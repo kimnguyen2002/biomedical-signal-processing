@@ -1,0 +1,1493 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>12.1 Typical Noises in the ECG &#8212; Biomedical Signal Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ec5fc9de" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch18_ecg_preprocessing/01_ecg_noise_types';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="../_static/equation-previews-data.js?v=1d8d4c5d"></script>
+    <script src="../_static/equation-previews.js?v=9ddb93c8"></script>
+    <link rel="canonical" href="https://kimnguyen2002.github.io/biomedical-signal-processing/ch18_ecg_preprocessing/01_ecg_noise_types.html" />
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="12.2 High-Pass Filtering and Baseline Wander Removal" href="02_highpass_baseline_wander.html" />
+    <link rel="prev" title="12. ECG Noise and Preprocessing, Step by Step" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+    <meta name="docbuild:last-update" content="November 08, 2026"/>
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Biomedical Signal Processing - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Biomedical Signal Processing - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part I. Foundations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch01_introduction/index.html">1. Introduction to Biomedical Signals</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/01_what_is_a_biomedical_signal.html">1.1 What Is a Biomedical Signal?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/02_bioelectric_origins.html">1.2 The Bioelectric Origin of Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/03_acquisition_chain.html">1.3 From Body to Computer: The Acquisition Chain</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch02_math_toolkit/index.html">2. The Mathematical Toolkit</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/01_complex_numbers.html">2.1 Complex Numbers and Euler’s Formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/03_signals_as_vectors.html">2.2 Signals as Vectors: Inner Products and Orthogonality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/04_calculus_for_signals.html">2.3 Calculus for Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/05_probability_and_statistics.html">2.4 Probability and Statistics for Signals</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part II. Linear Time-Invariant Systems</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch04_systems/index.html">3. Systems and Their Properties</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch04_systems/01_what_is_a_system.html">3.1 What Is a System?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch04_systems/02_linearity.html">3.2 Linearity and Superposition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch05_convolution/index.html">4. The Impulse Response and Convolution</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch05_convolution/01_impulse_representation.html">4.1 Building Signals from Impulses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch05_convolution/02_convolution_sum.html">4.2 The Convolution Sum</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part III. Frequency-Domain Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch07_fourier_series/index.html">5. Fourier Series</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/01_fourier_series_derivation.html">5.1 Representing Periodic Signals with Sinusoids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/02_complex_fourier_series.html">5.2 The Complex Exponential Fourier Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/03_convergence_gibbs.html">5.3 Convergence and the Gibbs Phenomenon</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch09_sampling/index.html">6. Sampling, Quantization and Reconstruction</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch09_sampling/01_sampling_theorem.html">6.1 The Sampling Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch09_sampling/02_aliasing.html">6.2 Aliasing and Anti-Aliasing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch12_spectral_estimation/index.html">7. Random Signals and Spectral Estimation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/01_random_processes.html">7.1 Random Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/02_power_spectral_density.html">7.2 Power Spectral Density and the Wiener–Khinchin Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/03_nonparametric_psd.html">7.3 The Periodogram, Bartlett and Welch Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/04_parametric_psd.html">7.4 Autoregressive Spectral Estimation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part IV. Filtering</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch13_filter_fundamentals/index.html">8. Filter Fundamentals</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch13_filter_fundamentals/01_filter_types_specs.html">8.1 Filter Types and Specifications</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch14_fir/index.html">9. FIR Filter Design</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch14_fir/01_linear_phase_fir.html">9.1 Linear-Phase FIR Filters</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch16_noise_removal/index.html">10. Noise Reduction: Averaging, Wiener and Adaptive Filters</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch16_noise_removal/01_signal_averaging.html">10.1 Signal Averaging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch16_noise_removal/02_wiener_filter.html">10.2 The Wiener Filter</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part V. The Electrocardiogram</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch17_ecg/index.html">11. The Electrocardiogram: Physiology and Recording</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/01_cardiac_electrophysiology.html">11.1 Cardiac Electrophysiology and the ECG Waveform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/02_recording_the_ecg.html">11.2 Recording the ECG: Leads, Amplifiers, Anti-Aliasing and Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/03_ecg_data_in_python.html">11.3 ECG Data in Python: PhysioNet Records, Annotations and Plots</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">12. ECG Noise and Preprocessing, Step by Step</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">12.1 Typical Noises in the ECG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_highpass_baseline_wander.html">12.2 High-Pass Filtering and Baseline Wander Removal</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part VI. Other Physiological Signals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch20_eeg/index.html">13. The Electroencephalogram</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/01_eeg_fundamentals.html">13.1 Origins of the EEG, Montages and Rhythms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/02_eeg_spectral_analysis.html">13.2 Spectral Analysis of the EEG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/03_event_related_activity.html">13.3 Event-Related Potentials and Desynchronization</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part VII. Advanced Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch24_wavelets/index.html">14. Wavelets and Multiresolution Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch24_wavelets/01_dwt_filter_banks.html">14.1 The Discrete Wavelet Transform and Filter Banks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch24_wavelets/02_wavelet_denoising.html">14.2 Wavelet Denoising</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../appendix/a_python_essentials.html">A. Python Essentials for Signal Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/b_datasets.html">B. Biomedical Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/c_math_reference.html">C. Mathematical Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/d_glossary.html">D. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/e_data_types.html">E. Python Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/f_pandas.html">F. pandas for Biomedical Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/g_numpy.html">G. NumPy for Sampled Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/h_latex.html">H. Writing Equations with LaTeX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/i_math_symbols.html">I. Mathematical Symbols and Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Books and References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch18_ecg_preprocessing/01_ecg_noise_types.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>12.1 Typical Noises in the ECG</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-clean-ecg-and-where-its-energy-lies">12.1.1 The Clean ECG and Where Its Energy Lies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-a-clean-reference-recording">Step 1: Load a clean reference recording</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-separate-the-qrs-complexes-from-the-slower-waves">Step 2: Separate the QRS complexes from the slower waves</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-estimate-the-power-spectral-densities">Step 3: Estimate the power spectral densities</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#signal-noise-and-artifact">12.1.2 Signal, Noise and Artifact</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-field-guide-to-ecg-noise">12.1.3 A Field Guide to ECG Noise</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#baseline-wander">Baseline wander</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#power-line-interference">Power-line interference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#muscle-emg-noise">Muscle (EMG) noise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#electrode-motion-artifact">Electrode motion artifact</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#electrode-pop-and-contact-loss">Electrode pop and contact loss</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#amplifier-thermal-and-quantization-noise">Amplifier, thermal and quantization noise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-gallery-of-simulated-artifacts">A gallery of simulated artifacts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aliasing-when-the-anti-aliasing-filter-is-missing">Aliasing when the anti-aliasing filter is missing</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-noise-from-the-mit-bih-noise-stress-test-database">12.1.4 Real Noise from the MIT-BIH Noise Stress Test Database</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-load-the-three-noise-records">Step 4: Load the three noise records</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-the-noise-lives-in-frequency">12.1.5 Where the Noise Lives in Frequency</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-overlay-the-noise-spectra-on-the-ecg-spectrum">Step 5: Overlay the noise spectra on the ECG spectrum</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-noisy-test-signals-at-a-chosen-snr">12.1.6 Building Noisy Test Signals at a Chosen SNR</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-write-a-function-that-adds-noise-at-a-chosen-snr">Step 6: Write a function that adds noise at a chosen SNR</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-7-look-at-the-result">Step 7: Look at the result</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-8-compare-with-a-naturally-noisy-recording">Step 8: Compare with a naturally noisy recording</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measuring-success-quality-metrics">12.1.7 Measuring Success: Quality Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-the-metrics-are-related">How the metrics are related</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-9-implement-the-metrics-and-check-equation-12-11">Step 9: Implement the metrics and check equation (12.11)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-map-of-noises-and-remedies">12.1.8 A Map of Noises and Remedies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="typical-noises-in-the-ecg">
+<span id="sec-12-1"></span><h1>12.1 Typical Noises in the ECG<a class="headerlink" href="#typical-noises-in-the-ecg" title="Link to this heading">#</a></h1>
+<p>An ECG recorded during everyday activity often looks quite different from a clean teaching example. The baseline drifts, muscle activity adds rapid fluctuations, and electrode movement can produce large deflections. Before choosing a method to reduce these disturbances, I want to understand what each one looks like and how it overlaps with the ECG.</p>
+<p>We will start with a relatively clean reference segment, examine common noise types, and add recorded noise at controlled levels. That gives us a way to compare methods later. I use <em>clean reference</em> as a practical label here; a real recording still contains measurement noise and is not a perfect noise-free ground truth.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">wfdb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">signal</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">"../bsp.mplstyle"</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"axes.prop_cycle"</span><span class="p">]</span><span class="o">.</span><span class="n">by_key</span><span class="p">()[</span><span class="s2">"color"</span><span class="p">]</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="the-clean-ecg-and-where-its-energy-lies">
+<span id="sec-12-1-1"></span><h2>12.1.1 The Clean ECG and Where Its Energy Lies<a class="headerlink" href="#the-clean-ecg-and-where-its-energy-lies" title="Link to this heading">#</a></h2>
+<section id="step-1-load-a-clean-reference-recording">
+<h3>Step 1: Load a clean reference recording<a class="headerlink" href="#step-1-load-a-clean-reference-recording" title="Link to this heading">#</a></h3>
+<p>Throughout this chapter I use the same five minutes of MIT-BIH Arrhythmia Database record 100 <span class="bibtex-citation" id="id1">[<a class="reference internal" href="../bibliography.html#id84" title="Ary L. Goldberger, Luis A. N. Amaral, Leon Glass, Jeffrey M. Hausdorff, Plamen Ch. Ivanov, Roger G. Mark, Joseph E. Mietus, George B. Moody, Chung-Kang Peng, and H. Eugene Stanley. PhysioBank, PhysioToolkit, and PhysioNet: components of a new research resource for complex physiologic signals. Circulation, 101(23):e215–e220, 2000.">Goldberger <em>et al.</em>, 2000</a>, <a class="reference internal" href="../bibliography.html#id85" title="George B. Moody and Roger G. Mark. The impact of the MIT-BIH arrhythmia database. IEEE Engineering in Medicine and Biology Magazine, 20(3):45–50, 2001.">Moody and Mark, 2001</a>]</span> as the clean reference: minutes 12 to 17 of the MLII lead, sampled at 360 Hz. Record 100 is one of the cleanest records in the database, with regular sinus rhythm and only a handful of atrial premature beats. The absolute DC level of an ECG is set by electrode offset potentials and carries no cardiac information, so we subtract the segment mean once and call the result <span class="math notranslate nohighlight">\(s[n]\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span> <span class="o">=</span> <span class="mi">360</span>
+<span class="n">seg_from</span><span class="p">,</span> <span class="n">seg_to</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">fs</span><span class="p">,</span> <span class="mi">17</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">fs</span>          <span class="c1"># minutes 12 to 17</span>
+<span class="n">rec</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdrecord</span><span class="p">(</span><span class="s2">"../data/mitdb/100"</span><span class="p">,</span> <span class="n">sampfrom</span><span class="o">=</span><span class="n">seg_from</span><span class="p">,</span> <span class="n">sampto</span><span class="o">=</span><span class="n">seg_to</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ann</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdann</span><span class="p">(</span><span class="s2">"../data/mitdb/100"</span><span class="p">,</span> <span class="s2">"atr"</span><span class="p">,</span> <span class="n">sampfrom</span><span class="o">=</span><span class="n">seg_from</span><span class="p">,</span> <span class="n">sampto</span><span class="o">=</span><span class="n">seg_to</span><span class="p">)</span>
+
+<span class="n">ecg_raw</span> <span class="o">=</span> <span class="n">rec</span><span class="o">.</span><span class="n">p_signal</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">ecg_raw</span> <span class="o">-</span> <span class="n">ecg_raw</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>                          <span class="c1"># clean, zero-mean reference (mV)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">fs</span>
+<span class="n">is_beat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">symbol</span><span class="p">,</span> <span class="p">[</span><span class="s2">"N"</span><span class="p">,</span> <span class="s2">"A"</span><span class="p">,</span> <span class="s2">"V"</span><span class="p">,</span> <span class="s2">"F"</span><span class="p">,</span> <span class="s2">"S"</span><span class="p">,</span> <span class="s2">"Q"</span><span class="p">])</span>
+<span class="n">r_peaks</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">sample</span><span class="p">[</span><span class="n">is_beat</span><span class="p">]</span> <span class="o">-</span> <span class="n">seg_from</span>              <span class="c1"># sample indices inside the segment</span>
+
+<span class="n">rr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">r_peaks</span><span class="p">)</span> <span class="o">/</span> <span class="n">fs</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Segment length       : </span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">fs</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> s (</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> samples)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Raw mean (removed)   : </span><span class="si">{</span><span class="n">ecg_raw</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mV"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"RMS after mean removal: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mV"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Beats                : </span><span class="si">{</span><span class="n">r_peaks</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">, mean heart rate </span><span class="si">{</span><span class="mi">60</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">rr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bpm"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Segment length       : 300 s (108000 samples)
+Raw mean (removed)   : -0.300 mV
+RMS after mean removal: 0.195 mV
+Beats                : 375, mean heart rate 75.0 bpm
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-separate-the-qrs-complexes-from-the-slower-waves">
+<h3>Step 2: Separate the QRS complexes from the slower waves<a class="headerlink" href="#step-2-separate-the-qrs-complexes-from-the-slower-waves" title="Link to this heading">#</a></h3>
+<p>A single ECG beat contains waves of very different speeds. The P and T waves are slow, rounded deflections lasting 80 to 200 ms, while the QRS complex rises and falls within about 80 to 100 ms and contains the sharpest edges of the beat. To see how this shows up in frequency, we split the signal into two parts with a smooth gate: a window of <span class="math notranslate nohighlight">\(\pm 60\)</span> ms around each annotated R peak keeps the QRS complexes, and its complement keeps the P waves, T waves and the baseline between them. The gate uses Tukey windows so that the cut itself does not create sharp edges.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">half</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.06</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span>                                  <span class="c1"># +-60 ms around each R peak</span>
+<span class="n">taper</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">tukey</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">half</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">gate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">r_peaks</span><span class="p">:</span>
+    <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="n">r</span> <span class="o">-</span> <span class="n">half</span><span class="p">,</span> <span class="n">r</span> <span class="o">+</span> <span class="n">half</span>
+    <span class="k">if</span> <span class="n">lo</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">hi</span> <span class="o">&lt;=</span> <span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+        <span class="n">gate</span><span class="p">[</span><span class="n">lo</span><span class="p">:</span><span class="n">hi</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">gate</span><span class="p">[</span><span class="n">lo</span><span class="p">:</span><span class="n">hi</span><span class="p">],</span> <span class="n">taper</span><span class="p">)</span>
+
+<span class="n">qrs_part</span> <span class="o">=</span> <span class="n">s</span> <span class="o">*</span> <span class="n">gate</span>
+<span class="n">slow_part</span> <span class="o">=</span> <span class="n">s</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">gate</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-estimate-the-power-spectral-densities">
+<h3>Step 3: Estimate the power spectral densities<a class="headerlink" href="#step-3-estimate-the-power-spectral-densities" title="Link to this heading">#</a></h3>
+<p>We estimate the power spectral density (PSD) of the whole ECG and of the two parts with Welch’s method (<a class="reference internal" href="../ch12_spectral_estimation/index.html"><span class="std std-doc">Section 7.3</span></a>), using 16 s Hann windows with 50 % overlap. The frequency resolution is <span class="math notranslate nohighlight">\(1/16 = 0.0625\)</span> Hz, fine enough to resolve the heart-rate harmonics. As a compact description of each spectrum, we also compute the frequency below which 90 % of the power lies.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">welch_psd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">seg_seconds</span><span class="o">=</span><span class="mi">16</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Welch PSD estimate (mV^2/Hz) with Hann windows of seg_seconds length and 50 % overlap."""</span>
+    <span class="k">return</span> <span class="n">signal</span><span class="o">.</span><span class="n">welch</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">nperseg</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">seg_seconds</span> <span class="o">*</span> <span class="n">fs</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">f_percent</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">90</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Frequency below which p percent of the PSD power lies."""</span>
+    <span class="n">cum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">S</span><span class="p">)</span> <span class="o">/</span> <span class="n">S</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">f</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">cum</span><span class="p">,</span> <span class="n">p</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)]</span>
+
+
+<span class="n">f</span><span class="p">,</span> <span class="n">S_ecg</span> <span class="o">=</span> <span class="n">welch_psd</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">S_qrs</span> <span class="o">=</span> <span class="n">welch_psd</span><span class="p">(</span><span class="n">qrs_part</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">S_slow</span> <span class="o">=</span> <span class="n">welch_psd</span><span class="p">(</span><span class="n">slow_part</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">S</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">"whole ECG"</span><span class="p">,</span> <span class="n">S_ecg</span><span class="p">),</span> <span class="p">(</span><span class="s2">"QRS gates"</span><span class="p">,</span> <span class="n">S_qrs</span><span class="p">),</span> <span class="p">(</span><span class="s2">"P, T and baseline"</span><span class="p">,</span> <span class="n">S_slow</span><span class="p">)]:</span>
+    <span class="n">above25</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">S</span><span class="p">[</span><span class="n">f</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">S</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">18s</span><span class="si">}</span><span class="s2">: 90 % of power below </span><span class="si">{</span><span class="n">f_percent</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">)</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2"> Hz, "</span>
+          <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">above25</span><span class="si">:</span><span class="s2">4.1f</span><span class="si">}</span><span class="s2"> % of power above 25 Hz"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>whole ECG         : 90 % of power below  24.9 Hz,  9.7 % of power above 25 Hz
+QRS gates         : 90 % of power below  25.8 Hz, 11.1 % of power above 25 Hz
+P, T and baseline : 90 % of power below   6.1 Hz,  1.7 % of power above 25 Hz
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">5.8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">show</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">20</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">t</span> <span class="o">&lt;</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">show</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">show</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">rp</span> <span class="o">=</span> <span class="n">r_peaks</span><span class="p">[(</span><span class="n">r_peaks</span> <span class="o">&gt;=</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">r_peaks</span> <span class="o">&lt;</span> <span class="mi">24</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rp</span> <span class="o">/</span> <span class="n">fs</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="n">rp</span><span class="p">],</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Annotated R peaks"</span><span class="p">)</span>
+<span class="n">r0</span> <span class="o">=</span> <span class="n">rp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">p_idx</span> <span class="o">=</span> <span class="n">r0</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.30</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">r0</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.30</span> <span class="o">*</span> <span class="n">fs</span><span class="p">):</span><span class="n">r0</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.10</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)])</span>
+<span class="n">t_idx</span> <span class="o">=</span> <span class="n">r0</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.15</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">r0</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.15</span> <span class="o">*</span> <span class="n">fs</span><span class="p">):</span><span class="n">r0</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.45</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)])</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">dy</span> <span class="ow">in</span> <span class="p">[(</span><span class="n">p_idx</span><span class="p">,</span> <span class="s2">"P"</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">),</span> <span class="p">(</span><span class="n">r0</span><span class="p">,</span> <span class="s2">"QRS"</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">),</span> <span class="p">(</span><span class="n">t_idx</span><span class="p">,</span> <span class="s2">"T"</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">)]:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="p">(</span><span class="n">idx</span> <span class="o">/</span> <span class="n">fs</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="n">idx</span><span class="p">]),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span> <span class="k">if</span> <span class="n">label</span> <span class="o">!=</span> <span class="s2">"QRS"</span> <span class="k">else</span> <span class="mi">6</span><span class="p">),</span>
+                <span class="n">textcoords</span><span class="o">=</span><span class="s2">"offset points"</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (s)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">),</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Clean reference: MIT-BIH record 100, lead MLII"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="s2">"main QRS band"</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.3"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">S_ecg</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Whole ECG"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">S_qrs</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"QRS gates only"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">S_slow</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"P, T and baseline only"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">75</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Frequency (Hz)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"PSD (dB re 1 mV²/Hz)"</span><span class="p">,</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Where the energy of the ECG lies"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/d41e84d77649382d8b5a06d53b2ad465f87e160aacf59c67fdaa459941966058.png" src="../_images/d41e84d77649382d8b5a06d53b2ad465f87e160aacf59c67fdaa459941966058.png" />
+</div>
+</div>
+<p>The picture is the one I keep in mind whenever I design an ECG filter. The slow waves and the baseline put almost all their power below about 10 Hz, concentrated in the narrow peaks at the heart rate (about 1.25 Hz here) and its first harmonics. The QRS complexes spread their power over a much wider range, with a broad hump between roughly 5 and 25 Hz and a tail that is still well above the noise floor at 40 Hz and beyond. This tail carries the sharp onset and offset of the QRS and the small notches that cardiologists look for, which is why diagnostic ECG equipment keeps content up to 150 Hz. Any noise that falls inside the 0.5 to 40 Hz range competes directly with the ECG; noise outside it can, at least in principle, be filtered away. One more detail is visible if you look closely: even this “clean” record contains a weak spectral line at exactly 60 Hz, a trace of power-line interference picked up during the original recording. A reference is never perfectly clean, and we will meet this line again in Section 18.4.</p>
+</section>
+</section>
+<section id="signal-noise-and-artifact">
+<span id="sec-12-1-2"></span><h2>12.1.2 Signal, Noise and Artifact<a class="headerlink" href="#signal-noise-and-artifact" title="Link to this heading">#</a></h2>
+<p>The simplest and by far the most common model writes the recorded signal <span class="math notranslate nohighlight">\(x[n]\)</span> as the sum of the clean signal <span class="math notranslate nohighlight">\(s[n]\)</span> and a disturbance <span class="math notranslate nohighlight">\(v[n]\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-12-1">
+\[\begin{equation*}
+x[n] = s[n] + v[n]. \tag{12.1}
+\end{equation*}\]</div>
+<p>Here <span class="math notranslate nohighlight">\(x[n]\)</span> is the recording we observe, <span class="math notranslate nohighlight">\(s[n]\)</span> is the ECG we want to retain, and <span class="math notranslate nohighlight">\(v[n]\)</span> is an added disturbance. At a sample where <span class="math notranslate nohighlight">\(s[n]=0.8\)</span> mV and <span class="math notranslate nohighlight">\(v[n]=0.2\)</span> mV, the model gives <span class="math notranslate nohighlight">\(x[n]=1.0\)</span> mV. In a controlled experiment we know both components; in a patient recording we usually observe only their sum. That is why subtracting a known noise array in a simulation is easier than removing noise from a real ECG.</p>
+<p>The words <em>noise</em> and <em>artifact</em> are often used interchangeably, but I find it helpful to keep a distinction in mind. <strong>Noise</strong> usually refers to random fluctuations without a recognizable shape, such as the thermal noise of an amplifier or the fuzzy activity of many muscle fibers firing asynchronously. An <strong>artifact</strong> is a disturbance with structure and a known origin, such as an electrode pop or a 60 Hz hum. Artifacts are often large and intermittent, and because they have a shape, they can mimic cardiac events.</p>
+<p>What counts as noise depends on the question. The respiratory oscillation of the baseline is noise for a cardiologist reading the ST segment, but it is the signal of interest when we estimate the breathing rate from the ECG in Section 22.3. Breathing also affects the ECG in a second way: it rotates the electrical axis of the heart and changes the conductivity of the chest, so the QRS amplitude rises and falls with each breath. This effect is <strong>multiplicative</strong> rather than additive,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-12-2">
+\[\begin{equation*}
+x[n] = s[n]\big(1 + m[n]\big) = s[n] + s[n]\,m[n], \tag{12.2}
+\end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(m[n]\)</span> is a slow modulation of a few percent to a few tens of percent. Written in the additive form on the right, the disturbance <span class="math notranslate nohighlight">\(s[n]m[n]\)</span> is proportional to the signal: it vanishes on the isoelectric line and is largest at the R peak. By the modulation property of the Fourier transform, its spectrum consists of copies of the ECG spectrum shifted by the respiratory frequency, so it lives in exactly the same bands as the ECG and no linear filter can separate the two. Everything else in this chapter uses the additive model <a class="reference internal" href="#eq-12-1">(12.1)</a>.</p>
+</section>
+<section id="a-field-guide-to-ecg-noise">
+<span id="sec-12-1-3"></span><h2>12.1.3 A Field Guide to ECG Noise<a class="headerlink" href="#a-field-guide-to-ecg-noise" title="Link to this heading">#</a></h2>
+<p>For each disturbance I describe its cause, how it looks in the time domain, where it lives in the spectrum, and how large it typically is.</p>
+<section id="baseline-wander">
+<h3>Baseline wander<a class="headerlink" href="#baseline-wander" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> Respiration moves the electrodes relative to the heart and changes the thoracic impedance; body movement stretches the skin under the electrodes; and the electrode–skin impedance drifts slowly as the electrolyte gel dries or sweat accumulates. <strong>Look.</strong> A slow, smooth undulation on which the beats ride, sometimes large enough to push the trace off the screen of a monitor. <strong>Spectrum.</strong> Mostly below 0.5 Hz, with the respiratory component at 0.15 to 0.5 Hz (9 to 30 breaths per minute) and movement-related drift that can reach about 1 Hz. <strong>Size.</strong> Tenths of a millivolt at rest, several millivolts during exercise. Baseline wander overlaps the lowest frequencies of the ST segment and T wave, which is what makes its removal delicate (<a class="reference internal" href="02_highpass_baseline_wander.html"><span class="std std-doc">Section 12.2</span></a>).</p>
+</section>
+<section id="power-line-interference">
+<h3>Power-line interference<a class="headerlink" href="#power-line-interference" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> The mains supply runs at 60 Hz in Taiwan and the United States and at 50 Hz in Europe and China. It couples into the recording through <em>capacitive coupling</em> between the power wiring and the patient’s body or the lead wires, through <em>magnetic induction</em> in the loop formed by the lead wires, and through <em>ground loops</em> when several earthed devices are connected to the patient. <strong>Look.</strong> A regular, fine oscillation that thickens the trace, most visible on the flat segments between beats. <strong>Spectrum.</strong> A narrow line at the mains frequency, often with weaker harmonics at 120 Hz, 180 Hz and so on; the line wanders by a few tenths of a hertz as the grid load changes. <strong>Size.</strong> From a few microvolts with good electrodes and a well-designed amplifier to a millivolt or more with a loose lead. The theory of notch filters is in Section 15.4 and the applied ECG walkthrough in Section 18.4.</p>
+</section>
+<section id="muscle-emg-noise">
+<h3>Muscle (EMG) noise<a class="headerlink" href="#muscle-emg-noise" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> Contraction of the chest, shoulder or limb muscles near the electrodes adds the summed action potentials of many motor units. <strong>Look.</strong> An irregular, fuzzy band riding on the trace, appearing in bursts when the patient moves or shivers. <strong>Spectrum.</strong> Broadband, from about 10 Hz to several hundred hertz, with most power between 20 and 150 Hz for surface recordings. It overlaps the QRS band, so a low-pass filter can only remove the part above the ECG (Section 18.3). <strong>Size.</strong> Tens of microvolts at rest to about a millivolt during strong contraction.</p>
+</section>
+<section id="electrode-motion-artifact">
+<h3>Electrode motion artifact<a class="headerlink" href="#electrode-motion-artifact" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> Stretching the skin under an electrode changes the electrochemical potential of the skin and of the electrode–electrolyte interface. <strong>Look.</strong> Irregular deflections lasting a fraction of a second to a few seconds, some of them sharp enough to be mistaken for a QRS complex or a T wave. <strong>Spectrum.</strong> Concentrated between roughly 0.5 and 10 Hz, squarely inside the band of the P and T waves and the lower part of the QRS. <strong>Size.</strong> Up to several millivolts. Electrode motion is the hardest ECG noise to remove because it overlaps the signal both in frequency and in shape, and it is the main source of false alarms in ambulatory monitoring.</p>
+</section>
+<section id="electrode-pop-and-contact-loss">
+<h3>Electrode pop and contact loss<a class="headerlink" href="#electrode-pop-and-contact-loss" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> An electrode briefly loses contact with the skin, or a lead is pulled. <strong>Look.</strong> An abrupt step or spike followed by an exponential recovery as the input coupling of the amplifier recharges; with a complete loss of contact, the amplifier output saturates at its supply rail and the trace becomes a flat line. <strong>Spectrum.</strong> Broadband, since a step contains all frequencies with amplitudes falling as <span class="math notranslate nohighlight">\(1/f\)</span>. <strong>Size.</strong> Often several millivolts, large enough to saturate the amplifier. Pops and saturation are not filtered away but detected and excluded, which is a job for the signal quality indices of Section 18.5.</p>
+</section>
+<section id="amplifier-thermal-and-quantization-noise">
+<h3>Amplifier, thermal and quantization noise<a class="headerlink" href="#amplifier-thermal-and-quantization-noise" title="Link to this heading">#</a></h3>
+<p>Every resistance <span class="math notranslate nohighlight">\(R\)</span> at absolute temperature <span class="math notranslate nohighlight">\(T\)</span> generates a random voltage, the thermal (Johnson–Nyquist) noise, with a flat spectrum. Its RMS value over a bandwidth <span class="math notranslate nohighlight">\(B\)</span> is</p>
+<div class="amsmath math notranslate nohighlight" id="eq-12-3">
+\[\begin{equation*}
+v_{\text{th}} = \sqrt{4 k T R B}, \tag{12.3}
+\end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(k = 1.38 \times 10^{-23}\)</span> J/K is Boltzmann’s constant. The input stages of the amplifier add their own white noise and a <span class="math notranslate nohighlight">\(1/f\)</span> (“flicker”) component that grows at low frequencies. Finally, an analog-to-digital converter with step size <span class="math notranslate nohighlight">\(\Delta\)</span> adds an error that behaves like white noise with variance <span class="math notranslate nohighlight">\(\Delta^2/12\)</span> (<a class="reference internal" href="../ch09_sampling/index.html"><span class="std std-doc">Section 9.4</span></a>). To judge whether any of this matters for the ECG, we take a body temperature of 310 K, a source resistance of 10 kΩ (wet gel electrode) or 100 kΩ (dry electrode on poorly prepared skin), a 150 Hz diagnostic bandwidth, and the MIT-BIH quantization step of 5 µV (11-bit converter, 200 steps per millivolt).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k_B</span><span class="p">,</span> <span class="n">T_body</span><span class="p">,</span> <span class="n">B</span> <span class="o">=</span> <span class="mf">1.380649e-23</span><span class="p">,</span> <span class="mf">310.0</span><span class="p">,</span> <span class="mf">150.0</span>     <span class="c1"># J/K, K, Hz</span>
+<span class="k">for</span> <span class="n">R</span> <span class="ow">in</span> <span class="p">(</span><span class="mf">10e3</span><span class="p">,</span> <span class="mf">100e3</span><span class="p">):</span>
+    <span class="n">v_th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">k_B</span> <span class="o">*</span> <span class="n">T_body</span> <span class="o">*</span> <span class="n">R</span> <span class="o">*</span> <span class="n">B</span><span class="p">)</span>     <span class="c1"># equation (18.3)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Thermal noise, R = </span><span class="si">{</span><span class="n">R</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e3</span><span class="si">:</span><span class="s2">5.0f</span><span class="si">}</span><span class="s2"> kOhm : </span><span class="si">{</span><span class="n">v_th</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e6</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> uV RMS"</span><span class="p">)</span>
+
+<span class="n">delta</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">200</span>                                   <span class="c1"># mV per ADC step in the MIT-BIH recordings</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Quantization noise, step </span><span class="si">{</span><span class="n">delta</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e3</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> uV : </span><span class="si">{</span><span class="n">delta</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e3</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> uV RMS"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Thermal noise, R =    10 kOhm : 0.16 uV RMS
+Thermal noise, R =   100 kOhm : 0.51 uV RMS
+Quantization noise, step 5 uV : 1.44 uV RMS
+</pre></div>
+</div>
+</div>
+</div>
+<p>Both are a few microvolts at most, several hundred times smaller than a QRS complex of about 1 mV. In clinical ECG they are rarely the limiting factor; they matter for low-resolution wearable converters and for microvolt-level analyses such as late potentials, which need averaging (<a class="reference internal" href="../ch16_noise_removal/index.html"><span class="std std-doc">Section 10.1</span></a>).</p>
+</section>
+<section id="a-gallery-of-simulated-artifacts">
+<h3>A gallery of simulated artifacts<a class="headerlink" href="#a-gallery-of-simulated-artifacts" title="Link to this heading">#</a></h3>
+<p>Before turning to real noise recordings, it helps to see the idealized shapes side by side. We add four artifacts to the clean reference: a 0.15 mV, 60 Hz hum; an electrode pop of 1 mV that decays with a 0.5 s time constant; a 0.3 mV respiratory oscillation at 0.25 Hz (15 breaths per minute); and a two-second burst of muscle noise. For the burst I borrow real muscle noise from the noise stress test database of <a class="reference internal" href="#sec-12-1-4">Section 12.1.4</a>, keep only its content above 5 Hz, and shape it with a smooth envelope.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ma_raw</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdrecord</span><span class="p">(</span><span class="s2">"../data/nstdb/ma"</span><span class="p">,</span> <span class="n">sampfrom</span><span class="o">=</span><span class="n">seg_from</span><span class="p">,</span> <span class="n">sampto</span><span class="o">=</span><span class="n">seg_to</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">p_signal</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">sos_hp5</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">butter</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">"highpass"</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">"sos"</span><span class="p">)</span>
+<span class="n">emg_part</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">sosfiltfilt</span><span class="p">(</span><span class="n">sos_hp5</span><span class="p">,</span> <span class="n">ma_raw</span><span class="p">)</span>
+
+<span class="n">hum</span> <span class="o">=</span> <span class="mf">0.15</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+<span class="n">pop</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="mf">3.0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="mf">3.0</span><span class="p">)</span>
+<span class="n">breathing</span> <span class="o">=</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+<span class="n">burst_env</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">t</span> <span class="o">-</span> <span class="mf">3.5</span><span class="p">)</span> <span class="o">/</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">**</span> <span class="mi">4</span><span class="p">)</span>    <span class="c1"># flat-topped, about 2 s long</span>
+<span class="n">burst</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">/</span> <span class="n">emg_part</span><span class="p">[:</span><span class="mi">7</span> <span class="o">*</span> <span class="n">fs</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">*</span> <span class="n">emg_part</span> <span class="o">*</span> <span class="n">burst_env</span>
+
+<span class="n">examples</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">"Power-line hum, 60 Hz"</span><span class="p">,</span> <span class="n">hum</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"Electrode pop"</span><span class="p">,</span> <span class="n">pop</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"Respiratory baseline wander"</span><span class="p">,</span> <span class="n">breathing</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"Muscle-noise burst"</span><span class="p">,</span> <span class="n">burst</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="o">=</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">6</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">8.4</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">art</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">examples</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">show</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">show</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Clean ECG"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">show</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">show</span><span class="p">]</span> <span class="o">+</span> <span class="n">art</span><span class="p">[</span><span class="n">show</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"ECG + artifact"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Time (s)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/dbd8cb701fac195f07b526d26267a1066c00e251ccb31fea79fd852ff5eabe56.png" src="../_images/dbd8cb701fac195f07b526d26267a1066c00e251ccb31fea79fd852ff5eabe56.png" />
+</div>
+</div>
+<p>Even these idealized examples show why there is no single cure. The hum is a narrow spectral line far above the main ECG energy, the pop and the respiratory wander are slow, and the muscle burst sits right inside the QRS band.</p>
+</section>
+<section id="aliasing-when-the-anti-aliasing-filter-is-missing">
+<h3>Aliasing when the anti-aliasing filter is missing<a class="headerlink" href="#aliasing-when-the-anti-aliasing-filter-is-missing" title="Link to this heading">#</a></h3>
+<p>The last entry in the field guide is not a physical noise source but a processing mistake. If a signal contains energy above half the sampling rate when it is sampled, or when it is later downsampled without first being low-pass filtered, that energy folds back into the band below <span class="math notranslate nohighlight">\(f_s/2\)</span> (<a class="reference internal" href="../ch09_sampling/index.html"><span class="std std-doc">Section 6.2</span></a>). A component at frequency <span class="math notranslate nohighlight">\(f\)</span> reappears at</p>
+<div class="amsmath math notranslate nohighlight" id="eq-12-4">
+\[\begin{equation*}
+f_{\text{alias}} = \left| f - k f_s \right|, \tag{12.4}
+\end{equation*}\]</div>
+<p>with the integer <span class="math notranslate nohighlight">\(k\)</span> chosen so that <span class="math notranslate nohighlight">\(0 \le f_{\text{alias}} \le f_s/2\)</span>. Hardware anti-aliasing filters in ECG amplifiers prevent this at acquisition (<a class="reference internal" href="../ch17_ecg/index.html"><span class="std std-doc">Section 11.2</span></a>), but the same error is easy to make in software. Suppose we add the 60 Hz hum and a little muscle noise (25 µV RMS) to the reference and then keep every fourth sample to obtain a 90 Hz signal. A 60 Hz hum then lands at <span class="math notranslate nohighlight">\(|60 - 90| = 30\)</span> Hz, right in the QRS band, where no later filter can tell it apart from the ECG. We compare naive downsampling (<code class="docutils literal notranslate"><span class="pre">x[::4]</span></code>) with <code class="docutils literal notranslate"><span class="pre">scipy.signal.decimate</span></code>, which applies a low-pass filter before discarding samples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_hum</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="n">hum</span> <span class="o">+</span> <span class="mf">0.025</span> <span class="o">*</span> <span class="n">emg_part</span> <span class="o">/</span> <span class="n">emg_part</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>     <span class="c1"># hum plus 25 uV RMS of muscle noise</span>
+<span class="n">fs_low</span> <span class="o">=</span> <span class="n">fs</span> <span class="o">/</span> <span class="mi">4</span>
+<span class="n">x_naive</span> <span class="o">=</span> <span class="n">x_hum</span><span class="p">[::</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">x_proper</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">decimate</span><span class="p">(</span><span class="n">x_hum</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">ftype</span><span class="o">=</span><span class="s2">"fir"</span><span class="p">,</span> <span class="n">zero_phase</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">f_low</span><span class="p">,</span> <span class="n">S_naive</span> <span class="o">=</span> <span class="n">welch_psd</span><span class="p">(</span><span class="n">x_naive</span><span class="p">,</span> <span class="n">fs_low</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">S_proper</span> <span class="o">=</span> <span class="n">welch_psd</span><span class="p">(</span><span class="n">x_proper</span><span class="p">,</span> <span class="n">fs_low</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">S_ref</span> <span class="o">=</span> <span class="n">welch_psd</span><span class="p">(</span><span class="n">s</span><span class="p">[::</span><span class="mi">4</span><span class="p">],</span> <span class="n">fs_low</span><span class="p">)</span>                 <span class="c1"># clean ECG has almost nothing above 45 Hz</span>
+
+<span class="n">k30</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">f_low</span> <span class="o">-</span> <span class="mi">30</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"PSD at 30 Hz, naive downsampling : </span><span class="si">{</span><span class="mi">10</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">S_naive</span><span class="p">[</span><span class="n">k30</span><span class="p">])</span><span class="si">:</span><span class="s2">6.1f</span><span class="si">}</span><span class="s2"> dB"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"PSD at 30 Hz, decimate()         : </span><span class="si">{</span><span class="mi">10</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">S_proper</span><span class="p">[</span><span class="n">k30</span><span class="p">])</span><span class="si">:</span><span class="s2">6.1f</span><span class="si">}</span><span class="s2"> dB"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"PSD at 30 Hz, clean ECG          : </span><span class="si">{</span><span class="mi">10</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">S_ref</span><span class="p">[</span><span class="n">k30</span><span class="p">])</span><span class="si">:</span><span class="s2">6.1f</span><span class="si">}</span><span class="s2"> dB"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PSD at 30 Hz, naive downsampling :   -9.1 dB
+PSD at 30 Hz, decimate()         :  -34.0 dB
+PSD at 30 Hz, clean ECG          :  -32.0 dB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_low</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">S_ref</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Clean ECG"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_low</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">S_naive</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Hum + EMG, naive x[::4]"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_low</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">S_proper</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Hum + EMG, decimate()"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">"60 Hz hum aliased to 30 Hz"</span><span class="p">,</span> <span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">S_naive</span><span class="p">[</span><span class="n">k30</span><span class="p">])),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">34</span><span class="p">,</span> <span class="o">-</span><span class="mi">12</span><span class="p">),</span>
+            <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">"-&gt;"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.3"</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">45</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">75</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Frequency (Hz)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"PSD (dB re 1 mV²/Hz)"</span><span class="p">,</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Downsampling 360 Hz to 90 Hz with and without an anti-aliasing filter"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower left"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/81e8f041f17ece74f53020540ec12e2aa03f14f661ed1dcf2b4fd5668932c24c.png" src="../_images/81e8f041f17ece74f53020540ec12e2aa03f14f661ed1dcf2b4fd5668932c24c.png" />
+</div>
+</div>
+<p>The naive version shows a spectral line at 30 Hz about 25 dB above the ECG spectrum, and above about 35 Hz its floor is a few decibels higher because muscle noise from above 45 Hz has folded down as well. The properly decimated signal has neither (its slight drop near 45 Hz is the transition band of the anti-aliasing filter). Once aliasing has happened, it cannot be undone.</p>
+</section>
+</section>
+<section id="real-noise-from-the-mit-bih-noise-stress-test-database">
+<span id="sec-12-1-4"></span><h2>12.1.4 Real Noise from the MIT-BIH Noise Stress Test Database<a class="headerlink" href="#real-noise-from-the-mit-bih-noise-stress-test-database" title="Link to this heading">#</a></h2>
+<p>Simulated artifacts are useful for intuition, but a denoising method should be tested on the real thing. The MIT-BIH Noise Stress Test Database <span class="bibtex-citation" id="id2">[<a class="reference internal" href="../bibliography.html#id84" title="Ary L. Goldberger, Luis A. N. Amaral, Leon Glass, Jeffrey M. Hausdorff, Plamen Ch. Ivanov, Roger G. Mark, Joseph E. Mietus, George B. Moody, Chung-Kang Peng, and H. Eugene Stanley. PhysioBank, PhysioToolkit, and PhysioNet: components of a new research resource for complex physiologic signals. Circulation, 101(23):e215–e220, 2000.">Goldberger <em>et al.</em>, 2000</a>, <a class="reference internal" href="../bibliography.html#id86" title="George B. Moody, W. E. Muldrow, and Roger G. Mark. A noise stress test for arrhythmia detectors. Computers in Cardiology, 11:381–384, 1984.">Moody <em>et al.</em>, 1984</a>]</span> provides it. Its authors recorded physically active volunteers with standard ambulatory ECG equipment, placing the electrodes on the limbs in positions where the subjects’ own ECG was not visible. What remained was noise alone, in three half-hour, two-channel records:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bw</span></code>: <strong>baseline wander</strong>, dominated by slow drift from respiration and body movement;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">em</span></code>: <strong>electrode motion artifact</strong>, which also contains some baseline wander and muscle noise;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ma</span></code>: <strong>muscle artifact</strong>, recorded during muscle activity.</p></li>
+</ul>
+<section id="step-4-load-the-three-noise-records">
+<h3>Step 4: Load the three noise records<a class="headerlink" href="#step-4-load-the-three-noise-records" title="Link to this heading">#</a></h3>
+<p>All three are sampled at 360 Hz, the same rate as the MIT-BIH Arrhythmia Database, so they can be added directly to its ECG records. We load channel <code class="docutils literal notranslate"><span class="pre">noise1</span></code> of each record over the same five-minute window as the ECG and remove each record’s small mean.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">noise</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"bw"</span><span class="p">,</span> <span class="s2">"em"</span><span class="p">,</span> <span class="s2">"ma"</span><span class="p">):</span>
+    <span class="n">rec_n</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdrecord</span><span class="p">(</span><span class="sa">f</span><span class="s2">"../data/nstdb/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">sampfrom</span><span class="o">=</span><span class="n">seg_from</span><span class="p">,</span> <span class="n">sampto</span><span class="o">=</span><span class="n">seg_to</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">noise</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">rec_n</span><span class="o">.</span><span class="n">p_signal</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">rec_n</span><span class="o">.</span><span class="n">p_signal</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">name</span><span class="p">:</span> <span class="p">{</span><span class="s2">"RMS (mV)"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)),</span>
+                               <span class="s2">"peak-to-peak (mV)"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">v</span><span class="p">)}</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">noise</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span><span class="o">.</span><span class="n">T</span>
+<span class="n">summary</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">"ECG (record 100)"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">s</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">s</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                  RMS (mV)  peak-to-peak (mV)
+bw                   0.482              3.860
+em                   0.702              5.545
+ma                   0.176              2.310
+ECG (record 100)     0.195              1.990
+</pre></div>
+</div>
+</div>
+</div>
+<p>As recorded, the baseline-wander and electrode-motion records are much larger than the ECG we are going to add them to, and the muscle record is about as large. The time plots below use a common vertical scale so that sizes can be compared directly.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="o">=</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">20</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"bw"</span><span class="p">:</span> <span class="s2">"Baseline wander (bw)"</span><span class="p">,</span> <span class="s2">"em"</span><span class="p">:</span> <span class="s2">"Electrode motion (em)"</span><span class="p">,</span> <span class="s2">"ma"</span><span class="p">:</span> <span class="s2">"Muscle artifact (ma)"</span><span class="p">}</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">8.4</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">show</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">show</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Clean ECG, MIT-BIH record 100 (MLII)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">noise</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">])):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">show</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="n">show</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Noise record </span><span class="si">{</span><span class="n">labels</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="si">}</span><span class="s2">, channel noise1"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Time (s)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/11c3012d2ec951bacae4ddc66855e3d033e6398aa9c200ce9a36dc24c806b3f0.png" src="../_images/11c3012d2ec951bacae4ddc66855e3d033e6398aa9c200ce9a36dc24c806b3f0.png" />
+</div>
+</div>
+<p>The three records have very different personalities. Baseline wander is a slow, smooth undulation with a period of several seconds. The muscle record combines a slow drift with a rapid, irregular fuzz. Electrode motion is the most worrying: irregular deflections lasting a fraction of a second to a second or two, some of them sharp enough to be read as a beat. A QRS detector that sees such a deflection reports an extra beat, which is why electrode motion is regarded as the most troublesome of the three <span class="bibtex-citation" id="id3">[<a class="reference internal" href="../bibliography.html#id86" title="George B. Moody, W. E. Muldrow, and Roger G. Mark. A noise stress test for arrhythmia detectors. Computers in Cardiology, 11:381–384, 1984.">Moody <em>et al.</em>, 1984</a>]</span>.</p>
+</section>
+</section>
+<section id="where-the-noise-lives-in-frequency">
+<span id="sec-12-1-5"></span><h2>12.1.5 Where the Noise Lives in Frequency<a class="headerlink" href="#where-the-noise-lives-in-frequency" title="Link to this heading">#</a></h2>
+<section id="step-5-overlay-the-noise-spectra-on-the-ecg-spectrum">
+<h3>Step 5: Overlay the noise spectra on the ECG spectrum<a class="headerlink" href="#step-5-overlay-the-noise-spectra-on-the-ecg-spectrum" title="Link to this heading">#</a></h3>
+<p>The time plots suggest that the three noises differ mainly in speed, so we compare their PSDs with that of the ECG. To compare <em>shapes</em> rather than sizes, each noise is first scaled to the same power as the ECG. We also tabulate the share of each signal’s power in five bands.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">s</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>                                  <span class="c1"># s already has zero mean</span>
+<span class="n">psd</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">welch_psd</span><span class="p">(</span><span class="n">v</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">P_s</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)),</span> <span class="n">fs</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">noise</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+<span class="n">bands</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span> <span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="n">fs</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="n">band_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"&lt; 0.5 Hz"</span><span class="p">,</span> <span class="s2">"0.5–5 Hz"</span><span class="p">,</span> <span class="s2">"5–15 Hz"</span><span class="p">,</span> <span class="s2">"15–40 Hz"</span><span class="p">,</span> <span class="s2">"&gt; 40 Hz"</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">band_percent</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Percentage of total PSD power falling in each band."""</span>
+    <span class="k">return</span> <span class="p">[</span><span class="mi">100</span> <span class="o">*</span> <span class="n">S</span><span class="p">[(</span><span class="n">f</span> <span class="o">&gt;=</span> <span class="n">lo</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">f</span> <span class="o">&lt;</span> <span class="n">hi</span><span class="p">)]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">S</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="k">for</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="ow">in</span> <span class="n">bands</span><span class="p">]</span>
+
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">band_percent</span><span class="p">(</span><span class="n">S_ecg</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="n">band_percent</span><span class="p">(</span><span class="n">S</span><span class="p">)</span> <span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="n">psd</span><span class="o">.</span><span class="n">values</span><span class="p">()],</span>
+                     <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">"ECG"</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">psd</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">band_names</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Share of total power in each band (%)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Share of total power in each band (%)
+     &lt; 0.5 Hz  0.5–5 Hz  5–15 Hz  15–40 Hz  &gt; 40 Hz
+ECG       3.7      17.0     43.0      34.9      1.4
+bw       99.1       0.8      0.0       0.1      0.0
+em       38.2      53.4      7.6       0.7      0.1
+ma       79.8      10.9      1.0       6.7      1.5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mf">0.0625</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.5"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.18</span><span class="p">,</span> <span class="o">-</span><span class="mi">82</span><span class="p">,</span> <span class="s2">"baseline</span><span class="se">\n</span><span class="s2">band"</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.3"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">11.2</span><span class="p">,</span> <span class="o">-</span><span class="mi">82</span><span class="p">,</span> <span class="s2">"main QRS</span><span class="se">\n</span><span class="s2">band"</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.3"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">S_ecg</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"ECG (record 100)"</span><span class="p">)</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">S</span><span class="p">),</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">psd</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">])):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0625</span><span class="p">,</span> <span class="mi">180</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Frequency (Hz)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"PSD (dB re 1 mV²/Hz)"</span><span class="p">,</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Welch PSDs of the ECG and of three real noises scaled to equal power"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/dacb7294acad1549ea664f0c8a76c9133bb70ba848d69b08dc00d9c8185236fe.png" src="../_images/dacb7294acad1549ea664f0c8a76c9133bb70ba848d69b08dc00d9c8185236fe.png" />
+</div>
+</div>
+<p>The ECG has its peaks at the heart rate and its harmonics, with 60 % of its power between 0.5 and 15 Hz and most of the rest between 15 and 40 Hz. Against it, each noise tells a clear story.</p>
+<ul class="simple">
+<li><p><strong>Baseline wander</strong> keeps 99 % of its power below 0.5 Hz, where the ECG has only a few percent. The two spectra barely overlap, so a high-pass filter can separate them; the art is in doing so without damaging the ST segment (<a class="reference internal" href="02_highpass_baseline_wander.html"><span class="std std-doc">Section 12.2</span></a>).</p></li>
+<li><p><strong>Muscle artifact</strong> in this database is not pure EMG. About 80 % of its power is slow drift below 0.5 Hz, which a high-pass filter removes, but a broad plateau of muscle activity extends from a few hertz to well beyond 40 Hz, right across the QRS band. A low-pass filter can trim the part above the ECG band, but whatever falls between 5 and 40 Hz stays (Section 18.3).</p></li>
+<li><p><strong>Electrode motion</strong> puts more than half of its power between 0.5 and 5 Hz and a further 8 % between 5 and 15 Hz. This is exactly where the P and T waves, the heart-rate fundamental and much of the QRS live. No fixed frequency-selective filter can remove it without removing the ECG along with it.</p></li>
+</ul>
+<p>This is the frequency-domain reason why electrode motion is the hardest artifact: its spectrum overlaps the signal’s spectrum almost completely, and it also resembles the signal in the time domain. The methods that help against it use extra information, such as a reference sensor (<a class="reference internal" href="../ch16_noise_removal/index.html"><span class="std std-doc">Section 16.3</span></a>) or the repetitive nature of the heartbeat (<a class="reference internal" href="../ch16_noise_removal/index.html"><span class="std std-doc">Section 10.1</span></a>), or they simply detect the corrupted stretches and set them aside (Section 18.5).</p>
+</section>
+</section>
+<section id="building-noisy-test-signals-at-a-chosen-snr">
+<span id="sec-12-1-6"></span><h2>12.1.6 Building Noisy Test Signals at a Chosen SNR<a class="headerlink" href="#building-noisy-test-signals-at-a-chosen-snr" title="Link to this heading">#</a></h2>
+<p>To evaluate a denoising method quantitatively we need two things that never exist together in a real recording: the noisy signal and the clean signal underneath it. The noise stress test approach creates them artificially. We take the clean ECG <span class="math notranslate nohighlight">\(s[n]\)</span>, scale a real noise record <span class="math notranslate nohighlight">\(v[n]\)</span> by a gain <span class="math notranslate nohighlight">\(g\)</span>, and add the two,</p>
+<div class="math notranslate nohighlight">
+\[
+x[n] = s[n] + g\,v[n].
+\]</div>
+<p>The gain is chosen to produce a desired signal-to-noise ratio. We define the powers of the signal and of the noise over the <span class="math notranslate nohighlight">\(N\)</span> samples of the test segment as</p>
+<div class="amsmath math notranslate nohighlight" id="eq-12-5">
+\[\begin{equation*}
+P_s = \frac{1}{N}\sum_{n=0}^{N-1}\big(s[n] - \bar{s}\big)^2, \qquad
+P_v = \frac{1}{N}\sum_{n=0}^{N-1} v[n]^2, \qquad
+\mathrm{SNR}_{\text{in}} = 10\log_{10}\frac{P_s}{P_v}\ \text{dB}, \tag{12.5}
+\end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\bar{s}\)</span> is the mean of <span class="math notranslate nohighlight">\(s\)</span> and the noise is taken to have zero mean. The signal mean is removed because an ECG offset of a few tenths of a millivolt (record 100 sits at about <span class="math notranslate nohighlight">\(-0.31\)</span> mV) would otherwise inflate <span class="math notranslate nohighlight">\(P_s\)</span> without containing any cardiac information. This is the power ratio of Section 3.4.</p>
+<p><strong>Deriving the gain.</strong> After scaling, the noise power becomes <span class="math notranslate nohighlight">\(\frac{1}{N}\sum (g\,v[n])^2 = g^2 P_v\)</span>. We want</p>
+<div class="math notranslate nohighlight">
+\[
+10\log_{10}\frac{P_s}{g^2 P_v} = \mathrm{SNR}.
+\]</div>
+<p>Dividing both sides by 10 and raising 10 to the power of each side removes the logarithm,</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{P_s}{g^2 P_v} = 10^{\mathrm{SNR}/10}.
+\]</div>
+<p>Solving for <span class="math notranslate nohighlight">\(g^2\)</span> and taking the positive square root gives</p>
+<div class="amsmath math notranslate nohighlight" id="eq-12-6">
+\[\begin{equation*}
+g = \sqrt{\frac{P_s}{P_v\,10^{\mathrm{SNR}/10}}}. \tag{12.6}
+\end{equation*}\]</div>
+<p>Every 6 dB reduction in SNR roughly doubles the noise amplitude, because <span class="math notranslate nohighlight">\(10^{6/20} \approx 2\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The SNR defined here is a plain power ratio over the whole segment. The test records distributed with the noise stress test database were built with a different definition based on measured QRS amplitudes, so an “SNR of 6 dB” in this book is not numerically the same as the 6 dB label of an nstdb record. What matters is that we use one definition consistently.</p>
+</div>
+<section id="step-6-write-a-function-that-adds-noise-at-a-chosen-snr">
+<h3>Step 6: Write a function that adds noise at a chosen SNR<a class="headerlink" href="#step-6-write-a-function-that-adds-noise-at-a-chosen-snr" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">add_noise_at_snr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">snr_db</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return s + g*v with g from equation (18.6), so that the SNR of (18.5) equals snr_db."""</span>
+    <span class="n">P_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">s</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">v</span> <span class="o">-</span> <span class="n">v</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">P_s</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">snr_db</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">s</span> <span class="o">+</span> <span class="n">g</span> <span class="o">*</span> <span class="n">v</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">snr_db</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Power SNR of equation (18.5) in dB."""</span>
+    <span class="k">return</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">s</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">v</span> <span class="o">-</span> <span class="n">v</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+
+
+<span class="n">snr_levels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">noisy_em</span> <span class="o">=</span> <span class="p">{</span><span class="n">snr</span><span class="p">:</span> <span class="n">add_noise_at_snr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">noise</span><span class="p">[</span><span class="s2">"em"</span><span class="p">],</span> <span class="n">snr</span><span class="p">)</span> <span class="k">for</span> <span class="n">snr</span> <span class="ow">in</span> <span class="n">snr_levels</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">snr</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">noisy_em</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"target </span><span class="si">{</span><span class="n">snr</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2"> dB -&gt; measured </span><span class="si">{</span><span class="n">snr_db</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2"> dB, "</span>
+          <span class="sa">f</span><span class="s2">"noise RMS </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mV"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>target  24 dB -&gt; measured  24.00 dB, noise RMS 0.012 mV
+target  12 dB -&gt; measured  12.00 dB, noise RMS 0.049 mV
+target   6 dB -&gt; measured   6.00 dB, noise RMS 0.097 mV
+target   0 dB -&gt; measured  -0.00 dB, noise RMS 0.195 mV
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-7-look-at-the-result">
+<h3>Step 7: Look at the result<a class="headerlink" href="#step-7-look-at-the-result" title="Link to this heading">#</a></h3>
+<p>The measured SNR matches the target exactly. The figure shows the same eight seconds of record 100 with electrode-motion noise at the four levels. At 24 dB the noise is barely visible, at 12 dB it begins to disturb the P and T waves, at 6 dB some deflections are as large as T waves, and at 0 dB the noise has the same power as the ECG and several deflections could be read as beats.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">20</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">t</span> <span class="o">&lt;</span> <span class="mi">28</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">8.4</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">snr</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">snr_levels</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">show</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">show</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Clean ECG"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">show</span><span class="p">],</span> <span class="n">noisy_em</span><span class="p">[</span><span class="n">snr</span><span class="p">][</span><span class="n">show</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"ECG + electrode motion"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Record 100 with electrode-motion noise at </span><span class="si">{</span><span class="n">snr</span><span class="si">}</span><span class="s2"> dB"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Time (s)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/79d8b231d72f492152a6c7adf60ef8b4238d488bfa8c1d470414839c1b6c9552.png" src="../_images/79d8b231d72f492152a6c7adf60ef8b4238d488bfa8c1d470414839c1b6c9552.png" />
+</div>
+</div>
+</section>
+<section id="step-8-compare-with-a-naturally-noisy-recording">
+<h3>Step 8: Compare with a naturally noisy recording<a class="headerlink" href="#step-8-compare-with-a-naturally-noisy-recording" title="Link to this heading">#</a></h3>
+<p>Synthetic test signals are only useful if they resemble real recordings. Record 105 of the MIT-BIH Arrhythmia Database is described in its header as dominated by “high-grade noise and artifact”, and its annotators marked nearly ninety changes in signal quality (the <code class="docutils literal notranslate"><span class="pre">~</span></code> annotations). We plot a quiet and a noisy ten-second stretch of it with the annotated beats.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rec105</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdrecord</span><span class="p">(</span><span class="s2">"../data/mitdb/105"</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ann105</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdann</span><span class="p">(</span><span class="s2">"../data/mitdb/105"</span><span class="p">,</span> <span class="s2">"atr"</span><span class="p">)</span>
+<span class="n">x105</span> <span class="o">=</span> <span class="n">rec105</span><span class="o">.</span><span class="n">p_signal</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">n_quality</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">sym</span> <span class="o">==</span> <span class="s2">"~"</span> <span class="k">for</span> <span class="n">sym</span> <span class="ow">in</span> <span class="n">ann105</span><span class="o">.</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">n_beats</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">sym</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"N"</span><span class="p">,</span> <span class="s2">"V"</span><span class="p">,</span> <span class="s2">"A"</span><span class="p">,</span> <span class="s2">"Q"</span><span class="p">)</span> <span class="k">for</span> <span class="n">sym</span> <span class="ow">in</span> <span class="n">ann105</span><span class="o">.</span><span class="n">symbol</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Record 105: </span><span class="si">{</span><span class="n">n_beats</span><span class="si">}</span><span class="s2"> beat annotations, </span><span class="si">{</span><span class="n">n_quality</span><span class="si">}</span><span class="s2"> signal-quality changes ('~')"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Record 105: 2572 beat annotations, 88 signal-quality changes ('~')
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">4.8</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">beats105</span> <span class="o">=</span> <span class="n">ann105</span><span class="o">.</span><span class="n">sample</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">ann105</span><span class="o">.</span><span class="n">symbol</span><span class="p">,</span> <span class="p">[</span><span class="s2">"N"</span><span class="p">,</span> <span class="s2">"V"</span><span class="p">,</span> <span class="s2">"A"</span><span class="p">,</span> <span class="s2">"Q"</span><span class="p">])]</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="p">[(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">990</span><span class="p">,</span> <span class="s2">"Record 105, a quiet stretch (990–1000 s)"</span><span class="p">),</span>
+                         <span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1200</span><span class="p">,</span> <span class="s2">"Record 105, a noisy stretch (1200–1210 s)"</span><span class="p">)]:</span>
+    <span class="n">sl</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">start</span> <span class="o">*</span> <span class="n">fs</span><span class="p">,</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span>
+    <span class="n">tt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">sl</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">sl</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span> <span class="o">/</span> <span class="n">fs</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tt</span><span class="p">,</span> <span class="n">x105</span><span class="p">[</span><span class="n">sl</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">beats105</span><span class="p">[(</span><span class="n">beats105</span> <span class="o">&gt;=</span> <span class="n">sl</span><span class="o">.</span><span class="n">start</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">beats105</span> <span class="o">&lt;</span> <span class="n">sl</span><span class="o">.</span><span class="n">stop</span><span class="p">)]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">b</span> <span class="o">/</span> <span class="n">fs</span><span class="p">,</span> <span class="n">x105</span><span class="p">[</span><span class="n">b</span><span class="p">],</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Annotated beats"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (s)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/b7eb2d6865dcb5f876d849a8c29b7cc51594c610eda504daff362b27cbd45d75.png" src="../_images/b7eb2d6865dcb5f876d849a8c29b7cc51594c610eda504daff362b27cbd45d75.png" />
+</div>
+</div>
+<p>The noisy stretch combines much of what we have seen: a baseline that swings by several millivolts, sharp deflections near 1205 s and 1208 s that look like beats but are not, and true beats whose apparent amplitude and polarity change because they ride on the artifact. The real record is harder than any single synthetic noise, because the noises occur together and change over time. I use record 105 in Section 18.5 to test a complete preprocessing pipeline and to flag the stretches that no filter can rescue.</p>
+</section>
+</section>
+<section id="measuring-success-quality-metrics">
+<span id="sec-12-1-7"></span><h2>12.1.7 Measuring Success: Quality Metrics<a class="headerlink" href="#measuring-success-quality-metrics" title="Link to this heading">#</a></h2>
+<p>Suppose a denoising method turns the noisy signal <span class="math notranslate nohighlight">\(x[n]\)</span> into an estimate <span class="math notranslate nohighlight">\(\hat{s}[n]\)</span>. How close is <span class="math notranslate nohighlight">\(\hat{s}\)</span> to <span class="math notranslate nohighlight">\(s\)</span>? Several numbers are in common use, and it pays to define them precisely because papers do not always agree on the details. All of them are built from the error <span class="math notranslate nohighlight">\(e[n] = \hat{s}[n] - s[n]\)</span>, and every section of this chapter reports them.</p>
+<p><strong>Output SNR and SNR improvement.</strong> Treating the error as the noise that remains after processing,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-12-7">
+\[\begin{equation*}
+\mathrm{SNR}_{\text{out}} = 10\log_{10}\frac{P_s}{\frac{1}{N}\sum_n \big(\hat{s}[n] - s[n]\big)^2}, \qquad
+\Delta\mathrm{SNR} = \mathrm{SNR}_{\text{out}} - \mathrm{SNR}_{\text{in}}\ \text{dB}. \tag{12.7}
+\end{equation*}\]</div>
+<p>The improvement <span class="math notranslate nohighlight">\(\Delta\mathrm{SNR}\)</span> is the most useful single number for comparing methods across noise levels: a value of 10 dB means the method reduced the error power tenfold. The error contains both the noise left behind and any distortion of the signal itself, so a filter that removes the noise but also flattens the QRS is penalized.</p>
+<p><strong>Root-mean-square error</strong>, in the units of the signal (mV for the ECG),</p>
+<div class="amsmath math notranslate nohighlight" id="eq-12-8">
+\[\begin{equation*}
+\mathrm{RMSE} = \sqrt{\frac{1}{N}\sum_{n}\big(\hat{s}[n] - s[n]\big)^2}. \tag{12.8}
+\end{equation*}\]</div>
+<p><strong>Percentage root-mean-square difference</strong>, a normalized error popular in ECG compression and denoising,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-12-9">
+\[\begin{equation*}
+\mathrm{PRD} = 100\sqrt{\frac{\sum_n \big(\hat{s}[n] - s[n]\big)^2}{\sum_n \big(s[n] - \bar{s}\big)^2}}\ \%. \tag{12.9}
+\end{equation*}\]</div>
+<p>I subtract the mean in the denominator, a form sometimes called the normalized PRD (PRDN). The original PRD divides by <span class="math notranslate nohighlight">\(\sum s[n]^2\)</span>, which for an ECG with a large DC offset makes the error look much smaller than it is and makes the result depend on an arbitrary electrode potential.</p>
+<p><strong>Correlation coefficient</strong> between estimate and reference,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-12-10">
+\[\begin{equation*}
+\rho = \frac{\sum_n (\hat{s}[n] - \bar{\hat{s}})(s[n] - \bar{s})}
+{\sqrt{\sum_n (\hat{s}[n] - \bar{\hat{s}})^2}\sqrt{\sum_n (s[n] - \bar{s})^2}}. \tag{12.10}
+\end{equation*}\]</div>
+<section id="how-the-metrics-are-related">
+<h3>How the metrics are related<a class="headerlink" href="#how-the-metrics-are-related" title="Link to this heading">#</a></h3>
+<p>The first three metrics are not independent. Squaring the PRD and dividing the numerator and denominator of <a class="reference internal" href="#eq-12-9">(12.9)</a> by <span class="math notranslate nohighlight">\(N\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\left(\frac{\mathrm{PRD}}{100}\right)^2 &amp;= \frac{\frac{1}{N}\sum_n e[n]^2}{\frac{1}{N}\sum_n (s[n] - \bar{s})^2}
+= \frac{\mathrm{RMSE}^2}{P_s} \\
+&amp;= 10^{-\mathrm{SNR}_{\text{out}}/10},
+\end{aligned}
+\end{split}\]</div>
+<p>where the last line uses definition <a class="reference internal" href="#eq-12-7">(12.7)</a>, which says <span class="math notranslate nohighlight">\(P_s / \mathrm{RMSE}^2 = 10^{\mathrm{SNR}_{\text{out}}/10}\)</span>. Taking square roots,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-12-11">
+\[\begin{equation*}
+\mathrm{PRD} = 100 \cdot 10^{-\mathrm{SNR}_{\text{out}}/20}\ \%, \qquad
+\mathrm{RMSE} = \sqrt{P_s}\cdot 10^{-\mathrm{SNR}_{\text{out}}/20}. \tag{12.11}
+\end{equation*}\]</div>
+<p>So for a fixed test signal, output SNR, RMSE and PRD carry the same information on different scales: an output SNR of 20 dB is a PRD of 10 %, and 0 dB is a PRD of 100 %. The correlation coefficient is different in kind. It ignores any gain or offset, because <span class="math notranslate nohighlight">\(\rho(a\hat{s} + b, s) = \rho(\hat{s}, s)\)</span> for every <span class="math notranslate nohighlight">\(a &gt; 0\)</span>, so it measures whether the <em>shape</em> is right but not whether the <em>size</em> is right. A method that halves the amplitude of every wave would achieve <span class="math notranslate nohighlight">\(\rho = 1\)</span> and still be clinically useless, since ST deviations and QRS amplitudes would be wrong by a factor of two.</p>
+</section>
+<section id="step-9-implement-the-metrics-and-check-equation-12-11">
+<h3>Step 9: Implement the metrics and check equation (12.11)<a class="headerlink" href="#step-9-implement-the-metrics-and-check-equation-12-11" title="Link to this heading">#</a></h3>
+<p>We check <a class="reference internal" href="#eq-12-11">(12.11)</a> and illustrate the blind spot of <span class="math notranslate nohighlight">\(\rho\)</span> with three estimates for the reference corrupted by muscle noise at 12 dB: the noisy signal itself, a zero-phase 40 Hz low-pass filtered version of it, and a “perfectly shaped” estimate that is simply half the clean ECG.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">quality</span><span class="p">(</span><span class="n">s_hat</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""SNR_out, Delta SNR (if x given), RMSE, PRD and correlation, equations (18.7)-(18.10)."""</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">s_hat</span> <span class="o">-</span> <span class="n">s</span>
+    <span class="n">P_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">s</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"SNR_out (dB)"</span><span class="p">:</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">P_s</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">e</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))}</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">out</span><span class="p">[</span><span class="s2">"dSNR (dB)"</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="s2">"SNR_out (dB)"</span><span class="p">]</span> <span class="o">-</span> <span class="n">snr_db</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="n">s</span><span class="p">)</span>
+    <span class="n">out</span><span class="p">[</span><span class="s2">"RMSE (mV)"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">e</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">out</span><span class="p">[</span><span class="s2">"PRD (%)"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">e</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">s</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">out</span><span class="p">[</span><span class="s2">"rho"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">s_hat</span><span class="p">,</span> <span class="n">s</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<span class="n">x_ma</span> <span class="o">=</span> <span class="n">add_noise_at_snr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">noise</span><span class="p">[</span><span class="s2">"ma"</span><span class="p">],</span> <span class="mi">12</span><span class="p">)</span>
+<span class="n">sos_lp40</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">butter</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="s2">"lowpass"</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">"sos"</span><span class="p">)</span>
+<span class="n">candidates</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"noisy x (no processing)"</span><span class="p">:</span> <span class="n">x_ma</span><span class="p">,</span>
+              <span class="s2">"40 Hz zero-phase low-pass"</span><span class="p">:</span> <span class="n">signal</span><span class="o">.</span><span class="n">sosfiltfilt</span><span class="p">(</span><span class="n">sos_lp40</span><span class="p">,</span> <span class="n">x_ma</span><span class="p">),</span>
+              <span class="s2">"0.5 * clean ECG"</span><span class="p">:</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">s</span><span class="p">}</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">name</span><span class="p">:</span> <span class="n">quality</span><span class="p">(</span><span class="n">est</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">x_ma</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">candidates</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span><span class="o">.</span><span class="n">T</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">"noisy x (no processing)"</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Check (18.11): 100*10^(-SNR_out/20) = </span><span class="si">{</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="n">q</span><span class="p">[</span><span class="s1">'SNR_out (dB)'</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> %, "</span>
+      <span class="sa">f</span><span class="s2">"PRD = </span><span class="si">{</span><span class="n">q</span><span class="p">[</span><span class="s1">'PRD (%)'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> %"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                           SNR_out (dB)  dSNR (dB)  RMSE (mV)  PRD (%)    rho
+noisy x (no processing)          12.000      0.000      0.049   25.119  0.970
+40 Hz zero-phase low-pass        11.427     -0.573      0.052   26.831  0.965
+0.5 * clean ECG                   6.021     -5.979      0.097   50.000  1.000
+
+Check (18.11): 100*10^(-SNR_out/20) = 25.119 %, PRD = 25.119 %
+</pre></div>
+</div>
+</div>
+</div>
+<p>For the unprocessed signal the output SNR equals the input SNR of 12 dB, so <span class="math notranslate nohighlight">\(\Delta\mathrm{SNR} = 0\)</span> and the PRD is <span class="math notranslate nohighlight">\(100 \cdot 10^{-12/20} \approx 25\%\)</span>, exactly as <a class="reference internal" href="#eq-12-11">(12.11)</a> predicts. The 40 Hz low-pass actually makes things slightly worse (<span class="math notranslate nohighlight">\(\Delta\mathrm{SNR} \approx -0.6\)</span> dB): most of this noise record’s power is slow drift that a low-pass filter leaves untouched, and the little it removes above 40 Hz is outweighed by the small distortion it causes on the sharp QRS complexes. The halved ECG has a correlation of exactly 1 and yet the worst error of the three, with a PRD of 50 %. In the rest of the chapter I therefore always report an error-based metric (ΔSNR, RMSE or PRD) and use <span class="math notranslate nohighlight">\(\rho\)</span> only as a complement. For baseline removal we will add one clinically motivated metric, the error in the ST level, in <a class="reference internal" href="02_highpass_baseline_wander.html"><span class="std std-doc">Section 12.2</span></a>.</p>
+</section>
+</section>
+<section id="a-map-of-noises-and-remedies">
+<span id="sec-12-1-8"></span><h2>12.1.8 A Map of Noises and Remedies<a class="headerlink" href="#a-map-of-noises-and-remedies" title="Link to this heading">#</a></h2>
+<p>The table collects the field guide in one place. The frequency ranges are typical values, not sharp limits, and the last column points to where each remedy is developed.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Noise</p></th>
+<th class="head"><p>Typical frequency range</p></th>
+<th class="head"><p>Typical size</p></th>
+<th class="head"><p>Main remedy</p></th>
+<th class="head"><p>Where</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Baseline wander</p></td>
+<td><p>below 0.5 Hz (up to about 1 Hz with movement)</p></td>
+<td><p>0.1 to several mV</p></td>
+<td><p>high-pass filter, median or spline baseline</p></td>
+<td><p><a class="reference internal" href="02_highpass_baseline_wander.html"><span class="std std-doc">Section 12.2</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Muscle (EMG) noise</p></td>
+<td><p>about 10 Hz to several hundred Hz</p></td>
+<td><p>0.01 to 1 mV</p></td>
+<td><p>low-pass filter above the QRS band; wavelets or averaging in band</p></td>
+<td><p>Section 18.3, <a class="reference internal" href="../ch24_wavelets/index.html"><span class="std std-doc">Section 14.2</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Power-line interference</p></td>
+<td><p>50 or 60 Hz and harmonics</p></td>
+<td><p>µV to mV</p></td>
+<td><p>notch or comb filter, adaptive canceller</p></td>
+<td><p>Section 18.4, Section 15.4</p></td>
+</tr>
+<tr class="row-odd"><td><p>Electrode motion</p></td>
+<td><p>about 0.5 to 10 Hz, irregular</p></td>
+<td><p>up to several mV</p></td>
+<td><p>reference-based adaptive filtering, averaging, quality-based rejection</p></td>
+<td><p><a class="reference internal" href="../ch16_noise_removal/index.html"><span class="std std-doc">Section 16.3</span></a>, Section 18.5</p></td>
+</tr>
+<tr class="row-even"><td><p>Electrode pop, contact loss</p></td>
+<td><p>broadband steps, saturation</p></td>
+<td><p>several mV</p></td>
+<td><p>detection and exclusion</p></td>
+<td><p>Section 18.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>Thermal, amplifier, quantization</p></td>
+<td><p>white (plus <span class="math notranslate nohighlight">\(1/f\)</span>)</p></td>
+<td><p>a few µV</p></td>
+<td><p>good electrodes and converter; averaging</p></td>
+<td><p><a class="reference internal" href="../ch09_sampling/index.html"><span class="std std-doc">Section 9.4</span></a>, <a class="reference internal" href="../ch16_noise_removal/index.html"><span class="std std-doc">Section 10.1</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Aliasing</p></td>
+<td><p>anything above <span class="math notranslate nohighlight">\(f_s/2\)</span>, folded down</p></td>
+<td><p>any</p></td>
+<td><p>anti-aliasing filter before sampling or downsampling</p></td>
+<td><p><a class="reference internal" href="../ch17_ecg/index.html"><span class="std std-doc">Section 11.2</span></a>, <a class="reference internal" href="../ch09_sampling/index.html"><span class="std std-doc">Section 6.2</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>A clean ECG puts most of the power of its P and T waves below about 10 Hz and spreads the power of the QRS complexes over roughly 5 to 25 Hz, with a tail that still matters at 40 Hz and beyond. Every ECG filter is a compromise between this spectrum and that of the noise. Baseline wander lives almost entirely below 0.5 Hz and power-line interference in narrow lines at 50 or 60 Hz and their harmonics, so both can be separated from the ECG in frequency. Muscle noise overlaps the QRS band and can only be trimmed, electrode motion overlaps the whole ECG band and resembles the signal in shape, and electrode pops and saturation must be detected rather than filtered. Thermal and quantization noise are microvolt-level and rarely matter, while aliasing is a processing error that cannot be undone after the fact.</p>
+<p>To compare methods fairly, we add real noise from the MIT-BIH Noise Stress Test Database to a clean stretch of record 100 at a controlled power SNR, using the gain of equation <a class="reference internal" href="#eq-12-6">(12.6)</a>, and judge the result with ΔSNR, RMSE, PRD and the correlation coefficient. For a fixed test signal the first three are equivalent through equation <a class="reference internal" href="#eq-12-11">(12.11)</a>, while the correlation is blind to gain errors. The next four sections use this machinery to remove baseline wander, muscle noise and power-line interference, and then combine the pieces into a complete preprocessing pipeline with signal quality checks.</p>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Show that the correlation coefficient <a class="reference internal" href="#eq-12-10">(12.10)</a> is unchanged when <span class="math notranslate nohighlight">\(\hat{s}\)</span> is replaced by <span class="math notranslate nohighlight">\(a\hat{s} + b\)</span> with <span class="math notranslate nohighlight">\(a &gt; 0\)</span>. What happens when <span class="math notranslate nohighlight">\(a &lt; 0\)</span>? Give an example of a denoising failure that <span class="math notranslate nohighlight">\(\rho\)</span> would detect and one that it would miss.</p></li>
+<li><p>Using equation <a class="reference internal" href="#eq-12-11">(12.11)</a>, express RMSE in terms of PRD and <span class="math notranslate nohighlight">\(P_s\)</span>. For our reference segment of record 100, what RMSE corresponds to a PRD of 9 %?</p></li>
+<li><p>An ECG is sampled at 500 Hz in a country with 50 Hz mains, and then downsampled by keeping every fifth sample. Where do the 50 Hz line and its harmonics at 100, 150 and 200 Hz land after downsampling? Use equation <a class="reference internal" href="#eq-12-4">(12.4)</a> and check your answer with a simulated signal.</p></li>
+<li><p>Repeat the band-power analysis of <a class="reference internal" href="#sec-12-1-5">Section 12.1.5</a> for channel <code class="docutils literal notranslate"><span class="pre">noise2</span></code> of each noise record. Are the conclusions the same? Which channel would you choose to construct a test set, and why?</p></li>
+<li><p>Corrupt the reference with each of the three nstdb noises at 6 dB and apply a zero-phase 0.5–40 Hz Butterworth band-pass filter (<code class="docutils literal notranslate"><span class="pre">signal.butter(2,</span> <span class="pre">[0.5,</span> <span class="pre">40],</span> <span class="pre">&quot;bandpass&quot;,</span> <span class="pre">fs=fs,</span> <span class="pre">output=&quot;sos&quot;)</span></code> with <code class="docutils literal notranslate"><span class="pre">sosfiltfilt</span></code>). Compute ΔSNR for each noise and explain the ranking with the spectra of Section 12.1.5.</p></li>
+<li><p>Simulate an ECG with 20 % respiratory amplitude modulation at 0.3 Hz, equation <a class="reference internal" href="#eq-12-2">(12.2)</a>. Compute its PSD and locate the sidebands around the heart-rate harmonics. Then estimate the beat-by-beat R-peak amplitude using the annotations, and remove the modulation by dividing each beat by its smoothed amplitude. How much of the multiplicative disturbance can you remove?</p></li>
+</ol>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p>The noise stress test methodology and the database used throughout this chapter are described by <span class="bibtex-citation" id="id4">Moody <em>et al.</em> [<a class="reference internal" href="../bibliography.html#id86" title="George B. Moody, W. E. Muldrow, and Roger G. Mark. A noise stress test for arrhythmia detectors. Computers in Cardiology, 11:381–384, 1984.">1984</a>]</span>, and the PhysioNet resource that distributes it by <span class="bibtex-citation" id="id5">Goldberger <em>et al.</em> [<a class="reference internal" href="../bibliography.html#id84" title="Ary L. Goldberger, Luis A. N. Amaral, Leon Glass, Jeffrey M. Hausdorff, Plamen Ch. Ivanov, Roger G. Mark, Joseph E. Mietus, George B. Moody, Chung-Kang Peng, and H. Eugene Stanley. PhysioBank, PhysioToolkit, and PhysioNet: components of a new research resource for complex physiologic signals. Circulation, 101(23):e215–e220, 2000.">2000</a>]</span>. <span class="bibtex-citation" id="id6">Sörnmo and Laguna [<a class="reference internal" href="../bibliography.html#id20" title="Leif Sörnmo and Pablo Laguna. Bioelectrical Signal Processing in Cardiac and Neurological Applications. Elsevier Academic Press, Amsterdam, 2005.">2005</a>]</span> give a careful account of ECG noise sources and their spectra, and <span class="bibtex-citation" id="id7">Clifford <em>et al.</em> [<a class="reference internal" href="../bibliography.html#id24" title="Gari D. Clifford, Francisco Azuaje, and Patrick E. McSharry, editors. Advanced Methods and Tools for ECG Data Analysis. Artech House, Boston, MA, 2006.">2006</a>]</span> discusses noise and signal quality in ambulatory ECG analysis. The physical origins of electrode, motion and interference noise are treated in depth by <span class="bibtex-citation" id="id8">Webster [<a class="reference internal" href="../bibliography.html#id27" title="John G. Webster, editor. Medical Instrumentation: Application and Design. Wiley, Hoboken, NJ, 4th edition, 2010.">2010</a>]</span>, and <span class="bibtex-citation" id="id9">Rangayyan [<a class="reference internal" href="../bibliography.html#id19" title="Rangaraj M. Rangayyan. Biomedical Signal Analysis. Wiley-IEEE Press, Hoboken, NJ, 2nd edition, 2015.">2015</a>]</span> (Chapter 3) surveys artifacts in many biomedical signals with clinical examples.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ch18_ecg_preprocessing"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">12. ECG Noise and Preprocessing, Step by Step</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="02_highpass_baseline_wander.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">12.2 High-Pass Filtering and Baseline Wander Removal</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-clean-ecg-and-where-its-energy-lies">12.1.1 The Clean ECG and Where Its Energy Lies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-a-clean-reference-recording">Step 1: Load a clean reference recording</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-separate-the-qrs-complexes-from-the-slower-waves">Step 2: Separate the QRS complexes from the slower waves</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-estimate-the-power-spectral-densities">Step 3: Estimate the power spectral densities</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#signal-noise-and-artifact">12.1.2 Signal, Noise and Artifact</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-field-guide-to-ecg-noise">12.1.3 A Field Guide to ECG Noise</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#baseline-wander">Baseline wander</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#power-line-interference">Power-line interference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#muscle-emg-noise">Muscle (EMG) noise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#electrode-motion-artifact">Electrode motion artifact</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#electrode-pop-and-contact-loss">Electrode pop and contact loss</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#amplifier-thermal-and-quantization-noise">Amplifier, thermal and quantization noise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-gallery-of-simulated-artifacts">A gallery of simulated artifacts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aliasing-when-the-anti-aliasing-filter-is-missing">Aliasing when the anti-aliasing filter is missing</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-noise-from-the-mit-bih-noise-stress-test-database">12.1.4 Real Noise from the MIT-BIH Noise Stress Test Database</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-load-the-three-noise-records">Step 4: Load the three noise records</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-the-noise-lives-in-frequency">12.1.5 Where the Noise Lives in Frequency</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-overlay-the-noise-spectra-on-the-ecg-spectrum">Step 5: Overlay the noise spectra on the ECG spectrum</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-noisy-test-signals-at-a-chosen-snr">12.1.6 Building Noisy Test Signals at a Chosen SNR</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-write-a-function-that-adds-noise-at-a-chosen-snr">Step 6: Write a function that adds noise at a chosen SNR</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-7-look-at-the-result">Step 7: Look at the result</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-8-compare-with-a-naturally-noisy-recording">Step 8: Compare with a naturally noisy recording</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measuring-success-quality-metrics">12.1.7 Measuring Success: Quality Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-the-metrics-are-related">How the metrics are related</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-9-implement-the-metrics-and-check-equation-12-11">Step 9: Implement the metrics and check equation (12.11)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-map-of-noises-and-remedies">12.1.8 A Map of Noises and Remedies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kim Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on November 08, 2026.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

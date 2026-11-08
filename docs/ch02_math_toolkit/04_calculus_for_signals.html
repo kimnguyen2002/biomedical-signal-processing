@@ -1,0 +1,1344 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2.3 Calculus for Signals &#8212; Biomedical Signal Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ec5fc9de" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch02_math_toolkit/04_calculus_for_signals';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="../_static/equation-previews-data.js?v=1d8d4c5d"></script>
+    <script src="../_static/equation-previews.js?v=9ddb93c8"></script>
+    <link rel="canonical" href="https://kimnguyen2002.github.io/biomedical-signal-processing/ch02_math_toolkit/04_calculus_for_signals.html" />
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.4 Probability and Statistics for Signals" href="05_probability_and_statistics.html" />
+    <link rel="prev" title="2.2 Signals as Vectors: Inner Products and Orthogonality" href="03_signals_as_vectors.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+    <meta name="docbuild:last-update" content="November 08, 2026"/>
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Biomedical Signal Processing - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Biomedical Signal Processing - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part I. Foundations</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch01_introduction/index.html">1. Introduction to Biomedical Signals</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/01_what_is_a_biomedical_signal.html">1.1 What Is a Biomedical Signal?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/02_bioelectric_origins.html">1.2 The Bioelectric Origin of Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/03_acquisition_chain.html">1.3 From Body to Computer: The Acquisition Chain</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">2. The Mathematical Toolkit</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_complex_numbers.html">2.1 Complex Numbers and Euler’s Formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_signals_as_vectors.html">2.2 Signals as Vectors: Inner Products and Orthogonality</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">2.3 Calculus for Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_probability_and_statistics.html">2.4 Probability and Statistics for Signals</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part II. Linear Time-Invariant Systems</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch04_systems/index.html">3. Systems and Their Properties</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch04_systems/01_what_is_a_system.html">3.1 What Is a System?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch04_systems/02_linearity.html">3.2 Linearity and Superposition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch05_convolution/index.html">4. The Impulse Response and Convolution</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch05_convolution/01_impulse_representation.html">4.1 Building Signals from Impulses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch05_convolution/02_convolution_sum.html">4.2 The Convolution Sum</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part III. Frequency-Domain Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch07_fourier_series/index.html">5. Fourier Series</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/01_fourier_series_derivation.html">5.1 Representing Periodic Signals with Sinusoids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/02_complex_fourier_series.html">5.2 The Complex Exponential Fourier Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/03_convergence_gibbs.html">5.3 Convergence and the Gibbs Phenomenon</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch09_sampling/index.html">6. Sampling, Quantization and Reconstruction</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch09_sampling/01_sampling_theorem.html">6.1 The Sampling Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch09_sampling/02_aliasing.html">6.2 Aliasing and Anti-Aliasing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch12_spectral_estimation/index.html">7. Random Signals and Spectral Estimation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/01_random_processes.html">7.1 Random Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/02_power_spectral_density.html">7.2 Power Spectral Density and the Wiener–Khinchin Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/03_nonparametric_psd.html">7.3 The Periodogram, Bartlett and Welch Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/04_parametric_psd.html">7.4 Autoregressive Spectral Estimation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part IV. Filtering</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch13_filter_fundamentals/index.html">8. Filter Fundamentals</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch13_filter_fundamentals/01_filter_types_specs.html">8.1 Filter Types and Specifications</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch14_fir/index.html">9. FIR Filter Design</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch14_fir/01_linear_phase_fir.html">9.1 Linear-Phase FIR Filters</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch16_noise_removal/index.html">10. Noise Reduction: Averaging, Wiener and Adaptive Filters</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch16_noise_removal/01_signal_averaging.html">10.1 Signal Averaging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch16_noise_removal/02_wiener_filter.html">10.2 The Wiener Filter</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part V. The Electrocardiogram</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch17_ecg/index.html">11. The Electrocardiogram: Physiology and Recording</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/01_cardiac_electrophysiology.html">11.1 Cardiac Electrophysiology and the ECG Waveform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/02_recording_the_ecg.html">11.2 Recording the ECG: Leads, Amplifiers, Anti-Aliasing and Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/03_ecg_data_in_python.html">11.3 ECG Data in Python: PhysioNet Records, Annotations and Plots</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch18_ecg_preprocessing/index.html">12. ECG Noise and Preprocessing, Step by Step</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch18_ecg_preprocessing/01_ecg_noise_types.html">12.1 Typical Noises in the ECG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch18_ecg_preprocessing/02_highpass_baseline_wander.html">12.2 High-Pass Filtering and Baseline Wander Removal</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part VI. Other Physiological Signals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch20_eeg/index.html">13. The Electroencephalogram</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/01_eeg_fundamentals.html">13.1 Origins of the EEG, Montages and Rhythms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/02_eeg_spectral_analysis.html">13.2 Spectral Analysis of the EEG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/03_event_related_activity.html">13.3 Event-Related Potentials and Desynchronization</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part VII. Advanced Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch24_wavelets/index.html">14. Wavelets and Multiresolution Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch24_wavelets/01_dwt_filter_banks.html">14.1 The Discrete Wavelet Transform and Filter Banks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch24_wavelets/02_wavelet_denoising.html">14.2 Wavelet Denoising</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../appendix/a_python_essentials.html">A. Python Essentials for Signal Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/b_datasets.html">B. Biomedical Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/c_math_reference.html">C. Mathematical Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/d_glossary.html">D. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/e_data_types.html">E. Python Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/f_pandas.html">F. pandas for Biomedical Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/g_numpy.html">G. NumPy for Sampled Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/h_latex.html">H. Writing Equations with LaTeX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/i_math_symbols.html">I. Mathematical Symbols and Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Books and References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch02_math_toolkit/04_calculus_for_signals.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>2.3 Calculus for Signals</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivatives-and-finite-differences">2.3.1 Derivatives and Finite Differences</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiation-amplifies-noise">2.3.2 Differentiation Amplifies Noise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integration-riemann-sums-and-the-trapezoid-rule">2.3.3 Integration: Riemann Sums and the Trapezoid Rule</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#area-under-a-heartbeat">Area under a heartbeat</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-integrals-and-drift">2.3.4 Running Integrals and Drift</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dirac-delta">2.3.5 The Dirac Delta</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrals-we-will-use-repeatedly">2.3.6 Integrals We Will Use Repeatedly</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-series">2.3.7 Geometric Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylor-series-and-linearization">2.3.8 Taylor Series and Linearization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="calculus-for-signals">
+<span id="sec-2-3"></span><h1>2.3 Calculus for Signals<a class="headerlink" href="#calculus-for-signals" title="Link to this heading">#</a></h1>
+<p>The steepest part of a normal heartbeat is the upstroke of the R wave, where the voltage at the skin rises by about a millivolt in 20 to 30 milliseconds. Most QRS detectors, including the Pan–Tompkins algorithm that we build in Chapter 19, start by computing that slope. Cardiologists, for their part, have long used the <em>area</em> of the QRS complex to separate beats that start in the ventricles from normal beats. Slope is a derivative and area is an integral, so even simple ECG processing asks us to differentiate and integrate signals that exist only as lists of samples.</p>
+<p>On paper, calculus deals with smooth functions and infinitely small steps. In the computer, every derivative becomes a difference between neighbouring samples and every integral becomes a sum, and these approximations have errors, amplify noise and drift in ways that the textbook formulas do not warn about. In this section I go through the calculus that the rest of the book relies on, always with the sampled version next to the continuous one: finite differences and their accuracy, why differentiation amplifies noise, numerical integration and its drift, the Dirac delta, a short list of integrals that appear again and again, geometric series, and linearization with Taylor’s formula. The applied examples use real ECG records from the MIT-BIH Arrhythmia Database.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">wfdb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrate</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">"../bsp.mplstyle"</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"axes.prop_cycle"</span><span class="p">]</span><span class="o">.</span><span class="n">by_key</span><span class="p">()[</span><span class="s2">"color"</span><span class="p">]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="derivatives-and-finite-differences">
+<span id="sec-2-3-1"></span><h2>2.3.1 Derivatives and Finite Differences<a class="headerlink" href="#derivatives-and-finite-differences" title="Link to this heading">#</a></h2>
+<p>The derivative of a signal <span class="math notranslate nohighlight">\(x(t)\)</span> is the limit of a difference quotient,</p>
+<div class="math notranslate nohighlight">
+\[
+x'(t) = \frac{dx}{dt} = \lim_{h \to 0} \frac{x(t + h) - x(t)}{h}.
+\]</div>
+<p>A sampled signal <span class="math notranslate nohighlight">\(x[n] = x(nT_s)\)</span> does not let us take <span class="math notranslate nohighlight">\(h\)</span> smaller than the sampling period <span class="math notranslate nohighlight">\(T_s\)</span>, so we simply stop at <span class="math notranslate nohighlight">\(h = T_s\)</span>. Three choices are common:</p>
+<div class="math notranslate nohighlight">
+\[
+\underbrace{\frac{x[n+1] - x[n]}{T_s}}_{\text{forward}}, \qquad
+\underbrace{\frac{x[n] - x[n-1]}{T_s}}_{\text{backward}}, \qquad
+\underbrace{\frac{x[n+1] - x[n-1]}{2T_s}}_{\text{central}}.
+\]</div>
+<p>The backward difference uses only the present and past samples, so it can run in real time; the forward difference needs the next sample; the central difference needs one future sample and one past sample. To see how accurate each one is, we expand the neighbours of <span class="math notranslate nohighlight">\(x(t)\)</span> in Taylor series.</p>
+<p><strong>Step 1: expand the neighbours.</strong> For a smooth signal and <span class="math notranslate nohighlight">\(h = T_s\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+x(t + h) &amp;= x(t) + h\,x'(t) + \frac{h^2}{2}x''(t) + \frac{h^3}{6}x'''(t) + \cdots \\
+x(t - h) &amp;= x(t) - h\,x'(t) + \frac{h^2}{2}x''(t) - \frac{h^3}{6}x'''(t) + \cdots
+\end{aligned}
+\end{split}\]</div>
+<p><strong>Step 2: the forward difference.</strong> Subtracting <span class="math notranslate nohighlight">\(x(t)\)</span> from the first line and dividing by <span class="math notranslate nohighlight">\(h\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-16">
+\[\begin{equation*}
+\frac{x(t + h) - x(t)}{h} = x'(t) + \frac{h}{2}x''(t) + O(h^2). \tag{2.16}
+\end{equation*}\]</div>
+<p>The leading error term is proportional to <span class="math notranslate nohighlight">\(h\)</span>: halving the step halves the error. We call this a <strong>first-order</strong> approximation. The backward difference has the same error with the opposite sign.</p>
+<p><strong>Step 3: the central difference.</strong> Subtracting the second line from the first, the even-order terms (<span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(x''\)</span>) cancel, leaving <span class="math notranslate nohighlight">\(x(t + h) - x(t - h) = 2h\,x'(t) + \tfrac{h^3}{3}x'''(t) + \cdots\)</span>. Dividing by <span class="math notranslate nohighlight">\(2h\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-17">
+\[\begin{equation*}
+\frac{x(t + h) - x(t - h)}{2h} = x'(t) + \frac{h^2}{6}x'''(t) + O(h^4). \tag{2.17}
+\end{equation*}\]</div>
+<p>Now the error is proportional to <span class="math notranslate nohighlight">\(h^2\)</span>, so halving the step divides the error by four. This <strong>second-order</strong> accuracy is why <code class="docutils literal notranslate"><span class="pre">np.gradient</span></code> uses the central difference in the interior of an array.</p>
+<p>We check both predictions on a Gaussian pulse with a width of 15 ms, roughly the shape of an R wave, evaluated at a point on its upstroke. On a log–log plot, an error proportional to <span class="math notranslate nohighlight">\(h^p\)</span> appears as a straight line with slope <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">r_wave</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">amp</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">t0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.015</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Gaussian model of an R wave (mV), time in seconds."""</span>
+    <span class="k">return</span> <span class="n">amp</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">t</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">width</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">r_wave_slope</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">amp</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">t0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.015</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Exact derivative of r_wave (mV/s)."""</span>
+    <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">width</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r_wave</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">amp</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
+
+<span class="n">t_eval</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.01</span>                                         <span class="c1"># 10 ms before the peak</span>
+<span class="n">steps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>                        <span class="c1"># step sizes from 10 us to 10 ms</span>
+<span class="n">exact</span> <span class="o">=</span> <span class="n">r_wave_slope</span><span class="p">(</span><span class="n">t_eval</span><span class="p">)</span>
+<span class="n">err_fwd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">r_wave</span><span class="p">(</span><span class="n">t_eval</span> <span class="o">+</span> <span class="n">steps</span><span class="p">)</span> <span class="o">-</span> <span class="n">r_wave</span><span class="p">(</span><span class="n">t_eval</span><span class="p">))</span> <span class="o">/</span> <span class="n">steps</span> <span class="o">-</span> <span class="n">exact</span><span class="p">)</span>
+<span class="n">err_cen</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">r_wave</span><span class="p">(</span><span class="n">t_eval</span> <span class="o">+</span> <span class="n">steps</span><span class="p">)</span> <span class="o">-</span> <span class="n">r_wave</span><span class="p">(</span><span class="n">t_eval</span> <span class="o">-</span> <span class="n">steps</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">steps</span><span class="p">)</span> <span class="o">-</span> <span class="n">exact</span><span class="p">)</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">360</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"exact slope at t = -10 ms : </span><span class="si">{</span><span class="n">exact</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mV/s"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"forward, h = 1/360 s      : </span><span class="si">{</span><span class="p">(</span><span class="n">r_wave</span><span class="p">(</span><span class="n">t_eval</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">r_wave</span><span class="p">(</span><span class="n">t_eval</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">h</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mV/s"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"central, h = 1/360 s      : </span><span class="si">{</span><span class="p">(</span><span class="n">r_wave</span><span class="p">(</span><span class="n">t_eval</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">r_wave</span><span class="p">(</span><span class="n">t_eval</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">h</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">h</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mV/s"</span><span class="p">)</span>
+<span class="n">slope_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">steps</span><span class="p">[:</span><span class="mi">10</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">err_fwd</span><span class="p">[:</span><span class="mi">10</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">slope_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">steps</span><span class="p">[:</span><span class="mi">10</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">err_cen</span><span class="p">[:</span><span class="mi">10</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"fitted error slopes: forward </span><span class="si">{</span><span class="n">slope_f</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, central </span><span class="si">{</span><span class="n">slope_c</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>exact slope at t = -10 ms : 35.59 mV/s
+forward, h = 1/360 s      : 32.33 mV/s
+central, h = 1/360 s      : 35.07 mV/s
+fitted error slopes: forward 1.00, central 2.00
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">6.4</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">steps</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">err_fwd</span><span class="p">,</span> <span class="s2">"o-"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"forward difference"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">steps</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">err_cen</span><span class="p">,</span> <span class="s2">"s-"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"central difference"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">1000</span> <span class="o">/</span> <span class="mi">360</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">1000</span> <span class="o">/</span> <span class="mi">360</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="s2">"$T_s$ at 360 Hz"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.4"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Step size h (ms)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Absolute error (mV/s)"</span><span class="p">,</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Error of finite-difference slopes on an R wave"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower right"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/d4fad2cc58827d43414ab7c25f24dfb56c2645d8f5a53b5b2e6710c889dbacab.png" src="../_images/d4fad2cc58827d43414ab7c25f24dfb56c2645d8f5a53b5b2e6710c889dbacab.png" />
+</div>
+</div>
+<p>The fitted slopes are close to 1 and 2, as equations <a class="reference internal" href="#eq-2-16">(2.16)</a> and <a class="reference internal" href="#eq-2-17">(2.17)</a> predict. At the sampling period of the MIT-BIH records (2.8 ms) the forward difference is off by about 9% on this sharp pulse, the central difference by less than 2%.</p>
+</section>
+<section id="differentiation-amplifies-noise">
+<span id="sec-2-3-2"></span><h2>2.3.2 Differentiation Amplifies Noise<a class="headerlink" href="#differentiation-amplifies-noise" title="Link to this heading">#</a></h2>
+<p>The truncation error above is only half of the story. Real recordings contain noise, and differentiation treats noise very differently from the signal.</p>
+<p>The simplest way to see why is to differentiate a sinusoid. For <span class="math notranslate nohighlight">\(x(t) = A\cos(\omega t)\)</span>, <span class="math notranslate nohighlight">\(x'(t) = -A\omega\sin(\omega t)\)</span>: the amplitude is multiplied by <span class="math notranslate nohighlight">\(\omega = 2\pi f\)</span>. A 1 Hz component is multiplied by about 6, a 100 Hz component by about 600. The derivative is a filter whose gain grows linearly with frequency, and since the ECG has most of its energy below 40 Hz while white noise spreads evenly up to <span class="math notranslate nohighlight">\(f_s/2\)</span>, the derivative tilts the balance toward the noise.</p>
+<p>The finite differences behave in the same way, with a twist. Feeding <span class="math notranslate nohighlight">\(x[n] = e^{j\Omega n}\)</span> into the backward difference and factoring out <span class="math notranslate nohighlight">\(e^{-j\Omega/2}\)</span>, as we learned to do with Euler’s formula in <a class="reference internal" href="01_complex_numbers.html"><span class="std std-doc">Section 2.1</span></a>,</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{x[n] - x[n-1]}{T_s} = \frac{1 - e^{-j\Omega}}{T_s}\,e^{j\Omega n} = \frac{e^{-j\Omega/2}\big(e^{j\Omega/2} - e^{-j\Omega/2}\big)}{T_s}\,e^{j\Omega n} = \frac{2j\sin(\Omega/2)}{T_s}\,e^{-j\Omega/2}\,e^{j\Omega n}.
+\]</div>
+<p>The same manipulation for the central difference gives <span class="math notranslate nohighlight">\((e^{j\Omega} - e^{-j\Omega})/(2T_s) = j\sin(\Omega)/T_s\)</span>. So the gains are</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-18">
+\[\begin{equation*}
+|H_{\text{ideal}}| = \omega = \frac{\Omega}{T_s}, \qquad
+|H_{\text{backward}}| = \frac{2\,|\sin(\Omega/2)|}{T_s}, \qquad
+|H_{\text{central}}| = \frac{|\sin\Omega|}{T_s}, \tag{2.18}
+\end{equation*}\]</div>
+<p>with <span class="math notranslate nohighlight">\(\Omega = 2\pi f/f_s\)</span>. For small <span class="math notranslate nohighlight">\(\Omega\)</span>, <span class="math notranslate nohighlight">\(\sin\Omega \approx \Omega\)</span> and all three agree. Near the Nyquist frequency they part ways: the backward difference keeps rising to <span class="math notranslate nohighlight">\(2/T_s\)</span>, while the central difference falls back to zero, because samples two steps apart at the Nyquist frequency are identical. The central difference is a differentiator and a mild low-pass filter at the same time.</p>
+<p>We can also count the noise directly. Let <span class="math notranslate nohighlight">\(x[n] = s[n] + v[n]\)</span>, where <span class="math notranslate nohighlight">\(v[n]\)</span> is white noise, meaning that samples are independent with zero mean and variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>. The noise in the backward difference is <span class="math notranslate nohighlight">\((v[n] - v[n-1])/T_s\)</span>, and because the variance of a sum of independent terms is the sum of their variances (proved in <a class="reference internal" href="05_probability_and_statistics.html"><span class="std std-doc">Section 2.4</span></a>),</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-19">
+\[\begin{equation*}
+\operatorname{Var}\!\left[\frac{v[n] - v[n-1]}{T_s}\right] = \frac{\sigma^2 + \sigma^2}{T_s^2} = \frac{2\sigma^2}{T_s^2}, \qquad
+\operatorname{Var}\!\left[\frac{v[n+1] - v[n-1]}{2T_s}\right] = \frac{2\sigma^2}{4T_s^2} = \frac{\sigma^2}{2T_s^2}. \tag{2.19}
+\end{equation*}\]</div>
+<p>At 360 Hz, the backward difference multiplies the standard deviation of white noise by <span class="math notranslate nohighlight">\(\sqrt{2}\times 360 \approx 509\)</span>. We test this on ten seconds of record 100 with 20 µV of white noise added, a level typical of a good ambulatory amplifier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span> <span class="o">=</span> <span class="mi">360</span>
+<span class="n">Ts</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">fs</span>
+<span class="n">start</span> <span class="o">=</span> <span class="mi">300</span> <span class="o">*</span> <span class="n">fs</span>
+<span class="n">ecg</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdrecord</span><span class="p">(</span><span class="s2">"../data/mitdb/100"</span><span class="p">,</span> <span class="n">sampfrom</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">sampto</span><span class="o">=</span><span class="n">start</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span><span class="o">.</span><span class="n">p_signal</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ecg</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">*</span> <span class="n">Ts</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.02</span>                                           <span class="c1"># mV</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">ecg</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">backward_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Ts</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Backward difference (x[n] - x[n-1]) / Ts, first sample repeated."""</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">prepend</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">Ts</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">central_diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Ts</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Central difference (x[n+1] - x[n-1]) / (2 Ts), equation (2.28)."""</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">Ts</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">Ts</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="n">Ts</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">snr_db</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Signal-to-noise ratio of signal s and noise v in dB."""</span>
+    <span class="k">return</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"central_diff matches np.gradient: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">central_diff</span><span class="p">(</span><span class="n">ecg</span><span class="p">,</span><span class="w"> </span><span class="n">Ts</span><span class="p">),</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">ecg</span><span class="p">,</span><span class="w"> </span><span class="n">Ts</span><span class="p">))</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"SNR of the ECG itself            : </span><span class="si">{</span><span class="n">snr_db</span><span class="p">(</span><span class="n">ecg</span><span class="p">,</span><span class="w"> </span><span class="n">noise</span><span class="p">)</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2"> dB"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">D</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">"backward"</span><span class="p">,</span> <span class="n">backward_diff</span><span class="p">),</span> <span class="p">(</span><span class="s2">"central"</span><span class="p">,</span> <span class="n">central_diff</span><span class="p">)]:</span>
+    <span class="n">d_noise</span> <span class="o">=</span> <span class="n">D</span><span class="p">(</span><span class="n">ecg</span> <span class="o">+</span> <span class="n">noise</span><span class="p">,</span> <span class="n">Ts</span><span class="p">)</span> <span class="o">-</span> <span class="n">D</span><span class="p">(</span><span class="n">ecg</span><span class="p">,</span> <span class="n">Ts</span><span class="p">)</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">/</span> <span class="n">Ts</span> <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">"backward"</span> <span class="k">else</span> <span class="n">sigma</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">Ts</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"SNR after </span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">8s</span><span class="si">}</span><span class="s2"> difference : </span><span class="si">{</span><span class="n">snr_db</span><span class="p">(</span><span class="n">D</span><span class="p">(</span><span class="n">ecg</span><span class="p">,</span><span class="w"> </span><span class="n">Ts</span><span class="p">),</span><span class="w"> </span><span class="n">d_noise</span><span class="p">)</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2"> dB"</span>
+          <span class="sa">f</span><span class="s2">"   (noise std </span><span class="si">{</span><span class="n">d_noise</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mV/s, predicted </span><span class="si">{</span><span class="n">pred</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>central_diff matches np.gradient: True
+SNR of the ECG itself            :  19.1 dB
+SNR after backward difference :   5.6 dB   (noise std 10.00 mV/s, predicted 10.18)
+SNR after central  difference :  11.1 dB   (noise std 5.13 mV/s, predicted 5.09)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The SNR falls from about 19 dB to under 6 dB with the backward difference, and the measured noise levels agree with equation <a class="reference internal" href="#eq-2-19">(2.19)</a>. The central difference loses less because it rejects the highest frequencies. The figure shows the gains of equation (2.18) and what the loss looks like in the time domain.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">fs</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">Om</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span> <span class="o">/</span> <span class="n">fs</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">))</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Om</span> <span class="o">/</span> <span class="n">Ts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.5"</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"ideal $\omega$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">Om</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="n">Ts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"backward"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">Om</span><span class="p">))</span> <span class="o">/</span> <span class="n">Ts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"central"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">760</span><span class="p">,</span> <span class="s2">"most ECG</span><span class="se">\n</span><span class="s2">energy"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Frequency (Hz)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Gain (1/s)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Gain of the differentiators"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">sl</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">sl</span><span class="p">],</span> <span class="n">ecg</span><span class="p">[</span><span class="n">sl</span><span class="p">]</span> <span class="o">+</span> <span class="n">noise</span><span class="p">[</span><span class="n">sl</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"ECG + 20 µV white noise"</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">sharex</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">sl</span><span class="p">],</span> <span class="n">backward_diff</span><span class="p">(</span><span class="n">ecg</span> <span class="o">+</span> <span class="n">noise</span><span class="p">,</span> <span class="n">Ts</span><span class="p">)[</span><span class="n">sl</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"backward, noisy"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">sl</span><span class="p">],</span> <span class="n">backward_diff</span><span class="p">(</span><span class="n">ecg</span><span class="p">,</span> <span class="n">Ts</span><span class="p">)[</span><span class="n">sl</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"backward, clean"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (s)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Slope (mV/s)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"First difference of the ECG"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/e5e20638c8ea66352088cb450fe2ce9fc65229561a5329ad49fca57629ff950c.png" src="../_images/e5e20638c8ea66352088cb450fe2ce9fc65229561a5329ad49fca57629ff950c.png" />
+</div>
+</div>
+<p>The QRS slopes still stand out clearly, which is why derivative-based QRS detectors work, but the flat parts of the trace are now dominated by noise. Detectors therefore low-pass filter the ECG before differentiating, an idea we return to in Section 13.3.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Noise amplification depends on <em>where</em> the noise lives in frequency. If you repeat the experiment with the real muscle-noise record <code class="docutils literal notranslate"><span class="pre">nstdb/ma</span></code> instead of white noise, the SNR barely changes after differentiation, because muscle noise occupies roughly the same band as the QRS complex and both are amplified by similar amounts. White noise is the worst case because so much of its power sits near the Nyquist frequency.</p>
+</div>
+</section>
+<section id="integration-riemann-sums-and-the-trapezoid-rule">
+<span id="sec-2-3-3"></span><h2>2.3.3 Integration: Riemann Sums and the Trapezoid Rule<a class="headerlink" href="#integration-riemann-sums-and-the-trapezoid-rule" title="Link to this heading">#</a></h2>
+<p>The definite integral <span class="math notranslate nohighlight">\(\int_a^b x(t)\,dt\)</span> is the signed area under the curve. With samples spaced <span class="math notranslate nohighlight">\(T_s\)</span> apart, the simplest approximation replaces the curve by rectangles,</p>
+<div class="math notranslate nohighlight">
+\[
+\int_a^b x(t)\,dt \approx T_s\sum_{n=0}^{N-1} x[n] \qquad \text{(left Riemann sum)},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(N = (b - a)/T_s\)</span> and <span class="math notranslate nohighlight">\(x[n] = x(a + nT_s)\)</span>. Joining neighbouring samples by straight lines instead gives trapezoids, whose areas are <span class="math notranslate nohighlight">\(\tfrac{T_s}{2}(x[n] + x[n+1])\)</span>. Adding them up, every interior sample appears in two trapezoids and the two end samples in one:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-20">
+\[\begin{equation*}
+\int_a^b x(t)\,dt \approx T_s\left(\frac{x[0]}{2} + x[1] + \cdots + x[N-1] + \frac{x[N]}{2}\right). \tag{2.20}
+\end{equation*}\]</div>
+<p>The accuracy follows again from Taylor series. Consider one interval of width <span class="math notranslate nohighlight">\(h = T_s\)</span> centred at <span class="math notranslate nohighlight">\(m\)</span> and write <span class="math notranslate nohighlight">\(x(m + s) = x(m) + s\,x'(m) + \tfrac{s^2}{2}x''(m) + \cdots\)</span>.</p>
+<p><strong>Step 1: integrate the expansion exactly.</strong> The odd term integrates to zero over the symmetric interval, so</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{-h/2}^{h/2} x(m + s)\,ds = h\,x(m) + \frac{x''(m)}{2}\cdot\frac{2}{3}\left(\frac{h}{2}\right)^3 + \cdots = h\,x(m) + \frac{h^3}{24}x''(m) + \cdots
+\]</div>
+<p><strong>Step 2: evaluate the trapezoid.</strong> Using the expansion at <span class="math notranslate nohighlight">\(s = \pm h/2\)</span>, the first-order terms cancel and</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{h}{2}\big[x(m - h/2) + x(m + h/2)\big] = h\,x(m) + \frac{h^3}{8}x''(m) + \cdots
+\]</div>
+<p><strong>Step 3: subtract and add up.</strong> The trapezoid overestimates one interval by <span class="math notranslate nohighlight">\(\big(\tfrac{1}{8} - \tfrac{1}{24}\big)h^3 x'' = \tfrac{h^3}{12}x''\)</span>. Summing <span class="math notranslate nohighlight">\(N = (b - a)/h\)</span> such errors gives a total error of about</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-21">
+\[\begin{equation*}
+E_{\text{trap}} \approx \frac{(b - a)\,h^2}{12}\,\overline{x''}, \tag{2.21}
+\end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\overline{x''}\)</span> is the average curvature. The trapezoid rule is second order. A similar calculation for the left Riemann sum leaves an error of about <span class="math notranslate nohighlight">\(\tfrac{h}{2}\big(x(a) - x(b)\big)\)</span>, first order in <span class="math notranslate nohighlight">\(h\)</span>. We check both on <span class="math notranslate nohighlight">\(\int_0^1 e^{-3t}\,dt = (1 - e^{-3})/3\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exact</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">))</span> <span class="o">/</span> <span class="mi">3</span>
+<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">N</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">160</span><span class="p">):</span>
+    <span class="n">tt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span> <span class="o">*</span> <span class="n">tt</span><span class="p">)</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"N"</span><span class="p">:</span> <span class="n">N</span><span class="p">,</span> <span class="s2">"left Riemann error"</span><span class="p">:</span> <span class="n">h</span> <span class="o">*</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">exact</span><span class="p">,</span>
+                 <span class="s2">"trapezoid error"</span><span class="p">:</span> <span class="n">h</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">exact</span><span class="p">,</span>
+                 <span class="s2">"np.trapezoid error"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">exact</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"N"</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">float_format</span><span class="o">=</span><span class="s2">"</span><span class="si">{:.2e}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     left Riemann error  trapezoid error  np.trapezoid error
+N                                                           
+10             4.99e-02         2.37e-03            2.37e-03
+20             2.43e-02         5.94e-04            5.94e-04
+40             1.20e-02         1.48e-04            1.48e-04
+80             5.98e-03         3.71e-05            3.71e-05
+160            2.98e-03         9.28e-06            9.28e-06
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each doubling of <span class="math notranslate nohighlight">\(N\)</span> halves the Riemann error and quarters the trapezoid error. NumPy’s <code class="docutils literal notranslate"><span class="pre">np.trapezoid</span></code> implements equation <a class="reference internal" href="#eq-2-20">(2.20)</a> and agrees to the last digit.</p>
+<section id="area-under-a-heartbeat">
+<h3>Area under a heartbeat<a class="headerlink" href="#area-under-a-heartbeat" title="Link to this heading">#</a></h3>
+<p>Record 119 of the MIT-BIH database contains long runs of ventricular bigeminy, in which every normal beat is followed by a premature ventricular contraction (PVC). A PVC spreads through the ventricular muscle slowly instead of using the fast conduction system, so its QRS complex is wide and large, and its area is much larger than that of a normal beat. We compute the area of each beat over a fixed window from 60 ms before to 100 ms after the annotated R wave, after subtracting a baseline estimated 90 to 120 ms before the R wave (roughly the PR segment of a normal beat). The unit of area is mV·ms.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span> <span class="o">=</span> <span class="mi">360</span>
+<span class="n">rec119</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdrecord</span><span class="p">(</span><span class="s2">"../data/mitdb/119"</span><span class="p">,</span> <span class="n">sampto</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span>
+<span class="n">ann119</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdann</span><span class="p">(</span><span class="s2">"../data/mitdb/119"</span><span class="p">,</span> <span class="s2">"atr"</span><span class="p">,</span> <span class="n">sampto</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span>
+<span class="n">ecg119</span> <span class="o">=</span> <span class="n">rec119</span><span class="o">.</span><span class="n">p_signal</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">sym</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ann119</span><span class="o">.</span><span class="n">symbol</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">beat_area</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">lo</span><span class="o">=-</span><span class="mf">0.06</span><span class="p">,</span> <span class="n">hi</span><span class="o">=</span><span class="mf">0.10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Trapezoid area (mV*ms) of x from lo to hi seconds around sample r, baseline from the PR segment."""</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">r</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.12</span> <span class="o">*</span> <span class="n">fs</span><span class="p">):</span><span class="n">r</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.09</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">seg</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">lo</span> <span class="o">*</span> <span class="n">fs</span><span class="p">):</span><span class="n">r</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">hi</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">base</span>
+    <span class="k">return</span> <span class="mi">1000</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mi">1</span> <span class="o">/</span> <span class="n">fs</span><span class="p">)</span>
+
+<span class="n">areas</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"N"</span><span class="p">,</span> <span class="s2">"V"</span><span class="p">):</span>
+    <span class="n">beats</span> <span class="o">=</span> <span class="n">ann119</span><span class="o">.</span><span class="n">sample</span><span class="p">[(</span><span class="n">sym</span> <span class="o">==</span> <span class="n">label</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ann119</span><span class="o">.</span><span class="n">sample</span> <span class="o">&gt;</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ann119</span><span class="o">.</span><span class="n">sample</span> <span class="o">&lt;</span> <span class="n">ecg119</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)]</span>
+    <span class="n">areas</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">beat_area</span><span class="p">(</span><span class="n">ecg119</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">beats</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">areas</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2"> beats, area </span><span class="si">{</span><span class="n">areas</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">6.1f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">areas</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">4.1f</span><span class="si">}</span><span class="s2"> mV*ms"</span>
+          <span class="sa">f</span><span class="s2">"  (range </span><span class="si">{</span><span class="n">areas</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">areas</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N: 519 beats, area   49.1 +/- 11.2 mV*ms  (range 17 to 66)
+V: 140 beats, area  214.2 +/- 12.2 mV*ms  (range 172 to 242)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">idx_n</span> <span class="o">=</span> <span class="n">ann119</span><span class="o">.</span><span class="n">sample</span><span class="p">[</span><span class="n">sym</span> <span class="o">==</span> <span class="s2">"N"</span><span class="p">][</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">idx_v</span> <span class="o">=</span> <span class="n">ann119</span><span class="o">.</span><span class="n">sample</span><span class="p">[</span><span class="n">sym</span> <span class="o">==</span> <span class="s2">"V"</span><span class="p">][</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">),</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">"width_ratios"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">]})</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">idx_n</span><span class="p">,</span> <span class="s2">"Normal beat"</span><span class="p">,</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">idx_v</span><span class="p">,</span> <span class="s2">"PVC"</span><span class="p">,</span> <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">])]:</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">ecg119</span><span class="p">[</span><span class="n">r</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.12</span> <span class="o">*</span> <span class="n">fs</span><span class="p">):</span><span class="n">r</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.09</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">tw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.2</span> <span class="o">*</span> <span class="n">fs</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.3</span> <span class="o">*</span> <span class="n">fs</span><span class="p">))</span> <span class="o">/</span> <span class="n">fs</span>
+    <span class="n">seg</span> <span class="o">=</span> <span class="n">ecg119</span><span class="p">[</span><span class="n">r</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.2</span> <span class="o">*</span> <span class="n">fs</span><span class="p">):</span><span class="n">r</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.3</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)]</span> <span class="o">-</span> <span class="n">base</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tw</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.3</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">tw</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mf">0.06</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">tw</span> <span class="o">&lt;=</span> <span class="mf">0.10</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">tw</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">seg</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.5"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time from R (ms)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">lab</span><span class="si">}</span><span class="s2">: area </span><span class="si">{</span><span class="n">beat_area</span><span class="p">(</span><span class="n">ecg119</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">fs</span><span class="p">)</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> mV·ms"</span><span class="p">,</span>
+           <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">260</span><span class="p">,</span> <span class="mi">57</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">areas</span><span class="p">[</span><span class="s2">"N"</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"N"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">areas</span><span class="p">[</span><span class="s2">"V"</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"V"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Beat area (mV·ms)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Number of beats"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Record 119, first 10 min"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper center"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/14e0d732bbfa505ec9868957e2df554fcfc651853df630488acd794ce37b0b00.png" src="../_images/14e0d732bbfa505ec9868957e2df554fcfc651853df630488acd794ce37b0b00.png" />
+</div>
+</div>
+<p>The two histograms do not overlap at all. On this record, a single number computed with the trapezoid rule separates normal beats from PVCs, which is why QRS area remains a standard feature in beat classifiers (Section 19.3). On other patients the separation is less clean, and in Chapter 27 we combine area with other features.</p>
+</section>
+</section>
+<section id="running-integrals-and-drift">
+<span id="sec-2-3-4"></span><h2>2.3.4 Running Integrals and Drift<a class="headerlink" href="#running-integrals-and-drift" title="Link to this heading">#</a></h2>
+<p>Often we want the integral as a function of time, <span class="math notranslate nohighlight">\(y(t) = \int_0^t x(\tau)\,d\tau\)</span>, which in discrete time becomes a running sum <span class="math notranslate nohighlight">\(y[n] = T_s\sum_{k=0}^{n} x[k]\)</span> (<code class="docutils literal notranslate"><span class="pre">np.cumsum</span></code> times <span class="math notranslate nohighlight">\(T_s\)</span>). A clinical example is spirometry: a pneumotachograph measures air flow in litres per second, and the volume of air breathed is its running integral.</p>
+<p>The running integral has no way to forget. Any constant offset <span class="math notranslate nohighlight">\(b\)</span> in the flow measurement, however small, adds <span class="math notranslate nohighlight">\(b\,t\)</span> to the volume, a ramp that grows without limit. Random noise causes a slower but equally unbounded drift. If <span class="math notranslate nohighlight">\(v[k]\)</span> is white noise with variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>, the noise in <span class="math notranslate nohighlight">\(y[n]\)</span> is <span class="math notranslate nohighlight">\(T_s\sum_{k=0}^{n} v[k]\)</span>, a sum of <span class="math notranslate nohighlight">\(n + 1\)</span> independent terms, so its variance is</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-22">
+\[\begin{equation*}
+\operatorname{Var}\big(y_{\text{noise}}[n]\big) = T_s^2\,(n + 1)\,\sigma^2 \quad\Longrightarrow\quad \text{std} = T_s\,\sigma\sqrt{n + 1} = \sigma\sqrt{T_s\,t}. \tag{2.22}
+\end{equation*}\]</div>
+<p>The error grows like the square root of time. This is the <strong>random walk</strong>, the opposite behaviour to differentiation: integration attenuates high frequencies (its gain is <span class="math notranslate nohighlight">\(1/\omega\)</span>) but amplifies very low ones without bound. The simulation below uses quiet breathing at 15 breaths per minute with a tidal volume of 0.5 L, a flow sensor sampled at 100 Hz with 0.02 L/s of white noise, and a zero offset of 0.005 L/s, about 1% of peak flow and well within the calibration error of a real sensor.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fs_r</span><span class="p">,</span> <span class="n">Ts_r</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.01</span>
+<span class="n">t_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">Ts_r</span><span class="p">)</span>
+<span class="n">f_br</span><span class="p">,</span> <span class="n">VT</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">/</span> <span class="mi">60</span><span class="p">,</span> <span class="mf">0.5</span>                                 <span class="c1"># breathing rate (Hz), tidal volume (L)</span>
+<span class="n">volume</span> <span class="o">=</span> <span class="n">VT</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f_br</span> <span class="o">*</span> <span class="n">t_r</span><span class="p">))</span>
+<span class="n">flow_true</span> <span class="o">=</span> <span class="n">VT</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f_br</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f_br</span> <span class="o">*</span> <span class="n">t_r</span><span class="p">)</span>    <span class="c1"># dV/dt (L/s)</span>
+<span class="n">offset</span><span class="p">,</span> <span class="n">sigma_f</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.02</span>
+<span class="n">flow_meas</span> <span class="o">=</span> <span class="n">flow_true</span> <span class="o">+</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">sigma_f</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">t_r</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">vol_est</span> <span class="o">=</span> <span class="n">Ts_r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">flow_meas</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"peak flow: </span><span class="si">{</span><span class="n">flow_true</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> L/s"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"volume error after 60 s: </span><span class="si">{</span><span class="n">vol_est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">volume</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">+.3f</span><span class="si">}</span><span class="s2"> L  (offset * t = </span><span class="si">{</span><span class="n">offset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">60</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> L)"</span><span class="p">)</span>
+
+<span class="n">walks</span> <span class="o">=</span> <span class="n">Ts_r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">sigma_f</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">((</span><span class="mi">2000</span><span class="p">,</span> <span class="n">t_r</span><span class="o">.</span><span class="n">size</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"random-walk std at 60 s: </span><span class="si">{</span><span class="n">walks</span><span class="p">[:,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> L  (equation (2.33): </span><span class="si">{</span><span class="n">sigma_f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Ts_r</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">60</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> L)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>peak flow: 0.393 L/s
+volume error after 60 s: +0.289 L  (offset * t = 0.300 L)
+random-walk std at 60 s: 0.0151 L  (equation (2.33): 0.0155 L)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">4.6</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_r</span><span class="p">,</span> <span class="n">flow_meas</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">"Flow (L/s)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Measured respiratory flow (offset 0.005 L/s, noise 0.02 L/s)"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_r</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"true volume"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_r</span><span class="p">,</span> <span class="n">vol_est</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"running integral of measured flow"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_r</span><span class="p">,</span> <span class="n">VT</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">offset</span> <span class="o">*</span> <span class="n">t_r</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.3"</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"mid-volume + offset·t"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (s)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Volume (L)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Integration turns a tiny offset into drift"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/091e61a91d7120abb061169dcbb7f41a187e6dc9b24236890ad35edc0fe660aa.png" src="../_images/091e61a91d7120abb061169dcbb7f41a187e6dc9b24236890ad35edc0fe660aa.png" />
+</div>
+</div>
+<p>After one minute the estimated lung volume has drifted by 0.3 L, more than half a tidal breath, even though the flow error is hardly visible. The random walk contributes only about 0.015 L over the same time. Real spirometers correct the offset at every breath, for example by forcing the volume back to the same end-expiratory level, which is a form of high-pass filtering. The same drift appears whenever acceleration is integrated to velocity in wearable motion sensors.</p>
+</section>
+<section id="the-dirac-delta">
+<span id="sec-2-3-5"></span><h2>2.3.5 The Dirac Delta<a class="headerlink" href="#the-dirac-delta" title="Link to this heading">#</a></h2>
+<p>The unit impulse <span class="math notranslate nohighlight">\(\delta(t)\)</span> was introduced in Section 3.2 and used to build the convolution integral in <a class="reference internal" href="../ch05_convolution/01_impulse_representation.html"><span class="std std-doc">Section 4.1</span></a>. It is not an ordinary function, and the cleanest way to work with it is as the limit of ordinary functions. Define a rectangular pulse of width <span class="math notranslate nohighlight">\(\varepsilon\)</span> and height <span class="math notranslate nohighlight">\(1/\varepsilon\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-23">
+\[\begin{equation*}
+\delta_\varepsilon(t) = \begin{cases} 1/\varepsilon, &amp; |t| &lt; \varepsilon/2, \\ 0, &amp; \text{otherwise,} \end{cases} \qquad \int_{-\infty}^{\infty} \delta_\varepsilon(t)\,dt = 1 \text{ for every } \varepsilon. \tag{2.23}
+\end{equation*}\]</div>
+<p>As <span class="math notranslate nohighlight">\(\varepsilon \to 0\)</span> the pulse becomes infinitely tall and narrow while its area stays one. The delta is whatever this family tends to <em>when it sits inside an integral</em>, which is the only place it ever appears.</p>
+<p><strong>Deriving the sifting property.</strong> Let <span class="math notranslate nohighlight">\(x(t)\)</span> be continuous at <span class="math notranslate nohighlight">\(t_0\)</span>. Multiplying by the shifted pulse and integrating, only the interval where the pulse is non-zero contributes:</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{-\infty}^{\infty} x(t)\,\delta_\varepsilon(t - t_0)\,dt = \frac{1}{\varepsilon}\int_{t_0 - \varepsilon/2}^{t_0 + \varepsilon/2} x(t)\,dt .
+\]</div>
+<p>The right-hand side is the <em>average</em> of <span class="math notranslate nohighlight">\(x\)</span> over an interval of width <span class="math notranslate nohighlight">\(\varepsilon\)</span> centred on <span class="math notranslate nohighlight">\(t_0\)</span>. By the mean value theorem for integrals, it equals <span class="math notranslate nohighlight">\(x(t_\varepsilon)\)</span> for some <span class="math notranslate nohighlight">\(t_\varepsilon\)</span> in that interval. As <span class="math notranslate nohighlight">\(\varepsilon \to 0\)</span>, <span class="math notranslate nohighlight">\(t_\varepsilon \to t_0\)</span>, and continuity gives <span class="math notranslate nohighlight">\(x(t_\varepsilon) \to x(t_0)\)</span>. Therefore</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-24">
+\[\begin{equation*}
+\int_{-\infty}^{\infty} x(t)\,\delta(t - t_0)\,dt = x(t_0). \tag{2.24}
+\end{equation*}\]</div>
+<p>Integrating against a delta <em>samples</em> the signal. The same limit holds for any family of unit-area pulses that shrink to a point, for example Gaussians of standard deviation <span class="math notranslate nohighlight">\(\varepsilon\)</span>. I find the averaging interpretation helpful in practice: a real measuring device never samples at a mathematical instant, it averages over a short aperture, and the measured value approaches the true one only when the aperture is short compared with the fastest feature of the signal.</p>
+<p>A second property follows by substitution. For <span class="math notranslate nohighlight">\(a \neq 0\)</span>, put <span class="math notranslate nohighlight">\(s = at\)</span> in <span class="math notranslate nohighlight">\(\int x(t)\,\delta(at)\,dt\)</span>; then <span class="math notranslate nohighlight">\(dt = ds/|a|\)</span> (the absolute value accounts for the reversal of the limits when <span class="math notranslate nohighlight">\(a &lt; 0\)</span>), and the integral becomes <span class="math notranslate nohighlight">\(x(0)/|a|\)</span>. Hence <span class="math notranslate nohighlight">\(\delta(at) = \delta(t)/|a|\)</span>, a scaling rule we need for the Fourier transform of sampled signals in <a class="reference internal" href="../ch09_sampling/index.html"><span class="std std-doc">Chapter 6</span></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">rect_delta</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">eps</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Rectangular nascent delta of width eps, equation (2.34)."""</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">eps</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">eps</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">gauss_delta</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">eps</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Gaussian nascent delta with standard deviation eps."""</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="n">eps</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">eps</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+
+<span class="n">tt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mi">600_001</span><span class="p">)</span>                    <span class="c1"># 1 us grid</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">tt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">tt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">r_wave</span><span class="p">(</span><span class="n">tt</span><span class="p">,</span> <span class="n">amp</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.012</span><span class="p">)</span>                    <span class="c1"># 1.2 mV R wave peaking at t0 = 0</span>
+<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">eps</span> <span class="ow">in</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.003</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">):</span>
+    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"eps (ms)"</span><span class="p">:</span> <span class="mi">1000</span> <span class="o">*</span> <span class="n">eps</span><span class="p">,</span>
+                 <span class="s2">"rect sift (mV)"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">rect_delta</span><span class="p">(</span><span class="n">tt</span><span class="p">,</span> <span class="n">eps</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="n">dt</span><span class="p">),</span>
+                 <span class="s2">"Gauss sift (mV)"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">gauss_delta</span><span class="p">(</span><span class="n">tt</span><span class="p">,</span> <span class="n">eps</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="n">dt</span><span class="p">)})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"eps (ms)"</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">float_format</span><span class="o">=</span><span class="s2">"</span><span class="si">{:.4f}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"true value x(0) = </span><span class="si">{</span><span class="n">r_wave</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">amp</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="o">=</span><span class="mf">0.012</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> mV"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>          rect sift (mV)  Gauss sift (mV)
+eps (ms)                                 
+100.0             0.3609           0.1430
+30.0              0.9489           0.4457
+10.0              1.1661           0.9219
+3.0               1.1965           1.1642
+1.0               1.1985           1.1959
+true value x(0) = 1.2000 mV
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">eps</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">((</span><span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tt</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">rect_delta</span><span class="p">(</span><span class="n">tt</span><span class="p">,</span> <span class="n">eps</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"rect, ε = </span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">eps</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ms"</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tt</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">gauss_delta</span><span class="p">(</span><span class="n">tt</span><span class="p">,</span> <span class="n">eps</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (ms)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Height (1/s)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Unit-area pulses approaching δ(t)"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">eps_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mf">3.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+<span class="n">sift</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">rect_delta</span><span class="p">(</span><span class="n">tt</span><span class="p">,</span> <span class="n">e</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">eps_grid</span><span class="p">]</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">eps_grid</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">sift</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"average over width ε"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"x(t₀) = 1.2 mV"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Pulse width ε (ms)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Sifted value (mV)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Sifting an R wave of width 12 ms"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower left"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/f6bafcb41d0b5cbb6bac0cc35ce8d04384a7caa022338a2c1fbc09e219a59273.png" src="../_images/f6bafcb41d0b5cbb6bac0cc35ce8d04384a7caa022338a2c1fbc09e219a59273.png" />
+</div>
+</div>
+<p>With a 100 ms aperture the “sample” of the R wave is less than a third of its true height. The value is within 1% of the peak only once <span class="math notranslate nohighlight">\(\varepsilon\)</span> falls to a few milliseconds, a fraction of the R wave width.</p>
+</section>
+<section id="integrals-we-will-use-repeatedly">
+<span id="sec-2-3-6"></span><h2>2.3.6 Integrals We Will Use Repeatedly<a class="headerlink" href="#integrals-we-will-use-repeatedly" title="Link to this heading">#</a></h2>
+<p>A handful of integrals appear so often in later chapters (impulse responses, Laplace and Fourier transforms, probability densities) that it pays to derive them once.</p>
+<p><strong>Integration by parts.</strong> Integrating the product rule <span class="math notranslate nohighlight">\((fg)' = f'g + fg'\)</span> from <span class="math notranslate nohighlight">\(a\)</span> to <span class="math notranslate nohighlight">\(b\)</span> and rearranging,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-25">
+\[\begin{equation*}
+\int_a^b f(t)\,g'(t)\,dt = \Big[f(t)\,g(t)\Big]_a^b - \int_a^b f'(t)\,g(t)\,dt. \tag{2.25}
+\end{equation*}\]</div>
+<p>The rule trades one integral for another; it helps when <span class="math notranslate nohighlight">\(f\)</span> becomes simpler on differentiation.</p>
+<p><strong>Exponentials.</strong> For any constant <span class="math notranslate nohighlight">\(a \ne 0\)</span>, real or complex, <span class="math notranslate nohighlight">\(\int e^{at}\,dt = e^{at}/a + \text{const}\)</span>, since differentiating <span class="math notranslate nohighlight">\(e^{at}/a\)</span> gives back <span class="math notranslate nohighlight">\(e^{at}\)</span>. Two special cases matter most. With <span class="math notranslate nohighlight">\(a &gt; 0\)</span>, the decaying exponential has a finite total area,</p>
+<div class="math notranslate nohighlight">
+\[
+\int_0^\infty e^{-at}\,dt = \Big[-\frac{e^{-at}}{a}\Big]_0^\infty = 0 - \Big(-\frac{1}{a}\Big) = \frac{1}{a}.
+\]</div>
+<p>With <span class="math notranslate nohighlight">\(a = j2\pi k/T\)</span> for a non-zero integer <span class="math notranslate nohighlight">\(k\)</span>, the integral over one period vanishes, <span class="math notranslate nohighlight">\(\int_0^T e^{j2\pi k t/T}\,dt = \tfrac{T}{j2\pi k}\big(e^{j2\pi k} - 1\big) = 0\)</span>, the continuous counterpart of the orthogonality sums in <a class="reference internal" href="03_signals_as_vectors.html#sec-2-2-6"><span class="std std-ref">Section 2.2.6</span></a>.</p>
+<p><strong>Time-weighted exponential.</strong> To compute <span class="math notranslate nohighlight">\(\int_0^\infty t\,e^{-at}\,dt\)</span>, choose <span class="math notranslate nohighlight">\(f = t\)</span> and <span class="math notranslate nohighlight">\(g' = e^{-at}\)</span> in equation <a class="reference internal" href="#eq-2-25">(2.25)</a>, so <span class="math notranslate nohighlight">\(f' = 1\)</span> and <span class="math notranslate nohighlight">\(g = -e^{-at}/a\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-26">
+\[\begin{equation*}
+\int_0^\infty t\,e^{-at}\,dt = \Big[-\frac{t\,e^{-at}}{a}\Big]_0^\infty + \frac{1}{a}\int_0^\infty e^{-at}\,dt = 0 + \frac{1}{a}\cdot\frac{1}{a} = \frac{1}{a^2}. \tag{2.26}
+\end{equation*}\]</div>
+<p>The boundary term vanishes at infinity because the exponential decays faster than <span class="math notranslate nohighlight">\(t\)</span> grows. In the drug-concentration model of <a class="reference internal" href="../ch04_systems/01_what_is_a_system.html"><span class="std std-doc">Section 3.1</span></a>, where <span class="math notranslate nohighlight">\(C(t) = C_0 e^{-kt}\)</span> after a bolus, the two results give the area under the curve, <span class="math notranslate nohighlight">\(\text{AUC} = C_0/k\)</span>, and the mean residence time of the drug, <span class="math notranslate nohighlight">\(\int t\,C\,dt / \int C\,dt = 1/k\)</span>.</p>
+<p><strong>The Gaussian integral.</strong> The integral <span class="math notranslate nohighlight">\(I = \int_{-\infty}^{\infty} e^{-t^2}\,dt\)</span> has no elementary antiderivative, but a classic trick computes it exactly.</p>
+<p><em>Step 1: square it and treat the square as a double integral.</em> Using different names for the two variables,</p>
+<div class="math notranslate nohighlight">
+\[
+I^2 = \int_{-\infty}^{\infty} e^{-u^2}\,du \int_{-\infty}^{\infty} e^{-v^2}\,dv = \iint_{\mathbb{R}^2} e^{-(u^2 + v^2)}\,du\,dv .
+\]</div>
+<p><em>Step 2: change to polar coordinates.</em> With <span class="math notranslate nohighlight">\(u = r\cos\phi\)</span>, <span class="math notranslate nohighlight">\(v = r\sin\phi\)</span>, we have <span class="math notranslate nohighlight">\(u^2 + v^2 = r^2\)</span> and the area element <span class="math notranslate nohighlight">\(du\,dv\)</span> becomes <span class="math notranslate nohighlight">\(r\,dr\,d\phi\)</span>. The extra factor <span class="math notranslate nohighlight">\(r\)</span> is exactly what makes the integral solvable:</p>
+<div class="math notranslate nohighlight">
+\[
+I^2 = \int_0^{2\pi}\!\int_0^\infty e^{-r^2}\,r\,dr\,d\phi = 2\pi\Big[-\tfrac{1}{2}e^{-r^2}\Big]_0^\infty = 2\pi\cdot\frac{1}{2} = \pi .
+\]</div>
+<p><em>Step 3: take the square root and rescale.</em> Since <span class="math notranslate nohighlight">\(I &gt; 0\)</span>, <span class="math notranslate nohighlight">\(I = \sqrt{\pi}\)</span>. Substituting <span class="math notranslate nohighlight">\(t = s/(\sigma\sqrt{2})\)</span> then gives the form we need for Gaussian pulses and the normal distribution of <a class="reference internal" href="05_probability_and_statistics.html"><span class="std std-doc">Section 2.4</span></a>:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-27">
+\[\begin{equation*}
+\int_{-\infty}^{\infty} e^{-t^2}\,dt = \sqrt{\pi}, \qquad \int_{-\infty}^{\infty} e^{-s^2/(2\sigma^2)}\,ds = \sigma\sqrt{2\pi}. \tag{2.27}
+\end{equation*}\]</div>
+<p>We confirm all four results with SciPy’s adaptive quadrature.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">sig</span> <span class="o">=</span> <span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.012</span>
+<span class="n">checks</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"int_0^inf exp(-a t) dt   = 1/a"</span><span class="p">:</span> <span class="p">(</span><span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">a</span> <span class="o">*</span> <span class="n">s</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">a</span><span class="p">),</span>
+    <span class="s2">"int_0^inf t exp(-a t) dt = 1/a^2"</span><span class="p">:</span> <span class="p">(</span><span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">a</span> <span class="o">*</span> <span class="n">s</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">"int exp(-t^2) dt         = sqrt(pi)"</span><span class="p">:</span> <span class="p">(</span><span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">s</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)),</span>
+    <span class="s2">"int exp(-s^2/2sig^2) ds  = sig sqrt(2pi)"</span><span class="p">:</span> <span class="p">(</span><span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">s</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sig</span><span class="o">**</span><span class="mi">2</span><span class="p">)),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">],</span>
+                                                 <span class="n">sig</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)),</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">closed</span><span class="p">)</span> <span class="ow">in</span> <span class="n">checks</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">42s</span><span class="si">}</span><span class="s2"> quad = </span><span class="si">{</span><span class="n">num</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">, closed form = </span><span class="si">{</span><span class="n">closed</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>int_0^inf exp(-a t) dt   = 1/a             quad = 2.857143, closed form = 2.857143
+int_0^inf t exp(-a t) dt = 1/a^2           quad = 8.163265, closed form = 8.163265
+int exp(-t^2) dt         = sqrt(pi)        quad = 1.772454, closed form = 1.772454
+int exp(-s^2/2sig^2) ds  = sig sqrt(2pi)   quad = 0.030080, closed form = 0.030080
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="geometric-series">
+<span id="sec-2-3-7"></span><h2>2.3.7 Geometric Series<a class="headerlink" href="#geometric-series" title="Link to this heading">#</a></h2>
+<p>Discrete-time systems produce sums of powers, <span class="math notranslate nohighlight">\(\sum r^n\)</span>, as naturally as continuous systems produce integrals of exponentials. The finite sum has a closed form that we derive with a one-line trick.</p>
+<p><strong>Step 1: write the sum and a shifted copy.</strong> Let <span class="math notranslate nohighlight">\(S_N = 1 + r + r^2 + \cdots + r^{N-1}\)</span>. Multiplying by <span class="math notranslate nohighlight">\(r\)</span> shifts every term one place: <span class="math notranslate nohighlight">\(r S_N = r + r^2 + \cdots + r^{N}\)</span>.</p>
+<p><strong>Step 2: subtract.</strong> All terms but the first of <span class="math notranslate nohighlight">\(S_N\)</span> and the last of <span class="math notranslate nohighlight">\(rS_N\)</span> cancel, <span class="math notranslate nohighlight">\(S_N - rS_N = 1 - r^N\)</span>, so for <span class="math notranslate nohighlight">\(r \ne 1\)</span></p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-28">
+\[\begin{equation*}
+\sum_{n=0}^{N-1} r^n = \frac{1 - r^N}{1 - r}, \qquad r \ne 1, \tag{2.28}
+\end{equation*}\]</div>
+<p>and <span class="math notranslate nohighlight">\(S_N = N\)</span> when <span class="math notranslate nohighlight">\(r = 1\)</span>. The derivation works for complex <span class="math notranslate nohighlight">\(r\)</span>, which is how we summed the roots of unity in <a class="reference internal" href="01_complex_numbers.html"><span class="std std-doc">Section 2.1</span></a>.</p>
+<p><strong>Step 3: let <span class="math notranslate nohighlight">\(N \to \infty\)</span>.</strong> If <span class="math notranslate nohighlight">\(|r| &lt; 1\)</span>, then <span class="math notranslate nohighlight">\(|r^N| = |r|^N \to 0\)</span>, and</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-29">
+\[\begin{equation*}
+\sum_{n=0}^{\infty} r^n = \frac{1}{1 - r}, \qquad |r| &lt; 1. \tag{2.29}
+\end{equation*}\]</div>
+<p>If <span class="math notranslate nohighlight">\(|r| \ge 1\)</span> the terms do not shrink and the series diverges. This single condition, <span class="math notranslate nohighlight">\(|r| &lt; 1\)</span>, becomes the stability condition for recursive filters in Section 5.5 and, in the language of poles, in Chapter 11.</p>
+<p>Differentiating equation (2.29) with respect to <span class="math notranslate nohighlight">\(r\)</span> gives one more useful sum, <span class="math notranslate nohighlight">\(\sum_{n=0}^\infty n\,r^{n-1} = 1/(1 - r)^2\)</span>, so <span class="math notranslate nohighlight">\(\sum_{n=0}^\infty n\,r^n = r/(1 - r)^2\)</span>. As an application, the exponential smoother of <a class="reference internal" href="../ch05_convolution/01_impulse_representation.html"><span class="std std-doc">Section 4.1</span></a> has impulse response <span class="math notranslate nohighlight">\(h[n] = (1 - \alpha)\alpha^n\)</span> for <span class="math notranslate nohighlight">\(n \ge 0\)</span>. Its total weight is <span class="math notranslate nohighlight">\((1 - \alpha)\cdot\tfrac{1}{1 - \alpha} = 1\)</span>, so it passes a constant signal unchanged, and its mean delay is <span class="math notranslate nohighlight">\(\sum n\,h[n] = (1 - \alpha)\,\alpha/(1 - \alpha)^2 = \alpha/(1 - \alpha)\)</span> samples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span><span class="p">,</span> <span class="n">N</span> <span class="o">=</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">5</span><span class="p">),</span> <span class="mi">12</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"finite sum, direct  : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"finite sum, (2.39)  : </span><span class="si">{</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">r</span><span class="o">**</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">alpha</span><span class="p">,</span> <span class="n">fs_hr</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mi">360</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+<span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="n">n</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"smoother total weight: </span><span class="si">{</span><span class="n">h</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"smoother mean delay  : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">h</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> samples (alpha/(1-alpha) = </span><span class="si">{</span><span class="n">alpha</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">alpha</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">),"</span>
+      <span class="sa">f</span><span class="s2">" </span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">h</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">fs_hr</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ms at 360 Hz"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finite sum, direct  : 1.103121+1.158403j
+finite sum, (2.39)  : 1.103121+1.158403j
+smoother total weight: 1.000000
+smoother mean delay  : 9.0000 samples (alpha/(1-alpha) = 9.0000), 25.0 ms at 360 Hz
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="taylor-series-and-linearization">
+<span id="sec-2-3-8"></span><h2>2.3.8 Taylor Series and Linearization<a class="headerlink" href="#taylor-series-and-linearization" title="Link to this heading">#</a></h2>
+<p>Taylor’s formula, used above to analyse finite differences, has a second job: it lets us replace a nonlinear relationship by a linear one near an operating point. Keeping the first two terms,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-30">
+\[\begin{equation*}
+f(x_0 + \Delta) = f(x_0) + f'(x_0)\,\Delta + \frac{f''(\xi)}{2}\,\Delta^2 \approx f(x_0) + f'(x_0)\,\Delta, \tag{2.30}
+\end{equation*}\]</div>
+<p>where the remainder term, with <span class="math notranslate nohighlight">\(\xi\)</span> between <span class="math notranslate nohighlight">\(x_0\)</span> and <span class="math notranslate nohighlight">\(x_0 + \Delta\)</span>, tells us how large the error of the linear approximation is. Because the remainder is proportional to <span class="math notranslate nohighlight">\(\Delta^2\)</span>, the relative error of linearization shrinks in proportion to the size of the excursion. Since the systems of <a class="reference internal" href="../ch04_systems/index.html"><span class="std std-doc">Chapter 3</span></a> and everything built on them are linear, this is the step that lets us use linear tools on a nonlinear body.</p>
+<p>Photoplethysmography is a good example. The light reaching a PPG photodiode obeys the Beer–Lambert law, <span class="math notranslate nohighlight">\(I = I_0\,e^{-A}\)</span>, where the absorbance <span class="math notranslate nohighlight">\(A\)</span> is proportional to the amount of absorbing material in the light path. With each heartbeat, arterial blood adds a small pulsatile absorbance <span class="math notranslate nohighlight">\(\Delta A(t)\)</span> to a large constant absorbance <span class="math notranslate nohighlight">\(A_0\)</span> from tissue, venous blood and bone. Expanding the exponential around <span class="math notranslate nohighlight">\(A_0\)</span> with equation (2.30), using <span class="math notranslate nohighlight">\(\tfrac{d}{dA}e^{-A} = -e^{-A}\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+I(t) = I_0\,e^{-A_0}e^{-\Delta A(t)} \approx \underbrace{I_0\,e^{-A_0}}_{I_{\text{DC}}}\big(1 - \Delta A(t)\big)
+\quad\Longrightarrow\quad
+\frac{I_{\text{AC}}(t)}{I_{\text{DC}}} \approx -\Delta A(t).
+\]</div>
+<p>The normalized pulsatile signal is, to first order, a linear and scaled copy of the arterial absorbance change, independent of the LED intensity <span class="math notranslate nohighlight">\(I_0\)</span> and of the static tissue. This approximation is the starting point of pulse oximetry (Section 22.1). The pulsatile part of a fingertip PPG is typically 0.5% to 2% of the total, so <span class="math notranslate nohighlight">\(\Delta A\)</span> is small and the remainder term predicts an error of about <span class="math notranslate nohighlight">\(\Delta A/2\)</span> relative to the AC signal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="n">exact_ratio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">dA</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>                          <span class="c1"># I_AC / I_DC, exact</span>
+<span class="n">linear_ratio</span> <span class="o">=</span> <span class="o">-</span><span class="n">dA</span>                                     <span class="c1"># first-order Taylor</span>
+<span class="n">rel_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">linear_ratio</span> <span class="o">-</span> <span class="n">exact_ratio</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">exact_ratio</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"Delta A"</span><span class="p">:</span> <span class="n">dA</span><span class="p">,</span> <span class="s2">"exact AC/DC"</span><span class="p">:</span> <span class="n">exact_ratio</span><span class="p">,</span> <span class="s2">"linear AC/DC"</span><span class="p">:</span> <span class="n">linear_ratio</span><span class="p">,</span>
+                    <span class="s2">"relative error (%)"</span><span class="p">:</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">rel_err</span><span class="p">})</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="s2">"</span><span class="si">{:.4f}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Delta A  exact AC/DC  linear AC/DC  relative error (%)
+  0.0050      -0.0050       -0.0050              0.2502
+  0.0100      -0.0100       -0.0100              0.5008
+  0.0200      -0.0198       -0.0200              1.0033
+  0.0500      -0.0488       -0.0500              2.5208
+  0.2000      -0.1813       -0.2000             10.3331
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dA_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">6.6</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dA_grid</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">dA_grid</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"exact $e^{-\Delta A}$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dA_grid</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">dA_grid</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.6</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"linear $1 - \Delta A$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="s2">"typical PPG</span><span class="se">\n</span><span class="s2">pulsatile range"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Pulsatile absorbance ΔA (dimensionless)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$I / I_</span><span class="si">{DC}</span><span class="s2">$"</span><span class="p">,</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Linearizing the Beer–Lambert law"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/682cf2a7771de547a8d56863aca977783ec4355a5aeefbfd02e86921dbec2514.png" src="../_images/682cf2a7771de547a8d56863aca977783ec4355a5aeefbfd02e86921dbec2514.png" />
+</div>
+</div>
+<p>In the physiological range the linear and exact curves are indistinguishable, with a relative error of about 1% or less. Only for absorbance changes ten times larger than any real pulse does the curvature start to matter.</p>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>Calculus on sampled signals replaces limits by finite steps, and Taylor series tell us what that costs. The forward and backward differences are first-order accurate, the central difference second-order, and the trapezoid rule second-order for integration. Differentiation multiplies each frequency by <span class="math notranslate nohighlight">\(\omega\)</span>, so it boosts the steep QRS complex but also boosts broadband noise: on record 100 with 20 µV of white noise, the backward difference lowered the SNR from about 19 dB to under 6 dB, in agreement with the variance formula <span class="math notranslate nohighlight">\(2\sigma^2/T_s^2\)</span>. Integration does the reverse, smoothing noise but accumulating offsets into a ramp and noise into a random walk whose spread grows as <span class="math notranslate nohighlight">\(\sqrt{t}\)</span>. On record 119, the trapezoid area of each beat separated normal beats from PVCs perfectly.</p>
+<p>The Dirac delta is best understood as the limit of unit-area pulses, and the sifting property is the statement that a shrinking average samples the signal. Integration by parts, the exponential and Gaussian integrals, and the finite and infinite geometric series will reappear in nearly every derivation of Parts II and III, starting with the convolution integral of Section 5.3, while linearization explains why linear methods work for the PPG and for many other physiological measurements.</p>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Derive the second-order central approximation of the second derivative, <span class="math notranslate nohighlight">\(x''(t) \approx [x(t + h) - 2x(t) + x(t - h)]/h^2\)</span>, from the Taylor expansions in <a class="reference internal" href="#sec-2-3-1">Section 2.3.1</a>, and find its leading error term. Verify the order numerically on <code class="docutils literal notranslate"><span class="pre">r_wave</span></code>.</p></li>
+<li><p>Show that the noise variance of the central difference of white noise is <span class="math notranslate nohighlight">\(\sigma^2/(2T_s^2)\)</span>, then compute the noise gain of the five-point derivative used by Pan and Tompkins, <span class="math notranslate nohighlight">\(y[n] = (2x[n] + x[n-1] - x[n-3] - 2x[n-4])/(8T_s)\)</span>. Is it larger or smaller than that of the backward difference?</p></li>
+<li><p>Evaluate <span class="math notranslate nohighlight">\(\int_0^\infty t^2 e^{-at}\,dt\)</span> by integrating by parts twice, and use the result to compute the variance of the residence time of a drug with elimination rate constant <span class="math notranslate nohighlight">\(k\)</span>.</p></li>
+<li><p>Use equation (2.28) to prove that a moving average of length <span class="math notranslate nohighlight">\(M\)</span> has gain <span class="math notranslate nohighlight">\(\left|\sin(M\Omega/2)/(M\sin(\Omega/2))\right|\)</span> for the input <span class="math notranslate nohighlight">\(e^{j\Omega n}\)</span>. At which frequencies is the gain exactly zero for <span class="math notranslate nohighlight">\(M = 7\)</span> at <span class="math notranslate nohighlight">\(f_s = 360\)</span> Hz?</p></li>
+<li><p>Repeat the QRS-area experiment of <a class="reference internal" href="#sec-2-3-3">Section 2.3.3</a> on record 208, which contains both PVCs (<code class="docutils literal notranslate"><span class="pre">V</span></code>) and fusion beats (<code class="docutils literal notranslate"><span class="pre">F</span></code>). Plot the three area histograms. Do fusion beats fall between normal beats and PVCs, as their name suggests?</p></li>
+<li><p>Modify the spirometry simulation so that the offset is removed at the end of each expiration (force the volume to the same value at every minimum). Plot the corrected volume over five minutes and estimate the remaining error. What does this correction look like as a filter?</p></li>
+</ol>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p>Finite differences, quadrature and their error analysis are treated clearly in most numerical analysis texts; for the signal-processing view of differentiators and integrators as filters, <span class="bibtex-citation" id="id1">Lyons [<a class="reference internal" href="../bibliography.html#id8" title="Richard G. Lyons. Understanding Digital Signal Processing. Prentice Hall, Upper Saddle River, NJ, 3rd edition, 2010.">2010</a>]</span> and <span class="bibtex-citation" id="id2">Smith [<a class="reference internal" href="../bibliography.html#id7" title="Steven W. Smith. The Scientist and Engineer's Guide to Digital Signal Processing. California Technical Publishing, San Diego, CA, 1997.">1997</a>]</span> are practical and readable. <span class="bibtex-citation" id="id3">Lathi and Green [<a class="reference internal" href="../bibliography.html#id6" title="B. P. Lathi and Roger A. Green. Linear Systems and Signals. Oxford University Press, New York, 3rd edition, 2018.">2018</a>]</span> covers the impulse function and the integrals needed for transforms with many worked examples. The use of slope and area features for QRS detection and beat classification is discussed in <span class="bibtex-citation" id="id4">Pan and Tompkins [<a class="reference internal" href="../bibliography.html#id64" title="Jiapu Pan and Willis J. Tompkins. A real-time QRS detection algorithm. IEEE Transactions on Biomedical Engineering, BME-32(3):230–236, 1985.">1985</a>]</span>, <span class="bibtex-citation" id="id5">Sörnmo and Laguna [<a class="reference internal" href="../bibliography.html#id20" title="Leif Sörnmo and Pablo Laguna. Bioelectrical Signal Processing in Cardiac and Neurological Applications. Elsevier Academic Press, Amsterdam, 2005.">2005</a>]</span> and <span class="bibtex-citation" id="id6">Rangayyan [<a class="reference internal" href="../bibliography.html#id19" title="Rangaraj M. Rangayyan. Biomedical Signal Analysis. Wiley-IEEE Press, Hoboken, NJ, 2nd edition, 2015.">2015</a>]</span>; the MIT-BIH data are described in <span class="bibtex-citation" id="id7">Moody and Mark [<a class="reference internal" href="../bibliography.html#id85" title="George B. Moody and Roger G. Mark. The impact of the MIT-BIH arrhythmia database. IEEE Engineering in Medicine and Biology Magazine, 20(3):45–50, 2001.">2001</a>]</span> and distributed by PhysioNet <span class="bibtex-citation" id="id8">[<a class="reference internal" href="../bibliography.html#id84" title="Ary L. Goldberger, Luis A. N. Amaral, Leon Glass, Jeffrey M. Hausdorff, Plamen Ch. Ivanov, Roger G. Mark, Joseph E. Mietus, George B. Moody, Chung-Kang Peng, and H. Eugene Stanley. PhysioBank, PhysioToolkit, and PhysioNet: components of a new research resource for complex physiologic signals. Circulation, 101(23):e215–e220, 2000.">Goldberger <em>et al.</em>, 2000</a>]</span>. <span class="bibtex-citation" id="id9">Allen [<a class="reference internal" href="../bibliography.html#id75" title="John Allen. Photoplethysmography and its application in clinical physiological measurement. Physiological Measurement, 28(3):R1–R39, 2007.">2007</a>]</span> reviews the physics and physiology of the PPG.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ch02_math_toolkit"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03_signals_as_vectors.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">2.2 Signals as Vectors: Inner Products and Orthogonality</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="05_probability_and_statistics.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2.4 Probability and Statistics for Signals</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivatives-and-finite-differences">2.3.1 Derivatives and Finite Differences</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiation-amplifies-noise">2.3.2 Differentiation Amplifies Noise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integration-riemann-sums-and-the-trapezoid-rule">2.3.3 Integration: Riemann Sums and the Trapezoid Rule</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#area-under-a-heartbeat">Area under a heartbeat</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-integrals-and-drift">2.3.4 Running Integrals and Drift</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dirac-delta">2.3.5 The Dirac Delta</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrals-we-will-use-repeatedly">2.3.6 Integrals We Will Use Repeatedly</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-series">2.3.7 Geometric Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylor-series-and-linearization">2.3.8 Taylor Series and Linearization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kim Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on November 08, 2026.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

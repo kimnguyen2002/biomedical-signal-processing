@@ -1,0 +1,1377 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>3.1 What Is a System? &#8212; Biomedical Signal Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ec5fc9de" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch04_systems/01_what_is_a_system';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="../_static/equation-previews-data.js?v=1d8d4c5d"></script>
+    <script src="../_static/equation-previews.js?v=9ddb93c8"></script>
+    <link rel="canonical" href="https://kimnguyen2002.github.io/biomedical-signal-processing/ch04_systems/01_what_is_a_system.html" />
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3.2 Linearity and Superposition" href="02_linearity.html" />
+    <link rel="prev" title="3. Systems and Their Properties" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+    <meta name="docbuild:last-update" content="November 08, 2026"/>
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Biomedical Signal Processing - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Biomedical Signal Processing - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part I. Foundations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch01_introduction/index.html">1. Introduction to Biomedical Signals</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/01_what_is_a_biomedical_signal.html">1.1 What Is a Biomedical Signal?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/02_bioelectric_origins.html">1.2 The Bioelectric Origin of Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/03_acquisition_chain.html">1.3 From Body to Computer: The Acquisition Chain</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch02_math_toolkit/index.html">2. The Mathematical Toolkit</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/01_complex_numbers.html">2.1 Complex Numbers and Euler’s Formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/03_signals_as_vectors.html">2.2 Signals as Vectors: Inner Products and Orthogonality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/04_calculus_for_signals.html">2.3 Calculus for Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/05_probability_and_statistics.html">2.4 Probability and Statistics for Signals</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part II. Linear Time-Invariant Systems</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">3. Systems and Their Properties</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">3.1 What Is a System?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_linearity.html">3.2 Linearity and Superposition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch05_convolution/index.html">4. The Impulse Response and Convolution</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch05_convolution/01_impulse_representation.html">4.1 Building Signals from Impulses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch05_convolution/02_convolution_sum.html">4.2 The Convolution Sum</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part III. Frequency-Domain Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch07_fourier_series/index.html">5. Fourier Series</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/01_fourier_series_derivation.html">5.1 Representing Periodic Signals with Sinusoids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/02_complex_fourier_series.html">5.2 The Complex Exponential Fourier Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/03_convergence_gibbs.html">5.3 Convergence and the Gibbs Phenomenon</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch09_sampling/index.html">6. Sampling, Quantization and Reconstruction</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch09_sampling/01_sampling_theorem.html">6.1 The Sampling Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch09_sampling/02_aliasing.html">6.2 Aliasing and Anti-Aliasing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch12_spectral_estimation/index.html">7. Random Signals and Spectral Estimation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/01_random_processes.html">7.1 Random Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/02_power_spectral_density.html">7.2 Power Spectral Density and the Wiener–Khinchin Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/03_nonparametric_psd.html">7.3 The Periodogram, Bartlett and Welch Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/04_parametric_psd.html">7.4 Autoregressive Spectral Estimation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part IV. Filtering</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch13_filter_fundamentals/index.html">8. Filter Fundamentals</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch13_filter_fundamentals/01_filter_types_specs.html">8.1 Filter Types and Specifications</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch14_fir/index.html">9. FIR Filter Design</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch14_fir/01_linear_phase_fir.html">9.1 Linear-Phase FIR Filters</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch16_noise_removal/index.html">10. Noise Reduction: Averaging, Wiener and Adaptive Filters</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch16_noise_removal/01_signal_averaging.html">10.1 Signal Averaging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch16_noise_removal/02_wiener_filter.html">10.2 The Wiener Filter</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part V. The Electrocardiogram</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch17_ecg/index.html">11. The Electrocardiogram: Physiology and Recording</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/01_cardiac_electrophysiology.html">11.1 Cardiac Electrophysiology and the ECG Waveform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/02_recording_the_ecg.html">11.2 Recording the ECG: Leads, Amplifiers, Anti-Aliasing and Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/03_ecg_data_in_python.html">11.3 ECG Data in Python: PhysioNet Records, Annotations and Plots</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch18_ecg_preprocessing/index.html">12. ECG Noise and Preprocessing, Step by Step</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch18_ecg_preprocessing/01_ecg_noise_types.html">12.1 Typical Noises in the ECG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch18_ecg_preprocessing/02_highpass_baseline_wander.html">12.2 High-Pass Filtering and Baseline Wander Removal</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part VI. Other Physiological Signals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch20_eeg/index.html">13. The Electroencephalogram</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/01_eeg_fundamentals.html">13.1 Origins of the EEG, Montages and Rhythms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/02_eeg_spectral_analysis.html">13.2 Spectral Analysis of the EEG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/03_event_related_activity.html">13.3 Event-Related Potentials and Desynchronization</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part VII. Advanced Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch24_wavelets/index.html">14. Wavelets and Multiresolution Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch24_wavelets/01_dwt_filter_banks.html">14.1 The Discrete Wavelet Transform and Filter Banks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch24_wavelets/02_wavelet_denoising.html">14.2 Wavelet Denoising</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../appendix/a_python_essentials.html">A. Python Essentials for Signal Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/b_datasets.html">B. Biomedical Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/c_math_reference.html">C. Mathematical Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/d_glossary.html">D. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/e_data_types.html">E. Python Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/f_pandas.html">F. pandas for Biomedical Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/g_numpy.html">G. NumPy for Sampled Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/h_latex.html">H. Writing Equations with LaTeX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/i_math_symbols.html">I. Mathematical Symbols and Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Books and References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch04_systems/01_what_is_a_system.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>3.1 What Is a System?</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#signals-in-signals-out">3.1.1 Signals In, Signals Out</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-gallery-of-systems">3.1.2 A Gallery of Systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-physiological-system-drug-concentration-after-a-dose">3.1.3 A Physiological System: Drug Concentration After a Dose</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-feedback-system-in-the-body-the-baroreflex">3.1.4 A Feedback System in the Body: The Baroreflex</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#block-diagrams-and-interconnections">3.1.5 Block Diagrams and Interconnections</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-time-systems-in-python-on-a-real-ecg">3.1.6 Discrete-Time Systems in Python on a Real ECG</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-select-an-excerpt-and-look-at-its-numbers">Step 1: Select an excerpt and look at its numbers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-write-each-system-as-a-function">Step 2: Write each system as a function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-apply-each-system-and-compare-the-outputs">Step 3: Apply each system and compare the outputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-chain-three-systems-into-a-qrs-detector-front-end">Step 4: Chain three systems into a QRS-detector front end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-check-whether-the-order-of-a-cascade-matters">Step 5: Check whether the order of a cascade matters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="what-is-a-system">
+<span id="sec-3-1"></span><h1>3.1 What Is a System?<a class="headerlink" href="#what-is-a-system" title="Link to this heading">#</a></h1>
+<p>An ECG passes through several steps before we see it on a screen: amplification, sampling, and often some filtering. Each step takes a signal as input and produces a signal as output. In signal processing, I call any such rule a <em>system</em>.</p>
+<p>We will start with familiar operations, such as multiplying a recording by a constant or averaging neighboring samples. Then we will connect those operations to mathematical notation and Python functions. The main question throughout is: what did this operation change, and what information did it keep?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">wfdb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">FancyBboxPatch</span><span class="p">,</span> <span class="n">Circle</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">"../bsp.mplstyle"</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"axes.prop_cycle"</span><span class="p">]</span><span class="o">.</span><span class="n">by_key</span><span class="p">()[</span><span class="s2">"color"</span><span class="p">]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="signals-in-signals-out">
+<span id="sec-3-1-1"></span><h2>3.1.1 Signals In, Signals Out<a class="headerlink" href="#signals-in-signals-out" title="Link to this heading">#</a></h2>
+<p>A system is a rule that assigns an output signal to every input signal in some class of allowed inputs. We write this with <strong>operator notation</strong>,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-3-1">
+\[\begin{equation*}
+y = \mathcal{T}\{x\}, \tag{3.1}
+\end{equation*}\]</div>
+<p>Here <span class="math notranslate nohighlight">\(x\)</span> is the whole input signal, <span class="math notranslate nohighlight">\(y\)</span> is the whole output, and <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> names the processing rule. For a gain of two, the rule is <span class="math notranslate nohighlight">\(\mathcal{T}\{x\}=2x\)</span>: an input sample of <span class="math notranslate nohighlight">\(0.3\)</span> mV becomes <span class="math notranslate nohighlight">\(0.6\)</span> mV. The braces mean ‘apply this rule to the signal’; they do not mean multiplication by a number called <span class="math notranslate nohighlight">\(\mathcal{T}\)</span>.</p>
+<p>which reads “<span class="math notranslate nohighlight">\(y\)</span> is the response of the system <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> to the input <span class="math notranslate nohighlight">\(x\)</span>”. The braces matter. A system acts on the <em>entire</em> input signal and returns an entire output signal, not one number at a time. You will often see the shorthand <span class="math notranslate nohighlight">\(y(t) = \mathcal{T}\{x(t)\}\)</span>, and we will use it too when nothing can go wrong, but it hides an important fact: the output at time <span class="math notranslate nohighlight">\(t\)</span> may depend on the input at many other times. A moving average, for example, produces <span class="math notranslate nohighlight">\(y\)</span> at 10.000 s from input samples taken between 9.983 s and 10.000 s. The careful reading of <span class="math notranslate nohighlight">\(y(t) = \mathcal{T}\{x\}(t)\)</span> is “apply <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> to the whole function <span class="math notranslate nohighlight">\(x\)</span>, then evaluate the resulting function at <span class="math notranslate nohighlight">\(t\)</span>”. This distinction becomes essential in Section 4.3, where we shift signals in time and ask whether the system notices.</p>
+<p>Systems come in two flavors that mirror the two kinds of signals. A <strong>continuous-time system</strong> maps a function <span class="math notranslate nohighlight">\(x(t)\)</span> to a function <span class="math notranslate nohighlight">\(y(t)\)</span>; the RC network at the input of an ECG amplifier and the cardiovascular system itself are examples. A <strong>discrete-time system</strong> maps a sequence <span class="math notranslate nohighlight">\(x[n]\)</span> to a sequence <span class="math notranslate nohighlight">\(y[n]\)</span>; every filter we write in Python belongs here. Some systems are hybrids: the analog-to-digital converter takes a continuous-time input and produces a discrete-time output, and the digital-to-analog converter does the reverse. Their behavior is the subject of Chapter 6. The physics of the body lives in continuous time and the processing lives in discrete time, so we need both descriptions, and most of the ideas in this chapter apply to each with only notational changes.</p>
+<p>Systems can also have several inputs and outputs. A 12-lead electrocardiograph takes the potentials of ten electrodes and produces twelve lead signals, and the baroreflex combines pressure information from receptors in the carotid arteries and the aortic arch. In this chapter we stay with single-input, single-output systems, which already contain all of the essential ideas.</p>
+<p>Before looking at examples, here is the input-output view in its simplest graphical form. The input is two seconds of a real ECG (MIT-BIH record 100) to which we have added a 0.15 mV, 60 Hz power-line hum, the kind of interference a poorly shielded lead picks up. The system is a six-point moving average, written down in equation <a class="reference internal" href="#eq-3-3">(3.3)</a> below. The output is a cleaner ECG, although the price is a visibly smaller R wave. I chose six points deliberately: why six points remove 60 Hz so completely at a sampling rate of 360 Hz is something we will be able to explain in Section 3.2.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rec</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdrecord</span><span class="p">(</span><span class="s2">"../data/mitdb/100"</span><span class="p">,</span> <span class="n">sampto</span><span class="o">=</span><span class="mi">30</span> <span class="o">*</span> <span class="mi">360</span><span class="p">)</span>
+<span class="n">ecg</span> <span class="o">=</span> <span class="n">rec</span><span class="o">.</span><span class="n">p_signal</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>                       <span class="c1"># lead MLII, mV</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="n">rec</span><span class="o">.</span><span class="n">fs</span>                                    <span class="c1"># 360 Hz</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ecg</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">fs</span>
+<span class="n">ann</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdann</span><span class="p">(</span><span class="s2">"../data/mitdb/100"</span><span class="p">,</span> <span class="s2">"atr"</span><span class="p">,</span> <span class="n">sampto</span><span class="o">=</span><span class="mi">30</span> <span class="o">*</span> <span class="mi">360</span><span class="p">)</span>
+<span class="n">beat_symbols</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"N"</span><span class="p">,</span> <span class="s2">"A"</span><span class="p">,</span> <span class="s2">"V"</span><span class="p">}</span>
+<span class="n">r_peaks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">sym</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">sample</span><span class="p">,</span> <span class="n">ann</span><span class="o">.</span><span class="n">symbol</span><span class="p">)</span> <span class="k">if</span> <span class="n">sym</span> <span class="ow">in</span> <span class="n">beat_symbols</span><span class="p">])</span>
+
+<span class="n">hum</span> <span class="o">=</span> <span class="mf">0.15</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>        <span class="c1"># 60 Hz interference, mV</span>
+<span class="n">ecg_hum</span> <span class="o">=</span> <span class="n">ecg</span> <span class="o">+</span> <span class="n">hum</span>
+<span class="n">M</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">ecg_clean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">ecg_hum</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">M</span><span class="p">)</span> <span class="o">/</span> <span class="n">M</span><span class="p">)[:</span> <span class="n">ecg</span><span class="o">.</span><span class="n">size</span><span class="p">]</span>   <span class="c1"># equation (4.3), causal</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Sampling rate: </span><span class="si">{</span><span class="n">fs</span><span class="si">}</span><span class="s2"> Hz, beats annotated in the first 30 s: </span><span class="si">{</span><span class="n">r_peaks</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"RMS of the hum before the system: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">hum</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mV"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling rate: 360 Hz, beats annotated in the first 30 s: 37
+RMS of the hum before the system: 0.106 mV
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">win</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">t</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">2.8</span><span class="p">))</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.42</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">ax_in</span><span class="p">,</span> <span class="n">ax_box</span><span class="p">,</span> <span class="n">ax_out</span> <span class="o">=</span> <span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">ax_in</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">win</span><span class="p">],</span> <span class="n">ecg_hum</span><span class="p">[</span><span class="n">win</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">ax_in</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (s)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Input $x[n]$: ECG + 60 Hz hum"</span><span class="p">)</span>
+<span class="n">ax_out</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">win</span><span class="p">],</span> <span class="n">ecg_clean</span><span class="p">[</span><span class="n">win</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">ax_out</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (s)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Output $y[n]$"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ax_in</span><span class="p">,</span> <span class="n">ax_out</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.15</span><span class="p">)</span>
+
+<span class="n">ax_box</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">"off"</span><span class="p">)</span>
+<span class="n">ax_box</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">ax_box</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">FancyBboxPatch</span><span class="p">((</span><span class="mf">0.18</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="mf">0.64</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="n">boxstyle</span><span class="o">=</span><span class="s2">"round,pad=0.02"</span><span class="p">,</span>
+                                <span class="n">fc</span><span class="o">=</span><span class="s2">"#eef4fc"</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.4</span><span class="p">))</span>
+<span class="n">ax_box</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.56</span><span class="p">,</span> <span class="sa">r</span><span class="s2">"$\mathcal</span><span class="si">{T}</span><span class="s2">\{\cdot\}$"</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax_box</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.41</span><span class="p">,</span> <span class="s2">"6-point moving</span><span class="se">\n</span><span class="s2">average"</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mf">8.5</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="ow">in</span> <span class="p">[(</span><span class="o">-</span><span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.17</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.83</span><span class="p">,</span> <span class="mf">1.08</span><span class="p">)]:</span>
+    <span class="n">ax_box</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">annotation_clip</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">"-|&gt;"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.3"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/e18fb7d689822dd65e167e1746ab215a317a4f5db2e9fa5bf65575015e21b5e6.png" src="../_images/e18fb7d689822dd65e167e1746ab215a317a4f5db2e9fa5bf65575015e21b5e6.png" />
+</div>
+</div>
+</section>
+<section id="a-gallery-of-systems">
+<span id="sec-3-1-2"></span><h2>3.1.2 A Gallery of Systems<a class="headerlink" href="#a-gallery-of-systems" title="Link to this heading">#</a></h2>
+<p>The following systems appear again and again in ECG instrumentation and analysis, and I have picked them because each one will later illustrate a different property. For each one we write the input-output rule explicitly. In <a class="reference internal" href="02_linearity.html#sec-3-2"><span class="std std-ref">Sections 3.2</span></a> and 4.3 we will return to this list and classify every entry by its properties.</p>
+<p><strong>Amplifier.</strong> The simplest system multiplies its input by a constant gain <span class="math notranslate nohighlight">\(G\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+y(t) = G\,x(t).
+\]</div>
+<p>The front end of an ECG recorder has a total gain of the order of 1000, so that a 1 mV R wave becomes a 1 V signal that suits the input range of the converter. A real amplifier cannot produce an output beyond its supply voltages. As long as the signal stays well inside those limits the rule <span class="math notranslate nohighlight">\(y = Gx\)</span> is accurate; when it does not, the output is clipped, a failure we analyze in Section 3.2.5.</p>
+<p><strong>Electrode.</strong> An electrode is a transducer between two kinds of charge carriers: ions in the tissue and electrons in the wire. Two effects shape its input-output behavior. First, the metal-electrolyte interface develops a <em>half-cell potential</em>, about 0.22 V for silver/silver chloride, so the electrode adds a constant offset to the biopotential. The offsets of a pair of electrodes largely cancel in a differential measurement, but a mismatch of tens of millivolts typically remains, which is far larger than the ECG itself. Second, the interface behaves electrically like a resistor in parallel with a capacitor (the charge double layer), so its impedance is larger for slow signals than for fast ones. A crude but useful model of the electrode is therefore</p>
+<div class="math notranslate nohighlight">
+\[
+y(t) = x(t) + V_0 ,
+\]</div>
+<p>with <span class="math notranslate nohighlight">\(V_0\)</span> a constant offset, followed by a frequency-dependent attenuation. This innocent-looking “add a constant” rule will turn out to be the textbook example of a system that is <em>not</em> linear in the strict sense (Example 3.2.3). <span class="bibtex-citation" id="id1">Webster [<a class="reference internal" href="../bibliography.html#id27" title="John G. Webster, editor. Medical Instrumentation: Application and Design. Wiley, Hoboken, NJ, 4th edition, 2010.">2010</a>]</span> gives the full electrochemistry.</p>
+<p><strong>RC low-pass filter.</strong> A resistor <span class="math notranslate nohighlight">\(R\)</span> in series with a capacitor <span class="math notranslate nohighlight">\(C\)</span>, with the output taken across the capacitor, is the simplest analog filter and appears at the input of nearly every acquisition system. Kirchhoff’s voltage law says the input voltage is split between the resistor and the capacitor, <span class="math notranslate nohighlight">\(x(t) = R\,i(t) + y(t)\)</span>. The current into a capacitor is proportional to the rate of change of its voltage, <span class="math notranslate nohighlight">\(i(t) = C\,dy/dt\)</span>. Substituting the second relation into the first,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-3-2">
+\[\begin{equation*}
+RC\,\frac{dy}{dt} + y(t) = x(t). \tag{3.2}
+\end{equation*}\]</div>
+<p>The system is described not by an explicit formula for <span class="math notranslate nohighlight">\(y\)</span> but by a differential equation that <span class="math notranslate nohighlight">\(y\)</span> must satisfy. The product <span class="math notranslate nohighlight">\(\tau = RC\)</span> is the <strong>time constant</strong>: with <span class="math notranslate nohighlight">\(R = 10\ \text{k}\Omega\)</span> and <span class="math notranslate nohighlight">\(C = 0.1\ \mu\text{F}\)</span> we get <span class="math notranslate nohighlight">\(\tau = 1\)</span> ms and a cutoff frequency <span class="math notranslate nohighlight">\(1/(2\pi\tau) \approx 159\)</span> Hz. Because the capacitor stores charge, the output at time <span class="math notranslate nohighlight">\(t\)</span> depends on the entire past of the input. We say the system has <em>memory</em>.</p>
+<p><strong>Moving average.</strong> The discrete-time workhorse for smoothing replaces each sample by the mean of the last <span class="math notranslate nohighlight">\(M\)</span> input samples,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-3-3">
+\[\begin{equation*}
+y[n] = \frac{1}{M}\sum_{k=0}^{M-1} x[n-k]. \tag{3.3}
+\end{equation*}\]</div>
+<p>At <span class="math notranslate nohighlight">\(f_s = 360\)</span> Hz, the six-point average used above spans <span class="math notranslate nohighlight">\(6/360 = 16.7\)</span> ms, short enough to leave the 80 to 100 ms QRS complex recognizable.</p>
+<p><strong>Squarer and rectifier.</strong> The memoryless rules</p>
+<div class="math notranslate nohighlight">
+\[
+y[n] = x^2[n] \qquad\text{and}\qquad y[n] = |x[n]|
+\]</div>
+<p>both make the output non-negative. Squaring emphasizes large values and turns amplitude into something proportional to instantaneous power; rectification is the first step in computing the envelope of an EMG (Chapter 21).</p>
+<p><strong>First difference.</strong> The rule</p>
+<div class="amsmath math notranslate nohighlight" id="eq-3-4">
+\[\begin{equation*}
+y[n] = x[n] - x[n-1] \tag{3.4}
+\end{equation*}\]</div>
+<p>measures how much the signal changed since the previous sample. Divided by <span class="math notranslate nohighlight">\(T_s\)</span>, it is the backward-difference approximation of the derivative from <a class="reference internal" href="../ch02_math_toolkit/index.html"><span class="std std-doc">Section 2.3</span></a>. It responds strongly to the steep slopes of the QRS complex and weakly to the slow P and T waves, which is why every classical QRS detector contains a differentiator.</p>
+<p>Two observations about this gallery are worth keeping in mind. The same mathematical rule can describe very different hardware: equation <a class="reference internal" href="#eq-3-2">(3.2)</a> governs an RC circuit, but as we see next, it also governs how the body eliminates a drug. And practical processing chains are built by connecting simple systems one after another, which is what we will do with the ECG in Section 3.1.6.</p>
+</section>
+<section id="a-physiological-system-drug-concentration-after-a-dose">
+<span id="sec-3-1-3"></span><h2>3.1.3 A Physiological System: Drug Concentration After a Dose<a class="headerlink" href="#a-physiological-system-drug-concentration-after-a-dose" title="Link to this heading">#</a></h2>
+<p>Pharmacokinetics describes how the body absorbs, distributes and eliminates a drug. The simplest useful model treats the body as one well-mixed compartment with an apparent volume of distribution <span class="math notranslate nohighlight">\(V\)</span> (liters). The drug enters at a rate <span class="math notranslate nohighlight">\(r(t)\)</span> (mg/h), and the liver and kidneys remove it at a rate proportional to the amount present. The input of this system is the dosing schedule and the output is the plasma concentration <span class="math notranslate nohighlight">\(C(t)\)</span> (mg/L), which is what a blood test measures. (We write <span class="math notranslate nohighlight">\(C(t)\)</span> for concentration here; the code keeps the letter <code class="docutils literal notranslate"><span class="pre">C</span></code> for the plot colors, so the concentration array is called <code class="docutils literal notranslate"><span class="pre">conc</span></code>.)</p>
+<p><strong>Step 1: write the mass balance.</strong> Let <span class="math notranslate nohighlight">\(A(t)\)</span> be the amount of drug in the body. Its rate of change is what comes in minus what is eliminated:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{dA}{dt} = r(t) - k\,A(t),
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(k\)</span> (1/h) is the elimination rate constant.</p>
+<p><strong>Step 2: convert amount to concentration.</strong> Since <span class="math notranslate nohighlight">\(A(t) = V\,C(t)\)</span> and <span class="math notranslate nohighlight">\(V\)</span> is constant, dividing by <span class="math notranslate nohighlight">\(V\)</span> gives</p>
+<div class="amsmath math notranslate nohighlight" id="eq-3-5">
+\[\begin{equation*}
+\frac{dC}{dt} = -k\,C(t) + \frac{r(t)}{V}. \tag{3.5}
+\end{equation*}\]</div>
+<p>Compare this with the RC equation <a class="reference internal" href="#eq-3-2">(3.2)</a> divided by <span class="math notranslate nohighlight">\(RC\)</span>, <span class="math notranslate nohighlight">\(\;dy/dt = -y/(RC) + x/(RC)\)</span>. The two are the same first-order equation, with <span class="math notranslate nohighlight">\(1/k\)</span> playing the role of the time constant <span class="math notranslate nohighlight">\(RC\)</span>. A capacitor discharging through a resistor and a drug being cleared by the kidneys are, as systems, identical.</p>
+<p><strong>Step 3: solve for a single bolus.</strong> Suppose a dose <span class="math notranslate nohighlight">\(D\)</span> (mg) is injected quickly at <span class="math notranslate nohighlight">\(t = 0\)</span>, so that immediately afterwards <span class="math notranslate nohighlight">\(C(0) = D/V\)</span> and <span class="math notranslate nohighlight">\(r(t) = 0\)</span> for <span class="math notranslate nohighlight">\(t &gt; 0\)</span>. Equation <a class="reference internal" href="#eq-3-5">(3.5)</a> becomes <span class="math notranslate nohighlight">\(dC/dt = -kC\)</span>. Separating the variables and integrating from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(t\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-3-6">
+\[\begin{equation*}
+\begin{aligned}
+\frac{dC}{C} &amp;= -k\,dt \\[2pt]
+\ln C(t) - \ln C(0) &amp;= -k\,t \\[2pt]
+C(t) &amp;= \frac{D}{V}\,e^{-kt}, \qquad t \ge 0.
+\end{aligned} \tag{3.6}
+\end{equation*}\]</div>
+<p>The concentration decays exponentially. The <strong>half-life</strong> <span class="math notranslate nohighlight">\(t_{1/2}\)</span> is the time at which it has fallen to half its initial value. Setting <span class="math notranslate nohighlight">\(e^{-k t_{1/2}} = 1/2\)</span> and taking logarithms gives <span class="math notranslate nohighlight">\(-k\,t_{1/2} = -\ln 2\)</span>, so</p>
+<div class="amsmath math notranslate nohighlight" id="eq-3-7">
+\[\begin{equation*}
+t_{1/2} = \frac{\ln 2}{k}. \tag{3.7}
+\end{equation*}\]</div>
+<p>On a logarithmic concentration axis, equation <a class="reference internal" href="#eq-3-6">(3.6)</a> is a straight line with slope <span class="math notranslate nohighlight">\(-k\)</span>, which is how <span class="math notranslate nohighlight">\(k\)</span> is estimated in practice from two or three blood samples.</p>
+<p><strong>Step 4: repeated doses.</strong> Most drugs are given repeatedly, say a dose <span class="math notranslate nohighlight">\(D\)</span> every <span class="math notranslate nohighlight">\(\tau\)</span> hours. Here we use a property that <a class="reference internal" href="02_linearity.html#sec-3-2"><span class="std std-ref">Sections 3.2</span></a> and 4.3 will make precise: because equation <a class="reference internal" href="#eq-3-5">(3.5)</a> is linear and its coefficients do not change with time, the response to a train of doses is the sum of time-shifted copies of the single-dose response. Just after the <span class="math notranslate nohighlight">\((n+1)\)</span>-th dose, given at time <span class="math notranslate nohighlight">\(n\tau\)</span>, each earlier dose <span class="math notranslate nohighlight">\(m\)</span> has been decaying for <span class="math notranslate nohighlight">\((n - m)\tau\)</span> hours, so</p>
+<div class="amsmath math notranslate nohighlight" id="eq-3-8">
+\[\begin{equation*}
+\begin{aligned}
+C_{\text{peak}, n} &amp;= \frac{D}{V}\sum_{m=0}^{n} e^{-k(n-m)\tau}
+ = \frac{D}{V}\sum_{i=0}^{n} \rho^{\,i}, \qquad \rho = e^{-k\tau} \\[4pt]
+&amp;= \frac{D}{V}\,\frac{1 - \rho^{\,n+1}}{1 - \rho}
+\;\xrightarrow{\;n\to\infty\;}\; \frac{D}{V}\,\frac{1}{1 - \rho}.
+\end{aligned} \tag{3.8}
+\end{equation*}\]</div>
+<p>In the second step we substituted <span class="math notranslate nohighlight">\(i = n - m\)</span>, and in the third we used the finite geometric series from <a class="reference internal" href="../ch02_math_toolkit/index.html"><span class="std std-doc">Section 2.3</span></a>. Since <span class="math notranslate nohighlight">\(0 &lt; \rho &lt; 1\)</span>, the term <span class="math notranslate nohighlight">\(\rho^{n+1}\)</span> vanishes as the doses accumulate, and the peak settles at a steady value. The trough just before the next dose is the peak multiplied by <span class="math notranslate nohighlight">\(\rho\)</span>.</p>
+<p>I chose parameters of the order seen for an intravenous antibiotic in an adult: <span class="math notranslate nohighlight">\(V = 50\)</span> L, <span class="math notranslate nohighlight">\(t_{1/2} = 6\)</span> h, <span class="math notranslate nohighlight">\(D = 1000\)</span> mg every <span class="math notranslate nohighlight">\(\tau = 12\)</span> h. Then <span class="math notranslate nohighlight">\(D/V = 20\)</span> mg/L and <span class="math notranslate nohighlight">\(\rho = e^{-(\ln 2/6)\cdot 12} = 2^{-2} = 1/4\)</span>. The steady-state peak is <span class="math notranslate nohighlight">\(20/(3/4) \approx 26.7\)</span> mg/L and the steady-state trough is <span class="math notranslate nohighlight">\(26.7/4 \approx 6.7\)</span> mg/L. The factor <span class="math notranslate nohighlight">\(1/(1 - \rho) = 4/3\)</span> is called the <em>accumulation factor</em>.</p>
+<p>To simulate the model we turn it into a discrete-time system. Sample time every <span class="math notranslate nohighlight">\(\Delta t = 0.1\)</span> h. Between two samples with no dose, equation <a class="reference internal" href="#eq-3-6">(3.6)</a> says the concentration is multiplied by <span class="math notranslate nohighlight">\(a = e^{-k\Delta t}\)</span>; a dose given at sample <span class="math notranslate nohighlight">\(n\)</span> adds <span class="math notranslate nohighlight">\(D/V\)</span>. Writing <span class="math notranslate nohighlight">\(d[n]\)</span> for the dose (mg) given at sample <span class="math notranslate nohighlight">\(n\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-3-9">
+\[\begin{equation*}
+C[n] = a\,C[n-1] + \frac{d[n]}{V}. \tag{3.9}
+\end{equation*}\]</div>
+<p>This is a <em>recursive</em> discrete-time system: the new output is computed from the previous output. It is exact at the sample times, not an approximation, and we will meet its general form again in <a class="reference internal" href="../ch05_convolution/index.html"><span class="std std-doc">Section 5.5</span></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">one_compartment</span><span class="p">(</span><span class="n">dose_mg</span><span class="p">,</span> <span class="n">dt_h</span><span class="p">,</span> <span class="n">V_L</span><span class="p">,</span> <span class="n">k_per_h</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Plasma concentration (mg/L) of a one-compartment model driven by boluses, equation (4.9)."""</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">k_per_h</span> <span class="o">*</span> <span class="n">dt_h</span><span class="p">)</span>
+    <span class="n">conc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">dose_mg</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">previous</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dose_mg</span><span class="p">):</span>
+        <span class="n">conc</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">previous</span> <span class="o">+</span> <span class="n">d</span> <span class="o">/</span> <span class="n">V_L</span>
+        <span class="n">previous</span> <span class="o">=</span> <span class="n">conc</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">conc</span>
+
+
+<span class="n">V</span><span class="p">,</span> <span class="n">t_half</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">tau</span> <span class="o">=</span> <span class="mf">50.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">,</span> <span class="mf">12.0</span>     <span class="c1"># L, h, mg, h</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t_half</span>                           <span class="c1"># equation (4.7)</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.1</span>                                         <span class="c1"># h</span>
+<span class="n">t_pk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="n">dose_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="n">tau</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>   <span class="c1"># samples at 0, 12, ..., 84 h</span>
+
+<span class="n">single</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">t_pk</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">single</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">D</span>
+<span class="n">repeated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">t_pk</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">repeated</span><span class="p">[</span><span class="n">dose_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">D</span>
+
+<span class="n">conc_single</span> <span class="o">=</span> <span class="n">one_compartment</span><span class="p">(</span><span class="n">single</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">conc_rep</span> <span class="o">=</span> <span class="n">one_compartment</span><span class="p">(</span><span class="n">repeated</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+
+<span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">k</span> <span class="o">*</span> <span class="n">tau</span><span class="p">)</span>
+<span class="n">peak_ss</span> <span class="o">=</span> <span class="n">D</span> <span class="o">/</span> <span class="n">V</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">rho</span><span class="p">)</span>                      <span class="c1"># equation (4.8)</span>
+<span class="n">i_6h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">t_pk</span> <span class="o">-</span> <span class="mi">6</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Doses given at t = </span><span class="si">{</span><span class="n">t_pk</span><span class="p">[</span><span class="n">dose_idx</span><span class="p">]</span><span class="si">}</span><span class="s2"> h"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Single dose: C(0) = </span><span class="si">{</span><span class="n">conc_single</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mg/L, C(6 h) = </span><span class="si">{</span><span class="n">conc_single</span><span class="p">[</span><span class="n">i_6h</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mg/L"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"rho = exp(-k tau) = </span><span class="si">{</span><span class="n">rho</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, accumulation factor = </span><span class="si">{</span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">rho</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Peaks after each dose (mg/L): </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">conc_rep</span><span class="p">[</span><span class="n">dose_idx</span><span class="p">],</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Steady-state peak from (4.8): </span><span class="si">{</span><span class="n">peak_ss</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mg/L, trough: </span><span class="si">{</span><span class="n">peak_ss</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rho</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mg/L"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Doses given at t = [ 0. 12. 24. 36. 48. 60. 72. 84.] h
+Single dose: C(0) = 20.00 mg/L, C(6 h) = 10.00 mg/L
+rho = exp(-k tau) = 0.2500, accumulation factor = 1.3333
+Peaks after each dose (mg/L): [20.   25.   26.25 26.56 26.64 26.66 26.67 26.67]
+Steady-state peak from (4.8): 26.67 mg/L, trough: 6.67 mg/L
+</pre></div>
+</div>
+</div>
+</div>
+<p>The simulated peaks climb from 20 mg/L after the first dose to 25, 26.25, 26.56 and onward toward the 26.67 mg/L predicted by equation <a class="reference internal" href="#eq-3-8">(3.8)</a>, and the concentration has halved exactly six hours after a single dose. The figure shows both experiments. On the logarithmic axis the single-dose decay is a straight line, and with repeated dosing the sawtooth settles within about four half-lives, a rule of thumb that every clinical pharmacologist knows.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">),</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">"width_ratios"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]})</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">t_pk</span><span class="p">,</span> <span class="n">conc_single</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">"1"</span><span class="p">,</span> <span class="s2">"2"</span><span class="p">,</span> <span class="s2">"5"</span><span class="p">,</span> <span class="s2">"10"</span><span class="p">,</span> <span class="s2">"20"</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">minorticks_off</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">18</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">D</span> <span class="o">/</span> <span class="n">V</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">h</span> <span class="o">/</span> <span class="n">t_half</span><span class="p">),</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$t_{1/2} = 6$ h: 20 $\rightarrow$ 10 mg/L"</span><span class="p">,</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s2">"offset points"</span><span class="p">,</span>
+            <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (h)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Concentration (mg/L)"</span><span class="p">,</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Single bolus (log scale)"</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_pk</span><span class="p">,</span> <span class="n">conc_rep</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Simulated concentration"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">peak_ss</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Steady-state peak, eq. (4.8)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">peak_ss</span> <span class="o">*</span> <span class="n">rho</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Steady-state trough"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_pk</span><span class="p">[</span><span class="n">dose_idx</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">dose_idx</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="s2">"^"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.4"</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Dose given"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">96</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">37</span><span class="p">),</span> <span class="n">xticks</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (h)"</span><span class="p">,</span>
+       <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Concentration (mg/L)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"1000 mg every 12 h: accumulation to steady state"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mf">8.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/7cb0fba3bcf6eadec7e67079334f0d852948b684d6f301b2df8f85a5bd6f2459.png" src="../_images/7cb0fba3bcf6eadec7e67079334f0d852948b684d6f301b2df8f85a5bd6f2459.png" />
+</div>
+</div>
+</section>
+<section id="a-feedback-system-in-the-body-the-baroreflex">
+<span id="sec-3-1-4"></span><h2>3.1.4 A Feedback System in the Body: The Baroreflex<a class="headerlink" href="#a-feedback-system-in-the-body-the-baroreflex" title="Link to this heading">#</a></h2>
+<p>In the systems so far, information flows in one direction, from input to output. Many physiological systems instead <em>measure their own output and act on it</em>. The arterial baroreflex is the classic example. Stretch receptors in the walls of the carotid sinus and the aortic arch fire faster when arterial pressure rises. Their signals travel through the glossopharyngeal and vagus nerves to the nucleus tractus solitarius in the medulla, which adjusts the autonomic outflow to the heart and blood vessels. When pressure falls, sympathetic activity increases and vagal activity decreases: heart rate, contractility and peripheral resistance all rise, pushing the pressure back up. The output (pressure) is fed back to influence the input of the heart and vessels. This is a <strong>feedback system</strong>.</p>
+<p>The value of the reflex is easiest to appreciate when it fails. On standing up, roughly half a liter of blood shifts into the veins of the legs, venous return falls, and without correction arterial pressure would drop and stay low. In a healthy person the reflex restores the pressure within seconds. When it is impaired, as in some neurological diseases or under certain medications, the pressure stays low; a sustained fall in systolic pressure of at least 20 mmHg within three minutes of standing is the clinical definition of orthostatic hypotension.</p>
+<p>I have kept the following model deliberately minimal, because its only job is to capture the loop structure. Let <span class="math notranslate nohighlight">\(p(t)\)</span> be the deviation of mean arterial pressure from its set point (mmHg), <span class="math notranslate nohighlight">\(d(t)\)</span> the disturbance (the pressure change that would occur without the reflex), and <span class="math notranslate nohighlight">\(u(t)\)</span> the correction produced by the reflex. The circulation responds to the sum of the two with a first-order lag of time constant <span class="math notranslate nohighlight">\(\tau_c\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-3-10">
+\[\begin{equation*}
+\tau_c\,\frac{dp}{dt} = -p(t) + d(t) + u(t), \tag{3.10}
+\end{equation*}\]</div>
+<p>and the reflex opposes the measured deviation with a loop gain <span class="math notranslate nohighlight">\(K\)</span> after a delay <span class="math notranslate nohighlight">\(\Delta\)</span> that reflects the slow sympathetic pathway,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-3-11">
+\[\begin{equation*}
+u(t) = -K\,p(t - \Delta). \tag{3.11}
+\end{equation*}\]</div>
+<p><strong>Steady state.</strong> Suppose the disturbance is a step of size <span class="math notranslate nohighlight">\(d_0\)</span> that stays on. Once the transients have died out, <span class="math notranslate nohighlight">\(p\)</span> is constant, so <span class="math notranslate nohighlight">\(dp/dt = 0\)</span> and <span class="math notranslate nohighlight">\(p(t - \Delta) = p(t) = p_{\text{ss}}\)</span>. Substituting into <a class="reference internal" href="#eq-3-10">(3.10)</a> and <a class="reference internal" href="#eq-3-11">(3.11)</a>,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-3-12">
+\[\begin{equation*}
+\begin{aligned}
+0 &amp;= -p_{\text{ss}} + d_0 - K\,p_{\text{ss}} \\[2pt]
+p_{\text{ss}} &amp;= \frac{d_0}{1 + K}.
+\end{aligned} \tag{3.12}
+\end{equation*}\]</div>
+<p>Without the reflex (<span class="math notranslate nohighlight">\(K = 0\)</span>) the full disturbance appears in the output. With feedback it is divided by <span class="math notranslate nohighlight">\(1 + K\)</span>. The delay does not affect this result, but it strongly affects how the system gets there. The simulation below uses <span class="math notranslate nohighlight">\(d_0 = -20\)</span> mmHg, <span class="math notranslate nohighlight">\(\tau_c = 4\)</span> s and <span class="math notranslate nohighlight">\(\Delta = 3\)</span> s; these are illustrative values chosen to show the qualitative behavior, not fitted parameters. We integrate equations <a class="reference internal" href="#eq-3-10">(3.10)</a> and <a class="reference internal" href="#eq-3-11">(3.11)</a> with small Euler steps of 10 ms (Section 2.3), which turns the continuous-time model into a discrete-time recursion very much like equation <a class="reference internal" href="#eq-3-9">(3.9)</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">baroreflex</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">d0</span><span class="o">=-</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">tau_c</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">t_on</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">70.0</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Euler simulation of the minimal baroreflex loop, equations (4.10) and (4.11)."""</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">T</span> <span class="o">/</span> <span class="n">dt</span><span class="p">))</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="n">t_on</span><span class="p">,</span> <span class="n">d0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">lag</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">delay</span> <span class="o">/</span> <span class="n">dt</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="o">-</span><span class="n">K</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">lag</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">lag</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">/</span> <span class="n">tau_c</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">p</span>
+
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="n">K</span><span class="p">:</span> <span class="n">baroreflex</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">)}</span>
+<span class="k">for</span> <span class="n">K</span><span class="p">,</span> <span class="p">(</span><span class="n">t_b</span><span class="p">,</span> <span class="n">d_b</span><span class="p">,</span> <span class="n">p_b</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">tail</span> <span class="o">=</span> <span class="n">p_b</span><span class="p">[</span><span class="n">t_b</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"K = </span><span class="si">{</span><span class="n">K</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">: predicted p_ss = </span><span class="si">{</span><span class="o">-</span><span class="mi">20</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">K</span><span class="p">)</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2"> mmHg, "</span>
+          <span class="sa">f</span><span class="s2">"last 20 s range [</span><span class="si">{</span><span class="n">tail</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">tail</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">] mmHg"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>K = 0: predicted p_ss = -20.00 mmHg, last 20 s range [-20.00, -20.00] mmHg
+K = 2: predicted p_ss =  -6.67 mmHg, last 20 s range [ -6.85,  -6.54] mmHg
+K = 3: predicted p_ss =  -5.00 mmHg, last 20 s range [-24.61,  12.81] mmHg
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">))</span>
+<span class="n">t_b</span><span class="p">,</span> <span class="n">d_b</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_b</span><span class="p">,</span> <span class="n">d_b</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Disturbance $d(t)$"</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">{</span><span class="mf">0.0</span><span class="p">:</span> <span class="s2">"No reflex ($K = 0$)"</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">:</span> <span class="s2">"Reflex, $K = 2$"</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">:</span> <span class="s2">"Reflex, $K = 3$"</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">K</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">((</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">)):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_b</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="n">K</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">K</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span> <span class="o">/</span> <span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">":"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"Predicted $d_0/(1+K)$ for $K = 2$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (s)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"MAP deviation (mmHg)"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">36</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Response of a delayed feedback loop to a sustained fall in pressure"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower left"</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/3c8ff3f7aae2ee84b1fa864138f7101514654478997fc5319a5ad09707361904.png" src="../_images/3c8ff3f7aae2ee84b1fa864138f7101514654478997fc5319a5ad09707361904.png" />
+</div>
+</div>
+<p>The figure shows three distinct behaviors. Without the reflex the pressure settles 20 mmHg low. With <span class="math notranslate nohighlight">\(K = 2\)</span> it settles only 6.7 mmHg low, as equation <a class="reference internal" href="#eq-3-12">(3.12)</a> predicts, but because the correction arrives three seconds late, the loop first overshoots and then rings with a period of about ten seconds. With <span class="math notranslate nohighlight">\(K = 3\)</span> the same delay turns the ringing into an oscillation that grows: the correction now arrives so late and so strongly that it pushes the pressure past the set point each time. Feedback with delay can stabilize or destabilize, depending on the gain.</p>
+<p>Slow oscillations of arterial pressure near 0.1 Hz, known as Mayer waves, are present in most people, and one widely discussed explanation is exactly this kind of resonance of the delayed sympathetic limb of the baroreflex. The real reflex is far richer than our model: it has several effectors with different time scales, a sigmoid rather than linear relation between pressure and nerve activity, and interactions with breathing. What the model keeps is the structure, a loop with gain and delay, and that structure is enough to explain both the benefit of feedback and its risk. We return to stability in Section 4.3.</p>
+</section>
+<section id="block-diagrams-and-interconnections">
+<span id="sec-3-1-5"></span><h2>3.1.5 Block Diagrams and Interconnections<a class="headerlink" href="#block-diagrams-and-interconnections" title="Link to this heading">#</a></h2>
+<p>Real processing chains and physiological models are built from smaller systems, and <strong>block diagrams</strong> show how they are connected. A box is a system, an arrow is a signal, and a circle with a <span class="math notranslate nohighlight">\(\Sigma\)</span> adds its incoming signals (with the signs written next to the arrows). Three basic connections cover almost everything we will need. I find a feedback diagram easiest to read by putting a finger on the input and following the signal once around the loop.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">block</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mf">1.6</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Draw a system block centered at (x, y)."""</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">FancyBboxPatch</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">boxstyle</span><span class="o">=</span><span class="s2">"round,pad=0.03"</span><span class="p">,</span>
+                                <span class="n">fc</span><span class="o">=</span><span class="s2">"#eef4fc"</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.3</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">summer</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.25</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Draw a summing junction centered at (x, y)."""</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">Circle</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">r</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s2">"white"</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">"0.25"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="sa">r</span><span class="s2">"$\Sigma$"</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">arrow</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.18</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.25"</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Draw a signal arrow from start to end, with an optional label."""</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">"-|&gt;"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span>
+                                                          <span class="n">shrinkA</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shrinkB</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">label</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">((</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">end</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">offset</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">end</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">offset</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="p">,</span>
+                <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"bottom"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">line</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">pts</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Draw a plain connecting line through a list of points."""</span>
+    <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">pts</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.25"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">2.6</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">"off"</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">arrow</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="p">(</span><span class="mf">2.7</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="s2">"$x$"</span><span class="p">)</span>
+<span class="n">block</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="sa">r</span><span class="s2">"$\mathcal</span><span class="si">{T}</span><span class="s2">_1$"</span><span class="p">)</span>
+<span class="n">arrow</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="mf">4.3</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="p">(</span><span class="mf">5.7</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="s2">"$w$"</span><span class="p">)</span>
+<span class="n">block</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="sa">r</span><span class="s2">"$\mathcal</span><span class="si">{T}</span><span class="s2">_2$"</span><span class="p">)</span>
+<span class="n">arrow</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="mf">7.3</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="p">(</span><span class="mf">9.4</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="s2">"$y$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Series (cascade): $y = \mathcal</span><span class="si">{T}</span><span class="s2">_2\{\mathcal</span><span class="si">{T}</span><span class="s2">_1\{x\}\}$"</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">line</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">[(</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="p">(</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.25"</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">line</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">[(</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="p">(</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)])</span>
+<span class="n">line</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">[(</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="p">(</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.4</span><span class="p">,</span> <span class="mf">1.38</span><span class="p">,</span> <span class="s2">"$x$"</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"bottom"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">arrow</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">3.7</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span>
+<span class="n">arrow</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span> <span class="p">(</span><span class="mf">3.7</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">))</span>
+<span class="n">block</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="sa">r</span><span class="s2">"$\mathcal</span><span class="si">{T}</span><span class="s2">_1$"</span><span class="p">)</span>
+<span class="n">block</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="sa">r</span><span class="s2">"$\mathcal</span><span class="si">{T}</span><span class="s2">_2$"</span><span class="p">)</span>
+<span class="n">line</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">[(</span><span class="mf">5.3</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">6.8</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)])</span>
+<span class="n">line</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">[(</span><span class="mf">5.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span> <span class="p">(</span><span class="mf">6.8</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)])</span>
+<span class="n">arrow</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="mf">6.8</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">6.8</span><span class="p">,</span> <span class="mf">1.45</span><span class="p">))</span>
+<span class="n">arrow</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="mf">6.8</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span> <span class="p">(</span><span class="mf">6.8</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">))</span>
+<span class="n">summer</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="mf">6.8</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">6.55</span><span class="p">,</span> <span class="mf">1.62</span><span class="p">,</span> <span class="s2">"+"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">6.55</span><span class="p">,</span> <span class="mf">0.62</span><span class="p">,</span> <span class="s2">"+"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">)</span>
+<span class="n">arrow</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="mf">7.05</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="p">(</span><span class="mf">9.4</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="s2">"$y$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Parallel: $y = \mathcal</span><span class="si">{T}</span><span class="s2">_1\{x\} + \mathcal</span><span class="si">{T}</span><span class="s2">_2\{x\}$"</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">arrow</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">),</span> <span class="p">(</span><span class="mf">2.25</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">),</span> <span class="s2">"$x$"</span><span class="p">)</span>
+<span class="n">summer</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">2.1</span><span class="p">,</span> <span class="mf">1.85</span><span class="p">,</span> <span class="s2">"+"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">2.25</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">,</span> <span class="sa">r</span><span class="s2">"$-$"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">)</span>
+<span class="n">arrow</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="mf">2.75</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">),</span> <span class="p">(</span><span class="mf">4.2</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">),</span> <span class="s2">"$e$"</span><span class="p">)</span>
+<span class="n">block</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">,</span> <span class="sa">r</span><span class="s2">"$\mathcal</span><span class="si">{T}</span><span class="s2">_1$"</span><span class="p">)</span>
+<span class="n">line</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">[(</span><span class="mf">5.8</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">),</span> <span class="p">(</span><span class="mf">7.6</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">)])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mf">7.6</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">,</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.25"</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">arrow</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="mf">7.6</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">),</span> <span class="p">(</span><span class="mf">9.4</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">),</span> <span class="s2">"$y$"</span><span class="p">)</span>
+<span class="n">line</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">[(</span><span class="mf">7.6</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">),</span> <span class="p">(</span><span class="mf">7.6</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="p">(</span><span class="mf">5.8</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)])</span>
+<span class="n">block</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="sa">r</span><span class="s2">"$\mathcal</span><span class="si">{T}</span><span class="s2">_2$"</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">line</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">[(</span><span class="mf">4.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)])</span>
+<span class="n">arrow</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">1.35</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Negative feedback: $e = x - \mathcal</span><span class="si">{T}</span><span class="s2">_2\{y\}$, $y = \mathcal</span><span class="si">{T}</span><span class="s2">_1\{e\}$"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/dee0a484ac835cc52e3028472bb6fd6f457fad945748a459cdd1a7b874d08f63.png" src="../_images/dee0a484ac835cc52e3028472bb6fd6f457fad945748a459cdd1a7b874d08f63.png" />
+</div>
+</div>
+<p><strong>Series (cascade).</strong> The output of the first system is the input of the second, <span class="math notranslate nohighlight">\(y = \mathcal{T}_2\{\mathcal{T}_1\{x\}\}\)</span>. The acquisition chain of <a class="reference internal" href="#sec-3-1">Section 3.1</a> (electrode, amplifier, filter, converter) is a cascade, and so is the QRS detector we build below. In general <em>the order matters</em>: squaring and then differencing is not the same as differencing and then squaring. For the special class of linear time-invariant systems the order does not matter, a fact proved in <a class="reference internal" href="../ch05_convolution/index.html"><span class="std std-doc">Section 5.4</span></a> and checked numerically in Section 3.1.6.</p>
+<p><strong>Parallel.</strong> The same input drives two systems and their outputs are added, <span class="math notranslate nohighlight">\(y = \mathcal{T}_1\{x\} + \mathcal{T}_2\{x\}\)</span>. A filter that keeps a signal and adds back a scaled version of its derivative, used to sharpen edges, has this form.</p>
+<p><strong>Feedback.</strong> The output is passed through a second system and subtracted from the input; the difference <span class="math notranslate nohighlight">\(e\)</span>, often called the error signal, drives the first system. The baroreflex has this structure, with the circulation in the forward path and the receptors and brainstem in the feedback path.</p>
+<p>When both blocks are simple gains, <span class="math notranslate nohighlight">\(\mathcal{T}_1\{x\} = G\,x\)</span> and <span class="math notranslate nohighlight">\(\mathcal{T}_2\{x\} = H\,x\)</span>, the three connections reduce to single equivalent gains. A cascade gives <span class="math notranslate nohighlight">\(y = H(Gx) = GH\,x\)</span> and a parallel connection gives <span class="math notranslate nohighlight">\(y = (G + H)\,x\)</span>. The feedback loop takes one more step, because <span class="math notranslate nohighlight">\(y\)</span> appears on both sides:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-3-13">
+\[\begin{equation*}
+\begin{aligned}
+y &amp;= G\,e = G\,(x - H\,y) \\[2pt]
+y\,(1 + GH) &amp;= G\,x \\[2pt]
+y &amp;= \frac{G}{1 + GH}\,x.
+\end{aligned} \tag{3.13}
+\end{equation*}\]</div>
+<p>The product <span class="math notranslate nohighlight">\(GH\)</span> is the <strong>loop gain</strong>. When it is large, <span class="math notranslate nohighlight">\(G/(1 + GH) \approx 1/H\)</span>: the closed-loop behavior is set almost entirely by the feedback path, and the forward gain <span class="math notranslate nohighlight">\(G\)</span> hardly matters. This is why amplifiers built around an operational amplifier with an enormous but poorly controlled open-loop gain still have precise, stable gains set by two resistors, and why equation <a class="reference internal" href="#eq-3-12">(3.12)</a> is the special case <span class="math notranslate nohighlight">\(G = 1\)</span>, <span class="math notranslate nohighlight">\(H = K\)</span>. The next cell checks the claim: doubling a forward gain of 100 changes the closed-loop gain by less than five percent.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">feedback_gain</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">H</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Closed-loop gain of a negative-feedback loop with static gains, equation (4.13)."""</span>
+    <span class="k">return</span> <span class="n">G</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">G</span> <span class="o">*</span> <span class="n">H</span><span class="p">)</span>
+
+
+<span class="n">H</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="k">for</span> <span class="n">G</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"G = </span><span class="si">{</span><span class="n">G</span><span class="si">:</span><span class="s2">&gt;9.0f</span><span class="si">}</span><span class="s2">, H = </span><span class="si">{</span><span class="n">H</span><span class="si">}</span><span class="s2">:  closed-loop gain = </span><span class="si">{</span><span class="n">feedback_gain</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="w"> </span><span class="n">H</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">   (1/H = </span><span class="si">{</span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">H</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<span class="n">change</span> <span class="o">=</span> <span class="n">feedback_gain</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">H</span><span class="p">)</span> <span class="o">/</span> <span class="n">feedback_gain</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">H</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Doubling G from 100 to 200 changes the closed-loop gain by </span><span class="si">{</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">change</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> %"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>G =       100, H = 0.1:  closed-loop gain = 9.0909   (1/H = 10.0)
+G =       200, H = 0.1:  closed-loop gain = 9.5238   (1/H = 10.0)
+G =      1000, H = 0.1:  closed-loop gain = 9.9010   (1/H = 10.0)
+G =   1000000, H = 0.1:  closed-loop gain = 9.9999   (1/H = 10.0)
+Doubling G from 100 to 200 changes the closed-loop gain by 4.8 %
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="discrete-time-systems-in-python-on-a-real-ecg">
+<span id="sec-3-1-6"></span><h2>3.1.6 Discrete-Time Systems in Python on a Real ECG<a class="headerlink" href="#discrete-time-systems-in-python-on-a-real-ecg" title="Link to this heading">#</a></h2>
+<p>A discrete-time system is, in code, simply a function that takes an array and returns an array of the same length. In this subsection we write the systems from <a class="reference internal" href="#sec-3-1-2">Section 3.1.2</a> in that form, apply each one to a real ECG from MIT-BIH record 100 <span class="bibtex-citation" id="id2">[<a class="reference internal" href="../bibliography.html#id84" title="Ary L. Goldberger, Luis A. N. Amaral, Leon Glass, Jeffrey M. Hausdorff, Plamen Ch. Ivanov, Roger G. Mark, Joseph E. Mietus, George B. Moody, Chung-Kang Peng, and H. Eugene Stanley. PhysioBank, PhysioToolkit, and PhysioNet: components of a new research resource for complex physiologic signals. Circulation, 101(23):e215–e220, 2000.">Goldberger <em>et al.</em>, 2000</a>, <a class="reference internal" href="../bibliography.html#id85" title="George B. Moody and Roger G. Mark. The impact of the MIT-BIH arrhythmia database. IEEE Engineering in Medicine and Biology Magazine, 20(3):45–50, 2001.">Moody and Mark, 2001</a>]</span>, and then chain three of them into the front end of a QRS detector. I have broken the work into small steps so that you can reproduce each one and change it.</p>
+<section id="step-1-select-an-excerpt-and-look-at-its-numbers">
+<h3>Step 1: Select an excerpt and look at its numbers<a class="headerlink" href="#step-1-select-an-excerpt-and-look-at-its-numbers" title="Link to this heading">#</a></h3>
+<p>We already loaded the first 30 s of lead MLII in Section 3.1.1. Four seconds are enough to see every wave clearly, so we cut the excerpt from 10 s to 14 s and keep the annotated beats that fall inside it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seg</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">fs</span><span class="p">,</span> <span class="mi">14</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">ecg</span><span class="p">[</span><span class="n">seg</span><span class="p">]</span>
+<span class="n">t_seg</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">seg</span><span class="p">]</span>
+<span class="n">r_seg</span> <span class="o">=</span> <span class="n">r_peaks</span><span class="p">[(</span><span class="n">r_peaks</span> <span class="o">&gt;=</span> <span class="n">seg</span><span class="o">.</span><span class="n">start</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">r_peaks</span> <span class="o">&lt;</span> <span class="n">seg</span><span class="o">.</span><span class="n">stop</span><span class="p">)]</span> <span class="o">-</span> <span class="n">seg</span><span class="o">.</span><span class="n">start</span>
+
+<span class="n">rr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">r_peaks</span><span class="p">)</span> <span class="o">/</span> <span class="n">fs</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Excerpt: </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> samples (</span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">fs</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> s), </span><span class="si">{</span><span class="n">r_seg</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> annotated beats"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Mean RR interval in the first 30 s: </span><span class="si">{</span><span class="n">rr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> s  -&gt;  heart rate </span><span class="si">{</span><span class="mi">60</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">rr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> bpm"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Mean of the excerpt (baseline offset): </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mV, R-peak amplitudes: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">r_seg</span><span class="p">],</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> mV"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Excerpt: 1440 samples (4 s), 4 annotated beats
+Mean RR interval in the first 30 s: 0.811 s  -&gt;  heart rate 74 bpm
+Mean of the excerpt (baseline offset): -0.321 mV, R-peak amplitudes: [0.88 0.86 0.8  0.82] mV
+</pre></div>
+</div>
+</div>
+</div>
+<p>The heart rate is about 75 beats per minute and, importantly for what follows, the whole excerpt sits on a baseline of about <span class="math notranslate nohighlight">\(-0.3\)</span> mV rather than at zero.</p>
+</section>
+<section id="step-2-write-each-system-as-a-function">
+<h3>Step 2: Write each system as a function<a class="headerlink" href="#step-2-write-each-system-as-a-function" title="Link to this heading">#</a></h3>
+<p>Every system with memory needs input samples from before the start of the array. We adopt the convention of <strong>initial rest</strong>: the input is taken to be zero before the first sample. For an excerpt cut from the middle of a recording this is not true, so the first few output samples form a start-up transient, which we will see rather than hide.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">amplifier</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">gain</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Static gain, y[n] = G x[n]."""</span>
+    <span class="k">return</span> <span class="n">gain</span> <span class="o">*</span> <span class="n">x</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">moving_average</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Causal M-point moving average, equation (4.3), assuming x[n] = 0 for n &lt; 0."""</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">x</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">M</span><span class="p">:]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[:</span><span class="o">-</span><span class="n">M</span><span class="p">])</span> <span class="o">/</span> <span class="n">M</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">first_difference</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""First difference y[n] = x[n] - x[n-1], equation (4.4), assuming x[-1] = 0."""</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">],</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">squarer</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Memoryless squarer, y[n] = x[n]^2."""</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">rectifier</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Full-wave rectifier, y[n] = |x[n]|."""</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+<span class="n">ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="o">/</span> <span class="mi">9</span><span class="p">)[:</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"moving_average vs np.convolve, max |difference|: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">moving_average</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ref</span><span class="p">))</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2"> mV"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"amplifier(x, 1000) at the first R peak: </span><span class="si">{</span><span class="n">amplifier</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">)[</span><span class="n">r_seg</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> mV"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>moving_average vs np.convolve, max |difference|: 2.1e-14 mV
+amplifier(x, 1000) at the first R peak: 885 mV
+</pre></div>
+</div>
+</div>
+</div>
+<p>The moving average uses a running (cumulative) sum, so its cost does not grow with <span class="math notranslate nohighlight">\(M\)</span>; it agrees with NumPy’s convolution to rounding error. The amplifier needs no further comment: a gain of 1000 turns the 0.88 mV R peak into 880 mV.</p>
+</section>
+<section id="step-3-apply-each-system-and-compare-the-outputs">
+<h3>Step 3: Apply each system and compare the outputs<a class="headerlink" href="#step-3-apply-each-system-and-compare-the-outputs" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">outputs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"moving average, M = 9"</span><span class="p">:</span> <span class="p">(</span><span class="n">moving_average</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="s2">"mV"</span><span class="p">),</span>
+    <span class="s2">"first difference"</span><span class="p">:</span> <span class="p">(</span><span class="n">first_difference</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s2">"mV"</span><span class="p">),</span>
+    <span class="s2">"squarer"</span><span class="p">:</span> <span class="p">(</span><span class="n">squarer</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s2">"mV²"</span><span class="p">),</span>
+    <span class="s2">"rectifier"</span><span class="p">:</span> <span class="p">(</span><span class="n">rectifier</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s2">"mV"</span><span class="p">),</span>
+<span class="p">}</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="s2">"first difference"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"First difference: n = 0 sample </span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mV, largest |value| afterwards </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mV"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First difference: n = 0 sample -0.390 mV, largest |value| afterwards 0.410 mV
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">9.4</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_seg</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_seg</span><span class="p">[</span><span class="n">r_seg</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">r_seg</span><span class="p">],</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Annotated R peaks"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.45</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Input: ECG, MIT-BIH record 100, lead MLII"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">unit</span><span class="p">))</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">outputs</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_seg</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Amplitude (</span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Output: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">"start-up transient"</span><span class="p">,</span> <span class="p">(</span><span class="n">t_seg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s2">"offset points"</span><span class="p">,</span>
+                 <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mf">8.5</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span>
+                 <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">"-"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.5"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Time (s)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/66913bd14708883e2d7adfb01171582186f3316820c28a2699c29910114ed909.png" src="../_images/66913bd14708883e2d7adfb01171582186f3316820c28a2699c29910114ed909.png" />
+</div>
+</div>
+<p>Each output tells us something about the system that produced it. The moving average leaves the waves in place but lowers and rounds the sharp QRS peak, because averaging over 25 ms smears fast changes. The first difference removes the baseline completely (a constant input has zero difference) and turns each QRS complex into a sharp biphasic deflection, while the P and T waves almost vanish. Its first sample, <span class="math notranslate nohighlight">\(-0.39\)</span> mV, is the start-up transient: under initial rest the system sees the input jump from 0 to the baseline at <span class="math notranslate nohighlight">\(n = 0\)</span>, a step as large as the QRS slopes themselves.</p>
+<p>The squarer and the rectifier are more subtle. Because the excerpt sits on a negative baseline, the long isoelectric stretches between beats become <em>positive</em> plateaus in both outputs, and the S wave produces a peak almost as tall as the R wave. Neither system lets an additive offset pass through unchanged: an offset added to the input changes the output by an amount that depends on the signal itself. This is our first concrete sign of nonlinearity, the topic of <a class="reference internal" href="02_linearity.html#sec-3-2"><span class="std std-ref">Section 3.2</span></a>, and it is the reason a QRS detector squares the signal only after the baseline has been removed.</p>
+</section>
+<section id="step-4-chain-three-systems-into-a-qrs-detector-front-end">
+<h3>Step 4: Chain three systems into a QRS-detector front end<a class="headerlink" href="#step-4-chain-three-systems-into-a-qrs-detector-front-end" title="Link to this heading">#</a></h3>
+<p>Connecting three of these systems in series gives the core of the classic Pan–Tompkins QRS detector <span class="bibtex-citation" id="id3">[<a class="reference internal" href="../bibliography.html#id64" title="Jiapu Pan and Willis J. Tompkins. A real-time QRS detection algorithm. IEEE Transactions on Biomedical Engineering, BME-32(3):230–236, 1985.">Pan and Tompkins, 1985</a>]</span>. The first difference emphasizes steep slopes, the squarer makes all deflections positive and accentuates the largest ones, and a moving average over 150 ms (54 samples at 360 Hz) merges the several peaks of each squared QRS into a single bump. The full algorithm, with its band-pass filter and adaptive thresholds, is the subject of Section 19.1. Because the first difference removes the baseline before the squarer sees the signal, the problem we noticed in Step 3 disappears.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">M_int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mf">0.150</span> <span class="o">*</span> <span class="n">fs</span><span class="p">))</span>
+<span class="n">detector_full</span> <span class="o">=</span> <span class="n">moving_average</span><span class="p">(</span><span class="n">squarer</span><span class="p">(</span><span class="n">first_difference</span><span class="p">(</span><span class="n">ecg</span><span class="p">)),</span> <span class="n">M_int</span><span class="p">)</span>    <span class="c1"># whole 30 s</span>
+<span class="n">detector_output</span> <span class="o">=</span> <span class="n">detector_full</span><span class="p">[</span><span class="n">seg</span><span class="p">]</span>
+
+<span class="n">delays_ms</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">r_peaks</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">r</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">r</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.3</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">ecg</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">fs</span><span class="p">),</span> <span class="n">r</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.3</span> <span class="o">*</span> <span class="n">fs</span><span class="p">))</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">detector_full</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    <span class="n">delays_ms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">w</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="n">fs</span><span class="p">)</span>    <span class="c1"># centroid of each bump</span>
+<span class="n">delays_ms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">delays_ms</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Integration window: </span><span class="si">{</span><span class="n">M_int</span><span class="si">}</span><span class="s2"> samples = </span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">M_int</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">fs</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ms"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Centroid delay after the R peak over </span><span class="si">{</span><span class="n">delays_ms</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> beats: "</span>
+      <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">delays_ms</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ms (SD </span><span class="si">{</span><span class="n">delays_ms</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ms)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"(M - 1)/2 samples = </span><span class="si">{</span><span class="p">(</span><span class="n">M_int</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> samples = </span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">M_int</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">fs</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ms"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Integration window: 54 samples = 150 ms
+Centroid delay after the R peak over 37 beats: 76.5 ms (SD 1.3 ms)
+(M - 1)/2 samples = 26.5 samples = 73.6 ms
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">4.6</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_seg</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_seg</span><span class="p">[</span><span class="n">r_seg</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">r_seg</span><span class="p">],</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Annotated R peaks"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.45</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Input ECG"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_seg</span><span class="p">,</span> <span class="n">detector_output</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Cascade output"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">r_seg</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">t_seg</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"R peak"</span> <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (s)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV²)"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.017</span><span class="p">),</span>
+            <span class="n">title</span><span class="o">=</span><span class="sa">r</span><span class="s2">"Cascade: first difference $\rightarrow$ squarer $\rightarrow$ 150 ms moving average"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/ee87f4ae7e119cd469743eb4098e46868268c02880c78ce134eab5877c09bac6.png" src="../_images/ee87f4ae7e119cd469743eb4098e46868268c02880c78ce134eab5877c09bac6.png" />
+</div>
+</div>
+<p>The cascade turns each heartbeat into one positive, flat-topped pulse that a simple threshold could detect. Because we computed it over the whole 30 s, the start-up transient has gone from this excerpt. The pulses are flat because the squared slope of a QRS lasts only about 20 ms, much less than the 150 ms window, so for most of the window the average contains the whole QRS. They are also late. The centroid of each pulse lags the R peak by about 76 ms, and almost all of that comes from the moving average: a causal <span class="math notranslate nohighlight">\(M\)</span>-point average can only look at the past, so a short event at sample <span class="math notranslate nohighlight">\(n_0\)</span> produces an output spread over samples <span class="math notranslate nohighlight">\(n_0\)</span> to <span class="math notranslate nohighlight">\(n_0 + M - 1\)</span>, centered <span class="math notranslate nohighlight">\((M - 1)/2 = 26.5\)</span> samples (74 ms) later. The remaining 2 to 3 ms reflect the fact that the steepest slope of this QRS is on its downstroke, just after the R peak. The delay is a direct consequence of causality, a property we define in Section 4.3.</p>
+</section>
+<section id="step-5-check-whether-the-order-of-a-cascade-matters">
+<h3>Step 5: Check whether the order of a cascade matters<a class="headerlink" href="#step-5-check-whether-the-order-of-a-cascade-matters" title="Link to this heading">#</a></h3>
+<p>Finally, we test the claim made in Section 3.1.5. The moving average and the first difference are both linear and time-invariant, so they should commute; the squarer is not, so swapping it with the first difference should change the result.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lti_a</span> <span class="o">=</span> <span class="n">moving_average</span><span class="p">(</span><span class="n">first_difference</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="mi">9</span><span class="p">)</span>
+<span class="n">lti_b</span> <span class="o">=</span> <span class="n">first_difference</span><span class="p">(</span><span class="n">moving_average</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+<span class="n">nl_a</span> <span class="o">=</span> <span class="n">squarer</span><span class="p">(</span><span class="n">first_difference</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">nl_b</span> <span class="o">=</span> <span class="n">first_difference</span><span class="p">(</span><span class="n">squarer</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"MA then difference vs difference then MA:          max |diff| = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">lti_a</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">lti_b</span><span class="p">))</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2"> mV"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"square then difference vs difference then square:  max |diff| = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">nl_a</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">nl_b</span><span class="p">))</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mV²"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"largest value of the squared difference itself:                   </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">nl_a</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mV²"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MA then difference vs difference then MA:          max |diff| = 6.1e-15 mV
+square then difference vs difference then square:  max |diff| = 0.518 mV²
+largest value of the squared difference itself:                   0.168 mV²
+</pre></div>
+</div>
+</div>
+</div>
+<p>The two LTI systems commute to within rounding error, while swapping the squarer with the difference changes the output by about half a mV², more than the whole height of the squared-difference output. Keeping track of which systems belong to the LTI class is therefore not pedantry. In my experience it is the first thing to check before rearranging a processing chain, because it tells us which rearrangements are safe.</p>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>A system is a rule <span class="math notranslate nohighlight">\(y = \mathcal{T}\{x\}\)</span> that maps a whole input signal to a whole output signal. Continuous-time systems such as RC networks are often described by differential equations, discrete-time systems such as moving averages and first differences by explicit formulas or recursions, and the same mathematics can describe very different objects: equation <a class="reference internal" href="#eq-3-5">(3.5)</a> for a drug cleared by the body is the RC equation <a class="reference internal" href="#eq-3-2">(3.2)</a> in another guise. Solving it gave the exponential decay <span class="math notranslate nohighlight">\(C(t) = (D/V)e^{-kt}\)</span>, the half-life <span class="math notranslate nohighlight">\(\ln 2/k\)</span>, and, by adding shifted copies of that response, the steady-state accumulation factor <span class="math notranslate nohighlight">\(1/(1 - e^{-k\tau})\)</span>. Feedback, as in the baroreflex, divides a disturbance by <span class="math notranslate nohighlight">\(1 + K\)</span> and makes the closed-loop gain <span class="math notranslate nohighlight">\(G/(1 + GH)\)</span> insensitive to the forward path, but combined with delay it can also cause ringing and instability.</p>
+<p>Writing systems as Python functions and applying them to a real ECG showed that simple building blocks, connected in series, already form the front end of a QRS detector, and that the order of the blocks matters unless they are all linear and time-invariant. The next two sections turn the informal questions of this section into precise definitions. <a class="reference internal" href="02_linearity.html"><span class="std std-doc">Section 3.2</span></a> defines linearity and superposition, and <a class="reference internal" href="index.html"><span class="std std-doc">Section 4.3</span></a> defines time invariance, causality, memory, invertibility and stability. Systems that are both linear and time-invariant are completely characterized by their impulse response, which is the starting point of <a class="reference internal" href="../ch05_convolution/index.html"><span class="std std-doc">Chapter 4</span></a>.</p>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>For each of the following, identify the input and output signals, say whether the system is continuous-time, discrete-time or a hybrid, and write it in operator notation: (a) a thermometer that displays the body temperature once per second; (b) a pulse oximeter that converts red and infrared light intensities into an <span class="math notranslate nohighlight">\(\text{SpO}_2\)</span> value every second; © the left ventricle, which converts a filling volume into a stroke volume.</p></li>
+<li><p>Redraw the feedback diagram of <a class="reference internal" href="#sec-3-1-5">Section 3.1.5</a> with a <em>positive</em> sign at the feedback input of the summer. Derive the closed-loop gain for static gains <span class="math notranslate nohighlight">\(G\)</span> and <span class="math notranslate nohighlight">\(H\)</span>, and describe what happens as <span class="math notranslate nohighlight">\(GH\)</span> approaches 1.</p></li>
+<li><p>For the one-compartment model with <span class="math notranslate nohighlight">\(V = 50\)</span> L, <span class="math notranslate nohighlight">\(t_{1/2} = 6\)</span> h and <span class="math notranslate nohighlight">\(D = 1000\)</span> mg every 12 h, derive a closed-form expression for the trough concentration just before the <span class="math notranslate nohighlight">\((n+1)\)</span>-th dose. Then find the <em>loading dose</em> <span class="math notranslate nohighlight">\(D_L\)</span> that, given once at <span class="math notranslate nohighlight">\(t = 0\)</span> followed by the usual maintenance doses, reaches the steady-state peak immediately. Check your answer by simulation with <code class="docutils literal notranslate"><span class="pre">one_compartment</span></code>.</p></li>
+<li><p>Implement a three-point <em>centered</em> moving average <span class="math notranslate nohighlight">\(y[n] = \tfrac{1}{3}(x[n-1] + x[n] + x[n+1])\)</span> and apply it to the same ECG excerpt. Compare the timing of the R peaks in its output with that of the causal three-point average. Which of the two could run on a bedside monitor in real time?</p></li>
+<li><p>Load <code class="docutils literal notranslate"><span class="pre">emg_healthy</span></code> from <code class="docutils literal notranslate"><span class="pre">../data/emgdb/</span></code> and compute an envelope by cascading the rectifier with a 50 ms moving average. Repeat with the order reversed. Plot both results over one second and explain the difference.</p></li>
+<li><p>In the baroreflex model, keep <span class="math notranslate nohighlight">\(\tau_c = 4\)</span> s and <span class="math notranslate nohighlight">\(\Delta = 3\)</span> s and find numerically the smallest gain <span class="math notranslate nohighlight">\(K\)</span> for which the oscillation no longer decays. Repeat for <span class="math notranslate nohighlight">\(\Delta = 1.5\)</span> s. How does the largest safe gain depend on the delay?</p></li>
+</ol>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p>The input-output view of systems and block-diagram algebra are introduced in Chapter 1 of <span class="bibtex-citation" id="id4">Oppenheim <em>et al.</em> [<a class="reference internal" href="../bibliography.html#id5" title="Alan V. Oppenheim, Alan S. Willsky, and S. Hamid Nawab. Signals and Systems. Prentice Hall, Upper Saddle River, NJ, 2nd edition, 1997.">1997</a>]</span> and in the first chapter of <span class="bibtex-citation" id="id5">Lathi and Green [<a class="reference internal" href="../bibliography.html#id6" title="B. P. Lathi and Roger A. Green. Linear Systems and Signals. Oxford University Press, New York, 3rd edition, 2018.">2018</a>]</span>. <span class="bibtex-citation" id="id6">Bruce [<a class="reference internal" href="../bibliography.html#id22" title="Eugene N. Bruce. Biomedical Signal Processing and Signal Modeling. Wiley, New York, 2001.">2001</a>]</span> and <span class="bibtex-citation" id="id7">Semmlow and Griffel [<a class="reference internal" href="../bibliography.html#id21" title="John L. Semmlow and Benjamin Griffel. Biosignal and Medical Image Processing. CRC Press, Boca Raton, FL, 3rd edition, 2014.">2014</a>]</span> develop the systems viewpoint specifically for biomedical signals. <span class="bibtex-citation" id="id8">Khoo [<a class="reference internal" href="../bibliography.html#id103" title="Michael C. K. Khoo. Physiological Control Systems: Analysis, Simulation, and Estimation. Wiley-IEEE Press, 2 edition, 2018. doi:10.1002/9781119058786.">2018</a>]</span> treats physiological feedback loops, including the baroreflex and compartmental models, as engineering control systems, and <span class="bibtex-citation" id="id9">Webster [<a class="reference internal" href="../bibliography.html#id27" title="John G. Webster, editor. Medical Instrumentation: Application and Design. Wiley, Hoboken, NJ, 4th edition, 2010.">2010</a>]</span> covers electrodes and amplifiers in the acquisition chain.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ch04_systems"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">3. Systems and Their Properties</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="02_linearity.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">3.2 Linearity and Superposition</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#signals-in-signals-out">3.1.1 Signals In, Signals Out</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-gallery-of-systems">3.1.2 A Gallery of Systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-physiological-system-drug-concentration-after-a-dose">3.1.3 A Physiological System: Drug Concentration After a Dose</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-feedback-system-in-the-body-the-baroreflex">3.1.4 A Feedback System in the Body: The Baroreflex</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#block-diagrams-and-interconnections">3.1.5 Block Diagrams and Interconnections</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-time-systems-in-python-on-a-real-ecg">3.1.6 Discrete-Time Systems in Python on a Real ECG</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-select-an-excerpt-and-look-at-its-numbers">Step 1: Select an excerpt and look at its numbers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-write-each-system-as-a-function">Step 2: Write each system as a function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-apply-each-system-and-compare-the-outputs">Step 3: Apply each system and compare the outputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-chain-three-systems-into-a-qrs-detector-front-end">Step 4: Chain three systems into a QRS-detector front end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-check-whether-the-order-of-a-cascade-matters">Step 5: Check whether the order of a cascade matters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kim Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on November 08, 2026.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

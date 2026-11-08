@@ -1,0 +1,1336 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>7.4 Autoregressive Spectral Estimation &#8212; Biomedical Signal Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ec5fc9de" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch12_spectral_estimation/04_parametric_psd';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="../_static/equation-previews-data.js?v=1d8d4c5d"></script>
+    <script src="../_static/equation-previews.js?v=9ddb93c8"></script>
+    <link rel="canonical" href="https://kimnguyen2002.github.io/biomedical-signal-processing/ch12_spectral_estimation/04_parametric_psd.html" />
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="8. Filter Fundamentals" href="../ch13_filter_fundamentals/index.html" />
+    <link rel="prev" title="7.3 The Periodogram, Bartlett and Welch Methods" href="03_nonparametric_psd.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+    <meta name="docbuild:last-update" content="November 08, 2026"/>
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Biomedical Signal Processing - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Biomedical Signal Processing - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part I. Foundations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch01_introduction/index.html">1. Introduction to Biomedical Signals</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/01_what_is_a_biomedical_signal.html">1.1 What Is a Biomedical Signal?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/02_bioelectric_origins.html">1.2 The Bioelectric Origin of Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/03_acquisition_chain.html">1.3 From Body to Computer: The Acquisition Chain</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch02_math_toolkit/index.html">2. The Mathematical Toolkit</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/01_complex_numbers.html">2.1 Complex Numbers and Euler’s Formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/03_signals_as_vectors.html">2.2 Signals as Vectors: Inner Products and Orthogonality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/04_calculus_for_signals.html">2.3 Calculus for Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/05_probability_and_statistics.html">2.4 Probability and Statistics for Signals</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part II. Linear Time-Invariant Systems</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch04_systems/index.html">3. Systems and Their Properties</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch04_systems/01_what_is_a_system.html">3.1 What Is a System?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch04_systems/02_linearity.html">3.2 Linearity and Superposition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch05_convolution/index.html">4. The Impulse Response and Convolution</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch05_convolution/01_impulse_representation.html">4.1 Building Signals from Impulses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch05_convolution/02_convolution_sum.html">4.2 The Convolution Sum</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part III. Frequency-Domain Analysis</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch07_fourier_series/index.html">5. Fourier Series</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/01_fourier_series_derivation.html">5.1 Representing Periodic Signals with Sinusoids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/02_complex_fourier_series.html">5.2 The Complex Exponential Fourier Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/03_convergence_gibbs.html">5.3 Convergence and the Gibbs Phenomenon</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch09_sampling/index.html">6. Sampling, Quantization and Reconstruction</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch09_sampling/01_sampling_theorem.html">6.1 The Sampling Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch09_sampling/02_aliasing.html">6.2 Aliasing and Anti-Aliasing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">7. Random Signals and Spectral Estimation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_random_processes.html">7.1 Random Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_power_spectral_density.html">7.2 Power Spectral Density and the Wiener–Khinchin Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_nonparametric_psd.html">7.3 The Periodogram, Bartlett and Welch Methods</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">7.4 Autoregressive Spectral Estimation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part IV. Filtering</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch13_filter_fundamentals/index.html">8. Filter Fundamentals</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch13_filter_fundamentals/01_filter_types_specs.html">8.1 Filter Types and Specifications</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch14_fir/index.html">9. FIR Filter Design</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch14_fir/01_linear_phase_fir.html">9.1 Linear-Phase FIR Filters</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch16_noise_removal/index.html">10. Noise Reduction: Averaging, Wiener and Adaptive Filters</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch16_noise_removal/01_signal_averaging.html">10.1 Signal Averaging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch16_noise_removal/02_wiener_filter.html">10.2 The Wiener Filter</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part V. The Electrocardiogram</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch17_ecg/index.html">11. The Electrocardiogram: Physiology and Recording</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/01_cardiac_electrophysiology.html">11.1 Cardiac Electrophysiology and the ECG Waveform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/02_recording_the_ecg.html">11.2 Recording the ECG: Leads, Amplifiers, Anti-Aliasing and Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/03_ecg_data_in_python.html">11.3 ECG Data in Python: PhysioNet Records, Annotations and Plots</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch18_ecg_preprocessing/index.html">12. ECG Noise and Preprocessing, Step by Step</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch18_ecg_preprocessing/01_ecg_noise_types.html">12.1 Typical Noises in the ECG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch18_ecg_preprocessing/02_highpass_baseline_wander.html">12.2 High-Pass Filtering and Baseline Wander Removal</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part VI. Other Physiological Signals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch20_eeg/index.html">13. The Electroencephalogram</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/01_eeg_fundamentals.html">13.1 Origins of the EEG, Montages and Rhythms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/02_eeg_spectral_analysis.html">13.2 Spectral Analysis of the EEG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/03_event_related_activity.html">13.3 Event-Related Potentials and Desynchronization</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part VII. Advanced Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch24_wavelets/index.html">14. Wavelets and Multiresolution Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch24_wavelets/01_dwt_filter_banks.html">14.1 The Discrete Wavelet Transform and Filter Banks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch24_wavelets/02_wavelet_denoising.html">14.2 Wavelet Denoising</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../appendix/a_python_essentials.html">A. Python Essentials for Signal Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/b_datasets.html">B. Biomedical Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/c_math_reference.html">C. Mathematical Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/d_glossary.html">D. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/e_data_types.html">E. Python Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/f_pandas.html">F. pandas for Biomedical Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/g_numpy.html">G. NumPy for Sampled Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/h_latex.html">H. Writing Equations with LaTeX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/i_math_symbols.html">I. Mathematical Symbols and Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Books and References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch12_spectral_estimation/04_parametric_psd.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>7.4 Autoregressive Spectral Estimation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-autoregressive-model-and-its-spectrum">7.4.1 The Autoregressive Model and Its Spectrum</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-yulewalker-equations">7.4.2 The Yule–Walker Equations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-levinsondurbin-recursion">7.4.3 The Levinson–Durbin Recursion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#burgs-method">7.4.4 Burg’s Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recovering-a-known-spectrum-from-a-short-record">7.4.5 Recovering a Known Spectrum from a Short Record</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-model-order">7.4.6 Choosing the Model Order</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applied-example-short-records-of-heart-rhythm-and-eeg">7.4.7 Applied Example: Short Records of Heart Rhythm and EEG</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-build-an-evenly-sampled-rr-series">Step 1: Build an evenly sampled RR series</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-welch-and-ar-spectra-of-five-minutes-and-of-one-minute">Step 2: Welch and AR spectra of five minutes and of one minute</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-read-the-hrv-spectra">Step 3: Read the HRV spectra</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-two-second-eeg-epochs">Step 4: Two-second EEG epochs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-interpret">Step 5: Interpret</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caveats">7.4.8 Caveats</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="autoregressive-spectral-estimation">
+<span id="sec-7-4"></span><h1>7.4 Autoregressive Spectral Estimation<a class="headerlink" href="#autoregressive-spectral-estimation" title="Link to this heading">#</a></h1>
+<p>Short-term heart rate variability is measured on five-minute recordings, and brain–computer interfaces decide what a user intends from one or two seconds of EEG. Welch’s method struggles with records this short. By the rule <a class="reference internal" href="03_nonparametric_psd.html#eq-7-30"><span class="std std-ref">(7.30)</span></a> of the previous section, a one-minute RR series analyzed with a resolution of 0.02 Hz would leave barely more than one segment to average, and a two-second EEG epoch cannot resolve anything finer than about 1 Hz. The limitation is built into the nonparametric approach: it assumes nothing about the spectrum, so everything must come from the data, and short data do not contain much.</p>
+<p>The <strong>parametric</strong> approach makes an assumption and lets it carry part of the load. We suppose that the signal was produced by passing white noise through an all-pole filter, an <strong>autoregressive</strong> (AR) model, estimate the handful of filter coefficients from the data, and read the spectrum off the filter’s frequency response. If the assumption is reasonable, a few parameters describe the spectrum well, and they can be estimated from far fewer samples than a fine-grained Welch estimate needs. This idea entered physiology through EEG analysis in the 1970s and became one of the two standard methods for HRV <span class="bibtex-citation" id="id1">[<a class="reference internal" href="../bibliography.html#id66" title="Task Force of the European Society of Cardiology and the North American Society of Pacing and Electrophysiology. Heart rate variability: standards of measurement, physiological interpretation, and clinical use. Circulation, 93(5):1043–1065, 1996.">Task Force of the European Society of Cardiology and the North American Society of Pacing and Electrophysiology, 1996</a>]</span>. In this section I derive the AR spectrum, the Yule–Walker equations and their fast solution by the Levinson–Durbin recursion, implement Burg’s method <span class="bibtex-citation" id="id2">[<a class="reference internal" href="../bibliography.html#id40" title="John Parker Burg. Maximum Entropy Spectral Analysis. PhD thesis, Stanford University, 1975.">Burg, 1975</a>]</span>, discuss how to choose the model order <span class="bibtex-citation" id="id3">[<a class="reference internal" href="../bibliography.html#id41" title="Hirotugu Akaike. A new look at the statistical model identification. IEEE Transactions on Automatic Control, 19(6):716–723, 1974.">Akaike, 1974</a>]</span>, and compare AR and Welch estimates on a known test process, on an RR series from the MIT-BIH database and on two-second EEG epochs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">wfdb</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mne</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">signal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.linalg</span><span class="w"> </span><span class="kn">import</span> <span class="n">solve_toeplitz</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.interpolate</span><span class="w"> </span><span class="kn">import</span> <span class="n">CubicSpline</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">"../bsp.mplstyle"</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"axes.prop_cycle"</span><span class="p">]</span><span class="o">.</span><span class="n">by_key</span><span class="p">()[</span><span class="s2">"color"</span><span class="p">]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">mne</span><span class="o">.</span><span class="n">set_log_level</span><span class="p">(</span><span class="s2">"ERROR"</span><span class="p">)</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">dB</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="the-autoregressive-model-and-its-spectrum">
+<span id="sec-7-4-1"></span><h2>7.4.1 The Autoregressive Model and Its Spectrum<a class="headerlink" href="#the-autoregressive-model-and-its-spectrum" title="Link to this heading">#</a></h2>
+<p>An <strong>autoregressive process of order <span class="math notranslate nohighlight">\(p\)</span></strong>, written AR(<span class="math notranslate nohighlight">\(p\)</span>), is generated by the difference equation</p>
+<div class="amsmath math notranslate nohighlight" id="eq-7-34">
+\[\begin{equation*}
+x[n] + a_1 x[n-1] + a_2 x[n-2] + \cdots + a_p x[n-p] = w[n], \tag{7.34}
+\end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(w[n]\)</span> is zero-mean white noise with variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>. Each new sample is a linear combination of the <span class="math notranslate nohighlight">\(p\)</span> previous samples (“auto-regression” on its own past) plus an unpredictable innovation. I write the coefficients on the left-hand side, <span class="math notranslate nohighlight">\(A(z) = 1 + a_1 z^{-1} + \cdots + a_p z^{-p}\)</span>, which is the convention of SciPy and most of the signal-processing literature. The AR(1) process <span class="math notranslate nohighlight">\(x[n] = a\,x[n-1] + w[n]\)</span> of Sections 7.1 and 12.2 is the case <span class="math notranslate nohighlight">\(p = 1\)</span> with <span class="math notranslate nohighlight">\(a_1 = -a\)</span>.</p>
+<p><strong>The spectrum.</strong> Equation <a class="reference internal" href="#eq-7-34">(7.34)</a> says that <span class="math notranslate nohighlight">\(A(z)X(z) = W(z)\)</span>, so <span class="math notranslate nohighlight">\(x[n]\)</span> is white noise passed through the all-pole filter <span class="math notranslate nohighlight">\(H(z) = 1/A(z)\)</span>. If all roots of <span class="math notranslate nohighlight">\(A(z)\)</span> lie inside the unit circle, the filter is causal and stable (Section 11.3) and <span class="math notranslate nohighlight">\(x[n]\)</span> is WSS. The rule <span class="math notranslate nohighlight">\(S_y = |H|^2 S_x\)</span>, equation <a class="reference internal" href="02_power_spectral_density.html#eq-7-20"><span class="std std-ref">(7.20)</span></a>, with the flat input spectrum <span class="math notranslate nohighlight">\(\sigma^2\)</span> then gives the AR spectrum at once:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-7-35">
+\[\begin{equation*}
+S_x(e^{j\Omega}) = \frac{\sigma^2}{\big|A(e^{j\Omega})\big|^2} = \frac{\sigma^2}{\left|1 + \sum_{k=1}^{p} a_k e^{-j\Omega k}\right|^2}. \tag{7.35}
+\end{equation*}\]</div>
+<p>In hertz, as a one-sided density, the same conversion as <a class="reference internal" href="02_power_spectral_density.html#eq-7-18"><span class="std std-ref">(7.18)</span></a> gives</p>
+<div class="amsmath math notranslate nohighlight" id="eq-7-36">
+\[\begin{equation*}
+S_x^{(1)}(f) = \frac{2\sigma^2}{f_s\,\big|A(e^{j2\pi f/f_s})\big|^2}, \qquad 0 &lt; f &lt; f_s/2. \tag{7.36}
+\end{equation*}\]</div>
+<p><strong>Where the peaks come from.</strong> Factor <span class="math notranslate nohighlight">\(A(z)\)</span> by its roots, the poles <span class="math notranslate nohighlight">\(p_i\)</span> of <span class="math notranslate nohighlight">\(H(z)\)</span>: <span class="math notranslate nohighlight">\(A(e^{j\Omega}) = \prod_{i=1}^{p}\big(1 - p_i e^{-j\Omega}\big)\)</span>. Each factor has magnitude <span class="math notranslate nohighlight">\(|e^{j\Omega} - p_i|\)</span>, the distance from the point <span class="math notranslate nohighlight">\(e^{j\Omega}\)</span> on the unit circle to the pole. When <span class="math notranslate nohighlight">\(e^{j\Omega}\)</span> passes close to a pole that sits near the circle, one factor in the denominator of <a class="reference internal" href="#eq-7-35">(7.35)</a> becomes small and the spectrum has a peak. The angle of the pole sets the peak frequency, <span class="math notranslate nohighlight">\(f \approx \angle p_i \, f_s/(2\pi)\)</span>, and its distance from the circle sets the sharpness: a pole at radius <span class="math notranslate nohighlight">\(r\)</span> produces a peak with a 3 dB width of roughly <span class="math notranslate nohighlight">\((1 - r)f_s/\pi\)</span> Hz. An AR(<span class="math notranslate nohighlight">\(p\)</span>) spectrum is therefore a smooth curve with at most <span class="math notranslate nohighlight">\(p/2\)</span> peaks, which is exactly the shape of many physiological spectra: an alpha peak on a falling EEG background, or the LF and HF peaks of heart rate variability.</p>
+<p>We reuse the AR(4) test process of <a class="reference internal" href="03_nonparametric_psd.html#sec-7-3-2"><span class="std std-ref">Section 7.3.2</span></a> and check the pole picture numerically.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.7607</span><span class="p">,</span> <span class="mf">3.8106</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.6535</span><span class="p">,</span> <span class="mf">0.9238</span><span class="p">])</span>
+<span class="n">sigma2_true</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">ar_spectrum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">sigma2</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""One-sided AR power spectral density, equation (12.36), at frequencies f (Hz)."""</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">A</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">freqz</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">],</span> <span class="n">worN</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sigma2</span> <span class="o">/</span> <span class="p">(</span><span class="n">fs</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+
+<span class="n">poles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roots</span><span class="p">(</span><span class="n">a_true</span><span class="p">)</span>
+<span class="n">f_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">2001</span><span class="p">)</span>
+<span class="n">S_true</span> <span class="o">=</span> <span class="n">ar_spectrum</span><span class="p">(</span><span class="n">a_true</span><span class="p">,</span> <span class="n">sigma2_true</span><span class="p">,</span> <span class="n">f_grid</span><span class="p">)</span>
+<span class="n">peaks</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">find_peaks</span><span class="p">(</span><span class="n">S_true</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">poles</span><span class="p">[</span><span class="n">poles</span><span class="o">.</span><span class="n">imag</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"pole: radius </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, angle -&gt; </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> cycles/sample, "</span>
+          <span class="sa">f</span><span class="s2">"predicted 3 dB width </span><span class="si">{</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">p</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"spectral peaks found at </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">f_grid</span><span class="p">[</span><span class="n">peaks</span><span class="p">],</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2"> cycles/sample"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pole: radius 0.9805, angle -&gt; 0.1400 cycles/sample, predicted 3 dB width 0.0062
+pole: radius 0.9803, angle -&gt; 0.1100 cycles/sample, predicted 3 dB width 0.0063
+spectral peaks found at [0.1102 0.1398] cycles/sample
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">9.4</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">),</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">"width_ratios"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">]})</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">circle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">400</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">circle</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">circle</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">poles</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">poles</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">mew</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Poles of 1/A(z)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.55"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.55"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Real part"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Imaginary part"</span><span class="p">,</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"AR(4) poles"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">"equal"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower left"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_grid</span><span class="p">,</span> <span class="n">dB</span><span class="p">(</span><span class="n">S_true</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"True PSD, equation (12.36)"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">poles</span><span class="p">[</span><span class="n">poles</span><span class="o">.</span><span class="n">imag</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="s2">":"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Frequency (cycles/sample)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"One-sided PSD (dB)"</span><span class="p">,</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Pole angles (dotted) mark the spectral peaks"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/fb8757c9f82876d15aa7dbce4b1610fabdedc351c91d194c9853cb1e0c0d55d6.png" src="../_images/fb8757c9f82876d15aa7dbce4b1610fabdedc351c91d194c9853cb1e0c0d55d6.png" />
+</div>
+</div>
+<p>The two pole pairs sit at radii of about 0.98, very close to the unit circle, and their angles agree with the two spectral peaks to within a few thousandths of a cycle per sample. The peaks are not exactly at the pole angles because each pole also contributes to the level at the other peak, but the pole picture is an accurate guide.</p>
+<p>There is a second, deeper way to see why AR estimates can be sharper than Welch estimates. The difference equation <a class="reference internal" href="#eq-7-34">(7.34)</a> also governs the autocorrelation (we prove this in the next subsection), so once <span class="math notranslate nohighlight">\(a_1, \ldots, a_p\)</span> are known, the autocorrelation is determined at <em>every</em> lag, not just the lags we could estimate from the data. A Welch estimate implicitly sets the autocorrelation to zero beyond the segment length, which is what limits its resolution. An AR estimate extrapolates it with the model. <span class="bibtex-citation" id="id4">Burg [<a class="reference internal" href="../bibliography.html#id40" title="John Parker Burg. Maximum Entropy Spectral Analysis. PhD thesis, Stanford University, 1975.">1975</a>]</span> showed that among all spectra consistent with the first <span class="math notranslate nohighlight">\(p + 1\)</span> autocorrelation values, the AR(<span class="math notranslate nohighlight">\(p\)</span>) spectrum is the one with maximum entropy, the one that assumes the least about the unknown lags. This is why AR spectral estimation is also called the <strong>maximum entropy method</strong>.</p>
+</section>
+<section id="the-yulewalker-equations">
+<span id="sec-7-4-2"></span><h2>7.4.2 The Yule–Walker Equations<a class="headerlink" href="#the-yulewalker-equations" title="Link to this heading">#</a></h2>
+<p>To estimate the coefficients we need equations that connect them to quantities we can measure. The autocorrelation is the natural candidate.</p>
+<p><strong>Step 1: multiply by a past sample and take expectations.</strong> Multiply both sides of <a class="reference internal" href="#eq-7-34">(7.34)</a> by <span class="math notranslate nohighlight">\(x[n - m]\)</span> for some <span class="math notranslate nohighlight">\(m \ge 0\)</span> and take the expectation. By stationarity <span class="math notranslate nohighlight">\(\mathbb{E}\{x[n-k]\,x[n-m]\} = R_x[m - k]\)</span>, so</p>
+<div class="math notranslate nohighlight">
+\[
+R_x[m] + \sum_{k=1}^{p} a_k\,R_x[m - k] = \mathbb{E}\{w[n]\,x[n-m]\}.
+\]</div>
+<p><strong>Step 2: evaluate the right-hand side.</strong> Because <span class="math notranslate nohighlight">\(H(z)\)</span> is causal, <span class="math notranslate nohighlight">\(x[n - m]\)</span> is a combination of <span class="math notranslate nohighlight">\(w[n-m], w[n-m-1], \ldots\)</span>, innovations that occurred at or before time <span class="math notranslate nohighlight">\(n - m\)</span>. For <span class="math notranslate nohighlight">\(m \ge 1\)</span> they all precede <span class="math notranslate nohighlight">\(w[n]\)</span>, and white noise is uncorrelated with its own past, so the right-hand side is zero. For <span class="math notranslate nohighlight">\(m = 0\)</span>, <span class="math notranslate nohighlight">\(x[n] = w[n] + (\text{terms in the past of } w)\)</span>, and only the first term correlates with <span class="math notranslate nohighlight">\(w[n]\)</span>, giving <span class="math notranslate nohighlight">\(\sigma^2\)</span>.</p>
+<p><strong>Step 3: collect the equations.</strong> For <span class="math notranslate nohighlight">\(m = 1, \ldots, p\)</span> we obtain <span class="math notranslate nohighlight">\(p\)</span> linear equations in the <span class="math notranslate nohighlight">\(p\)</span> unknown coefficients, and <span class="math notranslate nohighlight">\(m = 0\)</span> gives the noise variance:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-7-37">
+\[\begin{equation*}
+\sum_{k=1}^{p} a_k\,R_x[m - k] = -R_x[m], \quad m = 1, \ldots, p, \qquad\qquad \sigma^2 = R_x[0] + \sum_{k=1}^{p} a_k\,R_x[k]. \tag{7.37}
+\end{equation*}\]</div>
+<p>These are the <strong>Yule–Walker equations</strong>, named after the two statisticians who used them in the 1920s and 1930s to model sunspot numbers and other periodic-looking series. Using <span class="math notranslate nohighlight">\(R_x[-k] = R_x[k]\)</span>, the first set is the matrix equation</p>
+<div class="amsmath math notranslate nohighlight" id="eq-7-38">
+\[\begin{equation*}
+\underbrace{\begin{bmatrix}
+R_x[0] &amp; R_x[1] &amp; \cdots &amp; R_x[p-1] \\
+R_x[1] &amp; R_x[0] &amp; \cdots &amp; R_x[p-2] \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+R_x[p-1] &amp; R_x[p-2] &amp; \cdots &amp; R_x[0]
+\end{bmatrix}}_{\mathbf{R}}
+\begin{bmatrix} a_1 \\ a_2 \\ \vdots \\ a_p \end{bmatrix}
+= -\begin{bmatrix} R_x[1] \\ R_x[2] \\ \vdots \\ R_x[p] \end{bmatrix}. \tag{7.38}
+\end{equation*}\]</div>
+<p>The matrix <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> is symmetric and <strong>Toeplitz</strong>: every diagonal is constant, because each entry depends only on the difference of its row and column indices. Note also that for <span class="math notranslate nohighlight">\(m &gt; p\)</span> the same argument gives <span class="math notranslate nohighlight">\(R_x[m] = -\sum_k a_k R_x[m - k]\)</span>: the autocorrelation obeys the same recursion as the signal, which is the extrapolation property mentioned above.</p>
+<p><strong>Example 7.4.1.</strong> Solve the Yule–Walker equations for <span class="math notranslate nohighlight">\(p = 1\)</span>.</p>
+<p>With one unknown, <a class="reference internal" href="#eq-7-38">(7.38)</a> reads <span class="math notranslate nohighlight">\(R_x[0]\,a_1 = -R_x[1]\)</span>, so <span class="math notranslate nohighlight">\(a_1 = -R_x[1]/R_x[0] = -\rho_1\)</span>, the negative of the lag-one correlation coefficient. The variance equation gives <span class="math notranslate nohighlight">\(\sigma^2 = R_x[0] + a_1 R_x[1] = R_x[0](1 - \rho_1^2)\)</span>. For the AR(1) process of <a class="reference internal" href="01_random_processes.html#sec-7-1"><span class="std std-ref">Section 7.1</span></a> with <span class="math notranslate nohighlight">\(R_x[k] = \sigma_w^2 a^{|k|}/(1 - a^2)\)</span>, we get <span class="math notranslate nohighlight">\(\rho_1 = a\)</span>, hence <span class="math notranslate nohighlight">\(a_1 = -a\)</span> and <span class="math notranslate nohighlight">\(\sigma^2 = \frac{\sigma_w^2}{1 - a^2}(1 - a^2) = \sigma_w^2\)</span>, exactly the parameters that generated the process. Fitting an AR(1) model to an ECG noise record is thus as simple as computing its lag-one correlation.</p>
+<p><strong>Estimating the coefficients.</strong> In practice we replace <span class="math notranslate nohighlight">\(R_x[k]\)</span> by the biased estimate <span class="math notranslate nohighlight">\(\hat{r}_x^{\,b}[k]\)</span> of equation <a class="reference internal" href="01_random_processes.html#eq-7-10"><span class="std std-ref">(7.10)</span></a> and solve. I always use the biased estimate here: it guarantees that the estimated matrix is positive definite, which in turn guarantees that the fitted <span class="math notranslate nohighlight">\(A(z)\)</span> has all its roots inside the unit circle, so the fitted model is stable. A general linear solver costs <span class="math notranslate nohighlight">\(O(p^3)\)</span> operations, but SciPy’s <code class="docutils literal notranslate"><span class="pre">solve_toeplitz</span></code> exploits the structure and needs only <span class="math notranslate nohighlight">\(O(p^2)\)</span>, using the recursion of the next subsection.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">acorr_biased</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">max_lag</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Biased autocorrelation estimate r_b[k], k = 0..max_lag (equation 12.10)."""</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="n">N</span> <span class="o">-</span> <span class="n">k</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">k</span><span class="p">:])</span> <span class="o">/</span> <span class="n">N</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_lag</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">yule_walker</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""AR(p) coefficients [1, a_1..a_p] and noise variance from the Yule-Walker equations (12.37)-(12.38)."""</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">acorr_biased</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">solve_toeplitz</span><span class="p">(</span><span class="n">r</span><span class="p">[:</span><span class="n">p</span><span class="p">],</span> <span class="o">-</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">a</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">4096</span>
+<span class="n">x_long</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">lfilter</span><span class="p">([</span><span class="mf">1.0</span><span class="p">],</span> <span class="n">a_true</span><span class="p">,</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N</span> <span class="o">+</span> <span class="mi">3000</span><span class="p">))[</span><span class="mi">3000</span><span class="p">:]</span>
+<span class="n">a_yw</span><span class="p">,</span> <span class="n">s2_yw</span> <span class="o">=</span> <span class="n">yule_walker</span><span class="p">(</span><span class="n">x_long</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"true coefficients : </span><span class="si">{</span><span class="n">a_true</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">,  sigma^2 = </span><span class="si">{</span><span class="n">sigma2_true</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Yule-Walker, N=</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">a_yw</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">,  sigma^2 = </span><span class="si">{</span><span class="n">s2_yw</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"pole radii of the fit: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roots</span><span class="p">(</span><span class="n">a_yw</span><span class="p">))),</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true coefficients : [-2.7607  3.8106 -2.6535  0.9238],  sigma^2 = 1.000
+Yule-Walker, N=4096: [-2.6719  3.6122 -2.4598  0.8464],  sigma^2 = 1.955
+pole radii of the fit: [0.9558 0.9558 0.9626 0.9626]
+</pre></div>
+</div>
+</div>
+</div>
+<p>With 4096 samples the coefficients come out close to the true values, although not exactly: the estimated poles are pulled slightly inward, a sign of the bias of <span class="math notranslate nohighlight">\(\hat{r}_x^{\,b}\)</span> that becomes serious for short records, as we will see in <a class="reference internal" href="#sec-7-4-5">Section 7.4.5</a>.</p>
+</section>
+<section id="the-levinsondurbin-recursion">
+<span id="sec-7-4-3"></span><h2>7.4.3 The Levinson–Durbin Recursion<a class="headerlink" href="#the-levinsondurbin-recursion" title="Link to this heading">#</a></h2>
+<p>The Levinson–Durbin recursion <span class="bibtex-citation" id="id5">[]</span> solves <a class="reference internal" href="#eq-7-38">(7.38)</a> for orders <span class="math notranslate nohighlight">\(1, 2, \ldots, p\)</span> in turn, each from the previous one, in <span class="math notranslate nohighlight">\(O(p^2)\)</span> operations in total. Its by-products, the <em>reflection coefficients</em> and the prediction-error variances, are at least as useful as the speed.</p>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{a}^{(m)} = [1, a_1^{(m)}, \ldots, a_m^{(m)}]^T\)</span> be the solution of order <span class="math notranslate nohighlight">\(m\)</span> and <span class="math notranslate nohighlight">\(E_m\)</span> the corresponding noise variance (the mean squared one-step prediction error). Equations <a class="reference internal" href="#eq-7-37">(7.37)</a> for order <span class="math notranslate nohighlight">\(m\)</span> can be written together as one <span class="math notranslate nohighlight">\((m+1)\times(m+1)\)</span> system,</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{R}_{m+1}\,\mathbf{a}^{(m)} = \begin{bmatrix} E_m &amp; 0 &amp; \cdots &amp; 0 \end{bmatrix}^T,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{R}_{m+1}\)</span> is the Toeplitz matrix built from <span class="math notranslate nohighlight">\(R_x[0], \ldots, R_x[m]\)</span>: the first row is the variance equation, the others are the Yule–Walker equations.</p>
+<p><strong>Step 1: use the symmetry.</strong> A symmetric Toeplitz matrix is unchanged when we reverse the order of both rows and columns. Reversing the vector <span class="math notranslate nohighlight">\(\mathbf{a}^{(m)}\)</span> (call it <span class="math notranslate nohighlight">\(\tilde{\mathbf{a}}^{(m)}\)</span>) therefore reverses the right-hand side: <span class="math notranslate nohighlight">\(\mathbf{R}_{m+1}\tilde{\mathbf{a}}^{(m)} = [0, \ldots, 0, E_m]^T\)</span>.</p>
+<p><strong>Step 2: append a zero and grow the matrix.</strong> Padding with a zero and multiplying by the next larger matrix <span class="math notranslate nohighlight">\(\mathbf{R}_{m+2}\)</span> reproduces the old equations and adds one new row:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{R}_{m+2}\begin{bmatrix}\mathbf{a}^{(m)} \\ 0\end{bmatrix} = \begin{bmatrix} E_m \\ 0 \\ \vdots \\ 0 \\ \Delta_m \end{bmatrix}, \qquad
+\mathbf{R}_{m+2}\begin{bmatrix} 0 \\ \tilde{\mathbf{a}}^{(m)}\end{bmatrix} = \begin{bmatrix} \Delta_m \\ 0 \\ \vdots \\ 0 \\ E_m \end{bmatrix}, \qquad
+\Delta_m = R_x[m+1] + \sum_{k=1}^{m} a_k^{(m)} R_x[m+1-k].
+\end{split}\]</div>
+<p>The new row produces a nonzero leftover <span class="math notranslate nohighlight">\(\Delta_m\)</span>, which is why the padded vector is not yet the order-<span class="math notranslate nohighlight">\((m+1)\)</span> solution.</p>
+<p><strong>Step 3: combine to cancel the leftover.</strong> For any number <span class="math notranslate nohighlight">\(k_{m+1}\)</span>, the combination <span class="math notranslate nohighlight">\([\mathbf{a}^{(m)}; 0] + k_{m+1}[0; \tilde{\mathbf{a}}^{(m)}]\)</span> produces the right-hand side <span class="math notranslate nohighlight">\([E_m + k_{m+1}\Delta_m, 0, \ldots, 0, \Delta_m + k_{m+1}E_m]^T\)</span>. Choosing <span class="math notranslate nohighlight">\(k_{m+1} = -\Delta_m/E_m\)</span> zeroes the last entry, and the result has exactly the form of the order-<span class="math notranslate nohighlight">\((m+1)\)</span> equations. Reading off the coefficients and the first entry,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-7-39">
+\[\begin{equation*}
+k_{m+1} = -\frac{\Delta_m}{E_m}, \qquad a_i^{(m+1)} = a_i^{(m)} + k_{m+1}\,a_{m+1-i}^{(m)}, \quad a_{m+1}^{(m+1)} = k_{m+1}, \qquad E_{m+1} = E_m\big(1 - k_{m+1}^2\big). \tag{7.39}
+\end{equation*}\]</div>
+<p>The recursion starts from <span class="math notranslate nohighlight">\(\mathbf{a}^{(0)} = [1]\)</span> and <span class="math notranslate nohighlight">\(E_0 = R_x[0]\)</span>. The numbers <span class="math notranslate nohighlight">\(k_m\)</span> are the <strong>reflection coefficients</strong> (the name comes from their interpretation in models of wave propagation in layered media, such as the vocal tract). The error update shows that <span class="math notranslate nohighlight">\(E_m\)</span> can only decrease with order, and that <span class="math notranslate nohighlight">\(E_m &gt; 0\)</span> requires <span class="math notranslate nohighlight">\(|k_m| &lt; 1\)</span> at every stage. It can be shown that <span class="math notranslate nohighlight">\(|k_m| &lt; 1\)</span> for all <span class="math notranslate nohighlight">\(m\)</span> is equivalent to all roots of <span class="math notranslate nohighlight">\(A(z)\)</span> lying inside the unit circle, so the reflection coefficients are also a convenient stability test.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">levinson_durbin</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Solve the Yule-Walker equations by the Levinson-Durbin recursion (12.39)."""</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">]),</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">r</span><span class="p">[</span><span class="n">m</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">k</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">delta</span> <span class="o">/</span> <span class="n">E</span>
+        <span class="n">a_pad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">a_pad</span> <span class="o">+</span> <span class="n">k</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">*</span> <span class="n">a_pad</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">E</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">k</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">k</span>
+
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">acorr_biased</span><span class="p">(</span><span class="n">x_long</span> <span class="o">-</span> <span class="n">x_long</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">a_ld</span><span class="p">,</span> <span class="n">E_ld</span><span class="p">,</span> <span class="n">k_ld</span> <span class="o">=</span> <span class="n">levinson_durbin</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Levinson-Durbin     : </span><span class="si">{</span><span class="n">a_ld</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">,  E_4 = </span><span class="si">{</span><span class="n">E_ld</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"solve_toeplitz      : </span><span class="si">{</span><span class="n">a_yw</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">,  sigma^2 = </span><span class="si">{</span><span class="n">s2_yw</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"reflection coeffs   : </span><span class="si">{</span><span class="n">k_ld</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"max |difference|    : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">a_ld</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a_yw</span><span class="p">))</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Levinson-Durbin     : [-2.6719  3.6122 -2.4598  0.8464],  E_4 = 1.9547
+solve_toeplitz      : [-2.6719  3.6122 -2.4598  0.8464],  sigma^2 = 1.9547
+reflection coeffs   : [-0.7034  0.982  -0.6988  0.8464]
+max |difference|    : 2.1e-13
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="burgs-method">
+<span id="sec-7-4-4"></span><h2>7.4.4 Burg’s Method<a class="headerlink" href="#burgs-method" title="Link to this heading">#</a></h2>
+<p>The Yule–Walker estimate inherits a weakness from <span class="math notranslate nohighlight">\(\hat{r}_x^{\,b}\)</span>: the biased autocorrelation is the autocorrelation of the data <em>padded with zeros</em> on both sides, and by <a class="reference internal" href="03_nonparametric_psd.html#eq-7-24"><span class="std std-ref">(7.24)</span></a> its transform is the periodogram, with all the smoothing of the Fejér kernel. For long records this hardly matters. For short records of a process with sharp peaks, the poles are pulled toward the origin and the peaks are blunted. <span class="bibtex-citation" id="id6">Burg [<a class="reference internal" href="../bibliography.html#id40" title="John Parker Burg. Maximum Entropy Spectral Analysis. PhD thesis, Stanford University, 1975.">1975</a>]</span> avoided the autocorrelation estimate altogether and estimated the reflection coefficients directly from the data, one stage at a time, keeping the Levinson structure <a class="reference internal" href="#eq-7-39">(7.39)</a> so that the model remains stable.</p>
+<p><strong>Step 1: forward and backward prediction errors.</strong> For the order-<span class="math notranslate nohighlight">\(m\)</span> coefficients define the forward prediction error, the error of predicting <span class="math notranslate nohighlight">\(x[n]\)</span> from the <span class="math notranslate nohighlight">\(m\)</span> samples before it, and the backward prediction error, the error of predicting <span class="math notranslate nohighlight">\(x[n-m]\)</span> from the <span class="math notranslate nohighlight">\(m\)</span> samples after it:</p>
+<div class="math notranslate nohighlight">
+\[
+f_m[n] = \sum_{i=0}^{m} a_i^{(m)}\,x[n - i], \qquad b_m[n] = \sum_{i=0}^{m} a_i^{(m)}\,x[n - m + i], \qquad a_0^{(m)} = 1.
+\]</div>
+<p>For a stationary process the backward predictor uses the same coefficients as the forward one, because the autocorrelation is symmetric in time.</p>
+<p><strong>Step 2: derive the lattice recursion.</strong> Substituting the coefficient update of <a class="reference internal" href="#eq-7-39">(7.39)</a> into <span class="math notranslate nohighlight">\(f_m[n]\)</span> splits it into two sums. The first is <span class="math notranslate nohighlight">\(f_{m-1}[n]\)</span>. In the second, <span class="math notranslate nohighlight">\(k_m\sum_i a_{m-i}^{(m-1)}x[n-i]\)</span>, we substitute <span class="math notranslate nohighlight">\(j = m - i\)</span> and recognize <span class="math notranslate nohighlight">\(k_m\,b_{m-1}[n-1]\)</span>. The same manipulation applied to <span class="math notranslate nohighlight">\(b_m[n]\)</span> gives the companion equation, so</p>
+<div class="amsmath math notranslate nohighlight" id="eq-7-40">
+\[\begin{equation*}
+f_m[n] = f_{m-1}[n] + k_m\,b_{m-1}[n-1], \qquad b_m[n] = b_{m-1}[n-1] + k_m\,f_{m-1}[n], \tag{7.40}
+\end{equation*}\]</div>
+<p>starting from <span class="math notranslate nohighlight">\(f_0[n] = b_0[n] = x[n]\)</span>. This is the <strong>lattice</strong> form of the prediction-error filter.</p>
+<p><strong>Step 3: choose <span class="math notranslate nohighlight">\(k_m\)</span> to minimize the errors.</strong> Burg chose <span class="math notranslate nohighlight">\(k_m\)</span> to minimize the sum of forward and backward error energies over all <span class="math notranslate nohighlight">\(n\)</span> for which both are computable from the data, <span class="math notranslate nohighlight">\(n = m, \ldots, N - 1\)</span>, without any zero padding:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{E}_m(k_m) = \sum_{n=m}^{N-1}\Big[\big(f_{m-1}[n] + k_m b_{m-1}[n-1]\big)^2 + \big(b_{m-1}[n-1] + k_m f_{m-1}[n]\big)^2\Big].
+\]</div>
+<p>This is a quadratic in <span class="math notranslate nohighlight">\(k_m\)</span>. Setting its derivative to zero, <span class="math notranslate nohighlight">\(2\sum\big[(f + k_m b)\,b + (b + k_m f)\,f\big] = 0\)</span>, with <span class="math notranslate nohighlight">\(f = f_{m-1}[n]\)</span> and <span class="math notranslate nohighlight">\(b = b_{m-1}[n-1]\)</span>, and solving,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-7-41">
+\[\begin{equation*}
+k_m = \frac{-2\sum_{n=m}^{N-1} f_{m-1}[n]\,b_{m-1}[n-1]}{\sum_{n=m}^{N-1}\Big(f_{m-1}^2[n] + b_{m-1}^2[n-1]\Big)}. \tag{7.41}
+\end{equation*}\]</div>
+<p>Because <span class="math notranslate nohighlight">\(2|fb| \le f^2 + b^2\)</span> for any real numbers, the numerator can never exceed the denominator in magnitude, so <span class="math notranslate nohighlight">\(|k_m| \le 1\)</span> automatically and the Burg model is always stable. The coefficients then follow from the update in <a class="reference internal" href="#eq-7-39">(7.39)</a>, and the noise variance from <span class="math notranslate nohighlight">\(E_m = E_{m-1}(1 - k_m^2)\)</span> with <span class="math notranslate nohighlight">\(E_0\)</span> the mean square of the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">burg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Burg's AR(p) estimate: lattice recursion (12.40) with reflection coefficients (12.41)."""</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">f</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+        <span class="n">ff</span><span class="p">,</span> <span class="n">bb</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">b</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>                 <span class="c1"># f_{m-1}[n] and b_{m-1}[n-1], n = m..N-1</span>
+        <span class="n">k</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ff</span><span class="p">,</span> <span class="n">bb</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ff</span><span class="p">,</span> <span class="n">ff</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">bb</span><span class="p">,</span> <span class="n">bb</span><span class="p">))</span>
+        <span class="n">f</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">ff</span> <span class="o">+</span> <span class="n">k</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">*</span> <span class="n">bb</span><span class="p">,</span> <span class="n">bb</span> <span class="o">+</span> <span class="n">k</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">*</span> <span class="n">ff</span>
+        <span class="n">a_pad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">a_pad</span> <span class="o">+</span> <span class="n">k</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">*</span> <span class="n">a_pad</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">E</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">k</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">k</span>
+
+
+<span class="n">a_bg</span><span class="p">,</span> <span class="n">E_bg</span><span class="p">,</span> <span class="n">k_bg</span> <span class="o">=</span> <span class="n">burg</span><span class="p">(</span><span class="n">x_long</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"true   : </span><span class="si">{</span><span class="n">a_true</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Burg   : </span><span class="si">{</span><span class="n">a_bg</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">,  sigma^2 = </span><span class="si">{</span><span class="n">E_bg</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Yule-W.: </span><span class="si">{</span><span class="n">a_yw</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">,  sigma^2 = </span><span class="si">{</span><span class="n">s2_yw</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Burg pole radii: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roots</span><span class="p">(</span><span class="n">a_bg</span><span class="p">))),</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2">  "</span>
+      <span class="sa">f</span><span class="s2">"(true </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">poles</span><span class="p">)),</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true   : [-2.7607  3.8106 -2.6535  0.9238]
+Burg   : [-2.7508  3.7944 -2.6394  0.9194],  sigma^2 = 1.006
+Yule-W.: [-2.6719  3.6122 -2.4598  0.8464],  sigma^2 = 1.955
+Burg pole radii: [0.9756 0.9756 0.9828 0.9828]  (true [0.9803 0.9803 0.9805 0.9805])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="recovering-a-known-spectrum-from-a-short-record">
+<span id="sec-7-4-5"></span><h2>7.4.5 Recovering a Known Spectrum from a Short Record<a class="headerlink" href="#recovering-a-known-spectrum-from-a-short-record" title="Link to this heading">#</a></h2>
+<p>The real test is a short record. We draw 200 independent records of only <span class="math notranslate nohighlight">\(N = 256\)</span> samples from the AR(4) process, fit fourth-order models with both methods, and compare them with Welch estimates from the same data. The true order is known here; the next subsection removes that luxury.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N_short</span><span class="p">,</span> <span class="n">n_rep</span> <span class="o">=</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">200</span>
+<span class="n">w_rep</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_rep</span><span class="p">,</span> <span class="n">N_short</span> <span class="o">+</span> <span class="mi">3000</span><span class="p">))</span>
+<span class="n">x_rep</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">lfilter</span><span class="p">([</span><span class="mf">1.0</span><span class="p">],</span> <span class="n">a_true</span><span class="p">,</span> <span class="n">w_rep</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="mi">3000</span><span class="p">:]</span>
+
+<span class="n">S_yw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">ar_spectrum</span><span class="p">(</span><span class="o">*</span><span class="n">yule_walker</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">f_grid</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x_rep</span><span class="p">])</span>
+<span class="n">S_bg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">ar_spectrum</span><span class="p">(</span><span class="o">*</span><span class="n">burg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">4</span><span class="p">)[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">f_grid</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x_rep</span><span class="p">])</span>
+<span class="n">f_wl</span><span class="p">,</span> <span class="n">S_wl</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">welch</span><span class="p">(</span><span class="n">x_rep</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">nperseg</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">peak_pair</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Frequencies of the two largest local maxima of a spectrum (NaN if fewer than two)."""</span>
+    <span class="n">idx</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">find_peaks</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">idx</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="n">idx</span><span class="p">])[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]]])</span>
+
+
+<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">"Yule-Walker AR(4)"</span><span class="p">,</span> <span class="n">S_yw</span><span class="p">,</span> <span class="n">f_grid</span><span class="p">),</span> <span class="p">(</span><span class="s2">"Burg AR(4)"</span><span class="p">,</span> <span class="n">S_bg</span><span class="p">,</span> <span class="n">f_grid</span><span class="p">),</span> <span class="p">(</span><span class="s2">"Welch, L = 64"</span><span class="p">,</span> <span class="n">S_wl</span><span class="p">,</span> <span class="n">f_wl</span><span class="p">)]:</span>
+    <span class="n">pk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">peak_pair</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S</span><span class="p">])</span>
+    <span class="n">resolved</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">pk</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">pk</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.09</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">pk</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.16</span><span class="p">)</span>
+    <span class="n">on_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">f_grid</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"method"</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">"two peaks resolved (%)"</span><span class="p">:</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">resolved</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+                 <span class="s2">"median error at 0.11 (dB)"</span><span class="p">:</span> <span class="n">dB</span><span class="p">(</span><span class="n">on_grid</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">f_grid</span> <span class="o">-</span> <span class="mf">0.1102</span><span class="p">))]</span> <span class="o">/</span> <span class="n">S_true</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">f_grid</span> <span class="o">-</span> <span class="mf">0.1102</span><span class="p">))]),</span>
+                 <span class="s2">"median error at 0.40 (dB)"</span><span class="p">:</span> <span class="n">dB</span><span class="p">(</span><span class="n">on_grid</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">f_grid</span> <span class="o">-</span> <span class="mf">0.4</span><span class="p">))]</span> <span class="o">/</span> <span class="n">S_true</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">f_grid</span> <span class="o">-</span> <span class="mf">0.4</span><span class="p">))])})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>           method  two peaks resolved (%)  median error at 0.11 (dB)  median error at 0.40 (dB)
+Yule-Walker AR(4)                     0.5                      -10.0                       19.7
+       Burg AR(4)                   100.0                       -1.8                        0.1
+    Welch, L = 64                    19.0                       -5.3                       -0.2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">[(</span><span class="s2">"Yule–Walker AR(4)"</span><span class="p">,</span> <span class="n">S_yw</span><span class="p">,</span> <span class="n">f_grid</span><span class="p">,</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                                        <span class="p">(</span><span class="s2">"Burg AR(4)"</span><span class="p">,</span> <span class="n">S_bg</span><span class="p">,</span> <span class="n">f_grid</span><span class="p">,</span> <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                                        <span class="p">(</span><span class="s2">"Welch, L = 64"</span><span class="p">,</span> <span class="n">S_wl</span><span class="p">,</span> <span class="n">f_wl</span><span class="p">,</span> <span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">])]):</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S</span><span class="p">[:</span><span class="mi">20</span><span class="p">]:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dB</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_grid</span><span class="p">,</span> <span class="n">dB</span><span class="p">(</span><span class="n">S_true</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"True PSD"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"20 estimates, N = 256"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Frequency (cycles/sample)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">65</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"One-sided PSD (dB)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/3f3af41ce1ec22c70020f5575b7967c1c0f6c7277c64fb166048c3d10afaa55d.png" src="../_images/3f3af41ce1ec22c70020f5575b7967c1c0f6c7277c64fb166048c3d10afaa55d.png" />
+</div>
+</div>
+<p>The difference between the two AR methods is striking. With 256 samples Burg’s method recovers both peaks in almost every record and follows the 60 dB fall of the spectrum, while the Yule–Walker estimates are visibly smoothed: the zero-padding implicit in <span class="math notranslate nohighlight">\(\hat{r}_x^{\,b}\)</span> pulls the poles inward, so the two peaks are lowered and often merge into one. The Welch estimate, limited to a resolution of about <span class="math notranslate nohighlight">\(1.5/64 \approx 0.023\)</span> cycles/sample, cannot separate peaks 0.03 cycles/sample apart and fills in the valley between them. For short records of sharply peaked processes, Burg’s method is the one I would use, and it is the default AR method in most HRV software.</p>
+</section>
+<section id="choosing-the-model-order">
+<span id="sec-7-4-6"></span><h2>7.4.6 Choosing the Model Order<a class="headerlink" href="#choosing-the-model-order" title="Link to this heading">#</a></h2>
+<p>So far we cheated by using the true order. With real signals <span class="math notranslate nohighlight">\(p\)</span> must be chosen from the data, and the choice matters. Too low an order cannot represent all the peaks; too high an order fits the random fluctuations of the particular record and produces spurious peaks, or splits one true peak into two. The prediction-error variance <span class="math notranslate nohighlight">\(E_p\)</span> is no guide on its own, because by <a class="reference internal" href="#eq-7-39">(7.39)</a> it never increases with <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<p><strong>Final prediction error.</strong> <span class="bibtex-citation" id="id7"></span> asked a sharper question: how well would the fitted model predict a <em>new</em>, independent record from the same process? A rough argument shows the structure of his answer. Fitting <span class="math notranslate nohighlight">\(p\)</span> coefficients to <span class="math notranslate nohighlight">\(N\)</span> samples uses up about <span class="math notranslate nohighlight">\(p\)</span> degrees of freedom, so the in-sample error underestimates the true innovation variance, <span class="math notranslate nohighlight">\(\mathbb{E}\{E_p\} \approx \sigma^2(1 - p/N)\)</span>. Applied to new data, the estimation errors in the coefficients add to the innovation variance instead, giving an out-of-sample error of about <span class="math notranslate nohighlight">\(\sigma^2(1 + p/N)\)</span>. Eliminating the unknown <span class="math notranslate nohighlight">\(\sigma^2\)</span> between the two expressions gives the <strong>final prediction error</strong></p>
+<div class="amsmath math notranslate nohighlight" id="eq-7-42">
+\[\begin{equation*}
+\operatorname{FPE}(p) = E_p\,\frac{N + p}{N - p}, \tag{7.42}
+\end{equation*}\]</div>
+<p>which first decreases with <span class="math notranslate nohighlight">\(p\)</span>, as the model captures more structure, and then increases, as the penalty factor takes over. (Akaike’s original version uses <span class="math notranslate nohighlight">\(N + p + 1\)</span> and <span class="math notranslate nohighlight">\(N - p - 1\)</span> to count the estimated mean as an extra parameter; the difference is negligible for <span class="math notranslate nohighlight">\(N \gg p\)</span>.)</p>
+<p><strong>Akaike’s information criterion.</strong> The more general information criterion <span class="bibtex-citation" id="id8">[<a class="reference internal" href="../bibliography.html#id41" title="Hirotugu Akaike. A new look at the statistical model identification. IEEE Transactions on Automatic Control, 19(6):716–723, 1974.">Akaike, 1974</a>]</span>, derived from the expected Kullback–Leibler distance between the fitted model and the truth, takes for a Gaussian AR model the form</p>
+<div class="amsmath math notranslate nohighlight" id="eq-7-43">
+\[\begin{equation*}
+\operatorname{AIC}(p) = N\ln E_p + 2p. \tag{7.43}
+\end{equation*}\]</div>
+<p>The two criteria are close relatives: for <span class="math notranslate nohighlight">\(p \ll N\)</span>, <span class="math notranslate nohighlight">\(\ln\frac{N+p}{N-p} \approx \frac{2p}{N}\)</span>, so <span class="math notranslate nohighlight">\(N\ln\operatorname{FPE}(p) \approx \operatorname{AIC}(p)\)</span>. Both are known to overestimate the order somewhat for long records; variants with heavier penalties, such as the minimum description length <span class="math notranslate nohighlight">\(N\ln E_p + p\ln N\)</span>, choose smaller orders. I treat the criteria as a guide, not an oracle, and always look at the spectra of neighboring orders before settling.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">order_criteria</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p_max</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""FPE (12.42) and AIC (12.43) for Burg fits of orders 1..p_max."""</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">burg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p_max</span><span class="p">)</span>
+    <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cumprod</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">k</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>          <span class="c1"># E_1 .. E_pmax from (12.39)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">p</span><span class="p">,</span> <span class="n">E</span> <span class="o">*</span> <span class="p">(</span><span class="n">N</span> <span class="o">+</span> <span class="n">p</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">p</span><span class="p">),</span> <span class="n">N</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">E</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">p</span>
+
+
+<span class="n">p_axis</span><span class="p">,</span> <span class="n">fpe</span><span class="p">,</span> <span class="n">aic</span> <span class="o">=</span> <span class="n">order_criteria</span><span class="p">(</span><span class="n">x_rep</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">30</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Order chosen by FPE: </span><span class="si">{</span><span class="n">p_axis</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">fpe</span><span class="p">)]</span><span class="si">}</span><span class="s2">, by AIC: </span><span class="si">{</span><span class="n">p_axis</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">aic</span><span class="p">)]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">chosen</span> <span class="o">=</span> <span class="p">[</span><span class="n">p_axis</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">order_criteria</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">30</span><span class="p">)[</span><span class="mi">2</span><span class="p">])]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x_rep</span><span class="p">[:</span><span class="mi">100</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"AIC choice over 100 records of N = 256: "</span>
+      <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">chosen</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Order chosen by FPE: 4, by AIC: 4
+AIC choice over 100 records of N = 256: {4: 82, 5: 5, 6: 4, 8: 3, 10: 2, 13: 1, 14: 1, 15: 1, 17: 1}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">9.6</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">),</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">"width_ratios"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]})</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p_axis</span><span class="p">,</span> <span class="n">aic</span> <span class="o">-</span> <span class="n">aic</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="s2">"o-"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"AIC, equation (12.43)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p_axis</span><span class="p">,</span> <span class="n">N_short</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">fpe</span><span class="p">)</span> <span class="o">-</span> <span class="n">N_short</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">fpe</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="s2">"s--"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$N \ln$ FPE, equation (12.42)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Model order p"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Criterion minus its minimum"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">120</span><span class="p">),</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Order selection, one record of N = 256"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_grid</span><span class="p">,</span> <span class="n">dB</span><span class="p">(</span><span class="n">S_true</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"True PSD"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">])]:</span>
+    <span class="n">a_p</span><span class="p">,</span> <span class="n">E_p</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">burg</span><span class="p">(</span><span class="n">x_rep</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_grid</span><span class="p">,</span> <span class="n">dB</span><span class="p">(</span><span class="n">ar_spectrum</span><span class="p">(</span><span class="n">a_p</span><span class="p">,</span> <span class="n">E_p</span><span class="p">,</span> <span class="n">f_grid</span><span class="p">)),</span> <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Burg, p = </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Frequency (cycles/sample)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"One-sided PSD (dB)"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">25</span><span class="p">,</span> <span class="mi">65</span><span class="p">),</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Too low, right and too high orders"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/83eb1488a18c8545429cf541f513cdbb5aa374f91328848b0c5bb5c69eee4795.png" src="../_images/83eb1488a18c8545429cf541f513cdbb5aa374f91328848b0c5bb5c69eee4795.png" />
+</div>
+</div>
+</section>
+<section id="applied-example-short-records-of-heart-rhythm-and-eeg">
+<span id="sec-7-4-7"></span><h2>7.4.7 Applied Example: Short Records of Heart Rhythm and EEG<a class="headerlink" href="#applied-example-short-records-of-heart-rhythm-and-eeg" title="Link to this heading">#</a></h2>
+<p>Two classic uses of AR spectra in physiology are short-term heart rate variability and short EEG epochs. Both are situations where Welch’s method is starved of data.</p>
+<section id="step-1-build-an-evenly-sampled-rr-series">
+<h3>Step 1: Build an evenly sampled RR series<a class="headerlink" href="#step-1-build-an-evenly-sampled-rr-series" title="Link to this heading">#</a></h3>
+<p>An RR series is sampled at the beats, which are unevenly spaced in time. To apply any of our spectral methods we first resample it on a regular grid. The usual recipe <span class="bibtex-citation" id="id9">[<a class="reference internal" href="../bibliography.html#id66" title="Task Force of the European Society of Cardiology and the North American Society of Pacing and Electrophysiology. Heart rate variability: standards of measurement, physiological interpretation, and clinical use. Circulation, 93(5):1043–1065, 1996.">Task Force of the European Society of Cardiology and the North American Society of Pacing and Electrophysiology, 1996</a>]</span> is to keep only intervals between two normal beats (NN intervals), place each one at the time of its second beat, interpolate with a cubic spline, and resample at 4 Hz, comfortably above the 0.4 Hz upper edge of the HRV high-frequency band. We take the first five minutes of MIT-BIH record 100 <span class="bibtex-citation" id="id10">[<a class="reference internal" href="../bibliography.html#id84" title="Ary L. Goldberger, Luis A. N. Amaral, Leon Glass, Jeffrey M. Hausdorff, Plamen Ch. Ivanov, Roger G. Mark, Joseph E. Mietus, George B. Moody, Chung-Kang Peng, and H. Eugene Stanley. PhysioBank, PhysioToolkit, and PhysioNet: components of a new research resource for complex physiologic signals. Circulation, 101(23):e215–e220, 2000.">Goldberger <em>et al.</em>, 2000</a>, <a class="reference internal" href="../bibliography.html#id85" title="George B. Moody and Roger G. Mark. The impact of the MIT-BIH arrhythmia database. IEEE Engineering in Medicine and Biology Magazine, 20(3):45–50, 2001.">Moody and Mark, 2001</a>]</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ann</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdann</span><span class="p">(</span><span class="s2">"../data/mitdb/100"</span><span class="p">,</span> <span class="s2">"atr"</span><span class="p">,</span> <span class="n">sampto</span><span class="o">=</span><span class="mi">310</span> <span class="o">*</span> <span class="mi">360</span><span class="p">)</span>
+<span class="n">is_beat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">symbol</span><span class="p">,</span> <span class="p">[</span><span class="s2">"N"</span><span class="p">,</span> <span class="s2">"L"</span><span class="p">,</span> <span class="s2">"R"</span><span class="p">,</span> <span class="s2">"A"</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">,</span> <span class="s2">"J"</span><span class="p">,</span> <span class="s2">"S"</span><span class="p">,</span> <span class="s2">"V"</span><span class="p">,</span> <span class="s2">"F"</span><span class="p">,</span> <span class="s2">"e"</span><span class="p">,</span> <span class="s2">"j"</span><span class="p">,</span> <span class="s2">"E"</span><span class="p">,</span> <span class="s2">"/"</span><span class="p">,</span> <span class="s2">"f"</span><span class="p">,</span> <span class="s2">"Q"</span><span class="p">])</span>
+<span class="n">t_beat</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">sample</span><span class="p">[</span><span class="n">is_beat</span><span class="p">]</span> <span class="o">/</span> <span class="mf">360.0</span>
+<span class="n">sym</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">symbol</span><span class="p">)[</span><span class="n">is_beat</span><span class="p">]</span>
+<span class="n">nn</span> <span class="o">=</span> <span class="p">(</span><span class="n">sym</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">==</span> <span class="s2">"N"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sym</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"N"</span><span class="p">)</span>
+<span class="n">t_nn</span><span class="p">,</span> <span class="n">rr_ms</span> <span class="o">=</span> <span class="n">t_beat</span><span class="p">[</span><span class="mi">1</span><span class="p">:][</span><span class="n">nn</span><span class="p">],</span> <span class="mi">1000</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">t_beat</span><span class="p">)[</span><span class="n">nn</span><span class="p">]</span>
+
+<span class="n">fs_rr</span> <span class="o">=</span> <span class="mf">4.0</span>
+<span class="n">t_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">t_nn</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">t_nn</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">fs_rr</span><span class="p">)</span>
+<span class="n">rr_grid</span> <span class="o">=</span> <span class="n">CubicSpline</span><span class="p">(</span><span class="n">t_nn</span><span class="p">,</span> <span class="n">rr_ms</span><span class="p">)(</span><span class="n">t_grid</span><span class="p">)</span>
+<span class="n">rr_det</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">detrend</span><span class="p">(</span><span class="n">rr_grid</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">"linear"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nn</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> NN intervals kept of </span><span class="si">{</span><span class="n">nn</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">, mean RR </span><span class="si">{</span><span class="n">rr_ms</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ms, SDNN </span><span class="si">{</span><span class="n">rr_ms</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ms"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"resampled series: </span><span class="si">{</span><span class="n">rr_grid</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> samples at </span><span class="si">{</span><span class="n">fs_rr</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> Hz (</span><span class="si">{</span><span class="n">rr_grid</span><span class="o">.</span><span class="n">size</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">fs_rr</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> s)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>375 NN intervals kept of 383, mean RR 809 ms, SDNN 25.3 ms
+resampled series: 1197 samples at 4 Hz (299 s)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-welch-and-ar-spectra-of-five-minutes-and-of-one-minute">
+<h3>Step 2: Welch and AR spectra of five minutes and of one minute<a class="headerlink" href="#step-2-welch-and-ar-spectra-of-five-minutes-and-of-one-minute" title="Link to this heading">#</a></h3>
+<p>For the five-minute series, Welch’s method with 64 s segments (256 samples) gives a resolution of <span class="math notranslate nohighlight">\(1.5/64 \approx 0.023\)</span> Hz and only about 8 segments. For a one-minute piece the best Welch can do is a single 30 s segment pair. The AR model order is chosen by AIC with an upper limit of 20.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_hrv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)</span>
+<span class="n">hrv</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">"5 min"</span><span class="p">,</span> <span class="n">rr_det</span><span class="p">),</span> <span class="p">(</span><span class="s2">"1 min"</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">detrend</span><span class="p">(</span><span class="n">rr_grid</span><span class="p">[:</span><span class="mi">240</span><span class="p">]))]:</span>
+    <span class="n">p_ax</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">aic_rr</span> <span class="o">=</span> <span class="n">order_criteria</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">p_rr</span> <span class="o">=</span> <span class="n">p_ax</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">aic_rr</span><span class="p">)]</span>
+    <span class="n">a_rr</span><span class="p">,</span> <span class="n">E_rr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">burg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p_rr</span><span class="p">)</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="mi">256</span> <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="s2">"5 min"</span> <span class="k">else</span> <span class="mi">120</span>
+    <span class="n">f_w</span><span class="p">,</span> <span class="n">S_w</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">welch</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs_rr</span><span class="p">,</span> <span class="n">nperseg</span><span class="o">=</span><span class="n">L</span><span class="p">)</span>
+    <span class="n">hrv</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">p_rr</span><span class="p">,</span> <span class="n">S_ar</span><span class="o">=</span><span class="n">ar_spectrum</span><span class="p">(</span><span class="n">a_rr</span><span class="p">,</span> <span class="n">E_rr</span><span class="p">,</span> <span class="n">f_hrv</span><span class="p">,</span> <span class="n">fs_rr</span><span class="p">),</span> <span class="n">f_w</span><span class="o">=</span><span class="n">f_w</span><span class="p">,</span> <span class="n">S_w</span><span class="o">=</span><span class="n">S_w</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">: AIC order </span><span class="si">{</span><span class="n">p_rr</span><span class="si">:</span><span class="s2">2d</span><span class="si">}</span><span class="s2">; Welch with L = </span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2"> samples, </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="p">(</span><span class="n">L</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> segments"</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">band</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Power of a one-sided PSD in [lo, hi) Hz (trapezoidal rule)."""</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span> <span class="o">&gt;=</span> <span class="n">lo</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">f</span> <span class="o">&lt;</span> <span class="n">hi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="n">m</span><span class="p">])</span>
+
+
+<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">hrv</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">meth</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">S</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">"Welch"</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="s2">"f_w"</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">"S_w"</span><span class="p">]),</span> <span class="p">(</span><span class="sa">f</span><span class="s2">"Burg AR(</span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="s1">'p'</span><span class="p">]</span><span class="si">}</span><span class="s2">)"</span><span class="p">,</span> <span class="n">f_hrv</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="s2">"S_ar"</span><span class="p">])]:</span>
+        <span class="n">lf</span><span class="p">,</span> <span class="n">hf</span> <span class="o">=</span> <span class="n">band</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">),</span> <span class="n">band</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.40</span><span class="p">)</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"record"</span><span class="p">:</span> <span class="n">label</span><span class="p">,</span> <span class="s2">"method"</span><span class="p">:</span> <span class="n">meth</span><span class="p">,</span> <span class="s2">"LF (ms^2)"</span><span class="p">:</span> <span class="n">lf</span><span class="p">,</span> <span class="s2">"HF (ms^2)"</span><span class="p">:</span> <span class="n">hf</span><span class="p">,</span> <span class="s2">"LF/HF"</span><span class="p">:</span> <span class="n">lf</span> <span class="o">/</span> <span class="n">hf</span><span class="p">,</span>
+                     <span class="s2">"HF peak (Hz)"</span><span class="p">:</span> <span class="n">f</span><span class="p">[(</span><span class="n">f</span> <span class="o">&gt;=</span> <span class="mf">0.15</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">f</span> <span class="o">&lt;</span> <span class="mf">0.4</span><span class="p">)][</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">S</span><span class="p">[(</span><span class="n">f</span> <span class="o">&gt;=</span> <span class="mf">0.15</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">f</span> <span class="o">&lt;</span> <span class="mf">0.4</span><span class="p">)])]})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5 min: AIC order 20; Welch with L = 256 samples, 8 segments
+1 min: AIC order 20; Welch with L = 120 samples, 3 segments
+record      method  LF (ms^2)  HF (ms^2)  LF/HF  HF peak (Hz)
+ 5 min       Welch     15.038    445.083  0.034         0.172
+ 5 min Burg AR(20)     45.006    499.211  0.090         0.168
+ 1 min       Welch     43.050    305.798  0.141         0.167
+ 1 min Burg AR(20)     60.941    506.763  0.120         0.165
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_nn</span><span class="p">,</span> <span class="n">rr_ms</span><span class="p">,</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"NN intervals"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_grid</span><span class="p">,</span> <span class="n">rr_grid</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Cubic spline, 4 Hz"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (s)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"RR interval (ms)"</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="n">t_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">120</span><span class="p">),</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">"RR tachogram of MIT-BIH record 100 (first 2 min shown)"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.12</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.40</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.12</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.095</span><span class="p">,</span> <span class="mf">0.93</span><span class="p">,</span> <span class="s2">"LF"</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">get_xaxis_transform</span><span class="p">(),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.275</span><span class="p">,</span> <span class="mf">0.93</span><span class="p">,</span> <span class="s2">"HF"</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">get_xaxis_transform</span><span class="p">(),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">d5</span><span class="p">,</span> <span class="n">d1</span> <span class="o">=</span> <span class="n">hrv</span><span class="p">[</span><span class="s2">"5 min"</span><span class="p">],</span> <span class="n">hrv</span><span class="p">[</span><span class="s2">"1 min"</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">d5</span><span class="p">[</span><span class="s2">"f_w"</span><span class="p">],</span> <span class="n">d5</span><span class="p">[</span><span class="s2">"S_w"</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Welch, 5 min (64 s segments)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_hrv</span><span class="p">,</span> <span class="n">d5</span><span class="p">[</span><span class="s2">"S_ar"</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Burg AR(</span><span class="si">{</span><span class="n">d5</span><span class="p">[</span><span class="s1">'p'</span><span class="p">]</span><span class="si">}</span><span class="s2">), 5 min"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_hrv</span><span class="p">,</span> <span class="n">d1</span><span class="p">[</span><span class="s2">"S_ar"</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Burg AR(</span><span class="si">{</span><span class="n">d1</span><span class="p">[</span><span class="s1">'p'</span><span class="p">]</span><span class="si">}</span><span class="s2">), first 1 min only"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Frequency (Hz)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"PSD (ms$^2$/Hz)"</span><span class="p">,</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"HRV spectrum: Welch versus autoregressive estimates"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/a41a5fae8622b066b83c280d86cfa6454ae3fd812328c9f2ccecea21af0dc6cb.png" src="../_images/a41a5fae8622b066b83c280d86cfa6454ae3fd812328c9f2ccecea21af0dc6cb.png" />
+</div>
+</div>
+</section>
+<section id="step-3-read-the-hrv-spectra">
+<h3>Step 3: Read the HRV spectra<a class="headerlink" href="#step-3-read-the-hrv-spectra" title="Link to this heading">#</a></h3>
+<p>The five-minute AR spectrum is a smooth curve with a clear HF peak, the signature of respiratory sinus arrhythmia: heart rate rises during inspiration and falls during expiration, so the RR series oscillates at the breathing frequency. The Welch estimate from the same five minutes follows the AR curve on average but jitters around it, because eight segments leave a variance of roughly <span class="math notranslate nohighlight">\(1/8\)</span> of the PSD squared. The two methods give band powers of the same order, which is reassuring, but they are not identical, and this is a known practical issue: published HRV values computed with AR and FFT methods should not be mixed <span class="bibtex-citation" id="id11">[<a class="reference internal" href="../bibliography.html#id66" title="Task Force of the European Society of Cardiology and the North American Society of Pacing and Electrophysiology. Heart rate variability: standards of measurement, physiological interpretation, and clinical use. Circulation, 93(5):1043–1065, 1996.">Task Force of the European Society of Cardiology and the North American Society of Pacing and Electrophysiology, 1996</a>]</span>. The one-minute AR spectrum places the HF peak close to where the five-minute estimate puts it, from a quarter of the data. That is the practical advantage of the parametric approach. Its absolute level is less reliable, as the band powers show, because one minute contains only a dozen breaths.</p>
+</section>
+<section id="step-4-two-second-eeg-epochs">
+<h3>Step 4: Two-second EEG epochs<a class="headerlink" href="#step-4-two-second-eeg-epochs" title="Link to this heading">#</a></h3>
+<p>For the EEG we return to the eyes-closed recording of <a class="reference internal" href="03_nonparametric_psd.html#sec-7-3-8"><span class="std std-ref">Section 7.3.8</span></a>, channel O1, and cut it into 30 non-overlapping epochs of 2 s (320 samples). For each epoch we estimate the individual alpha frequency, the frequency of the largest peak between 7 and 14 Hz, in two ways: from a Hann-windowed periodogram, zero-padded to a 0.05 Hz grid so that the peak is not quantized to the 0.5 Hz bins, and from a Burg AR model. A single model order for all epochs keeps the comparison simple; I take the median of the AIC choices.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span> <span class="o">=</span> <span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_raw_edf</span><span class="p">(</span><span class="s2">"../data/eegmmidb/S001R02.edf"</span><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">eegbci</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+<span class="n">o1</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="p">[</span><span class="s2">"O1"</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e6</span>
+<span class="n">fs_eeg</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"sfreq"</span><span class="p">]</span>
+<span class="n">L_ep</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">fs_eeg</span><span class="p">)</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="n">o1</span><span class="p">[:</span><span class="mi">30</span> <span class="o">*</span> <span class="n">L_ep</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">L_ep</span><span class="p">)</span>
+
+<span class="n">p_eeg</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">order_criteria</span><span class="p">(</span><span class="n">ep</span><span class="p">,</span> <span class="mi">30</span><span class="p">)[</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">]))</span>
+<span class="n">f_e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">fs_eeg</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+<span class="n">alpha_win</span> <span class="o">=</span> <span class="p">(</span><span class="n">f_e</span> <span class="o">&gt;=</span> <span class="mi">7</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">f_e</span> <span class="o">&lt;=</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">nfft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">fs_eeg</span> <span class="o">/</span> <span class="mf">0.05</span><span class="p">))</span>
+<span class="n">iaf</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Periodogram (Hann)"</span><span class="p">:</span> <span class="p">[],</span> <span class="sa">f</span><span class="s2">"Burg AR(</span><span class="si">{</span><span class="n">p_eeg</span><span class="si">}</span><span class="s2">)"</span><span class="p">:</span> <span class="p">[]}</span>
+<span class="n">S_ep_pg</span><span class="p">,</span> <span class="n">S_ep_ar</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">:</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">S_pg</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span><span class="n">ep</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs_eeg</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s2">"hann"</span><span class="p">,</span> <span class="n">nfft</span><span class="o">=</span><span class="n">nfft</span><span class="p">,</span> <span class="n">detrend</span><span class="o">=</span><span class="s2">"constant"</span><span class="p">)</span>
+    <span class="n">a_e</span><span class="p">,</span> <span class="n">E_e</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">burg</span><span class="p">(</span><span class="n">ep</span><span class="p">,</span> <span class="n">p_eeg</span><span class="p">)</span>
+    <span class="n">S_ar</span> <span class="o">=</span> <span class="n">ar_spectrum</span><span class="p">(</span><span class="n">a_e</span><span class="p">,</span> <span class="n">E_e</span><span class="p">,</span> <span class="n">f_e</span><span class="p">,</span> <span class="n">fs_eeg</span><span class="p">)</span>
+    <span class="n">S_ep_pg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">S_pg</span><span class="p">)</span>
+    <span class="n">S_ep_ar</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">S_ar</span><span class="p">)</span>
+    <span class="n">iaf</span><span class="p">[</span><span class="s2">"Periodogram (Hann)"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f_e</span><span class="p">[</span><span class="n">alpha_win</span><span class="p">][</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">S_pg</span><span class="p">[</span><span class="n">alpha_win</span><span class="p">])])</span>
+    <span class="n">iaf</span><span class="p">[</span><span class="sa">f</span><span class="s2">"Burg AR(</span><span class="si">{</span><span class="n">p_eeg</span><span class="si">}</span><span class="s2">)"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f_e</span><span class="p">[</span><span class="n">alpha_win</span><span class="p">][</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">S_ar</span><span class="p">[</span><span class="n">alpha_win</span><span class="p">])])</span>
+
+<span class="n">f_ref</span><span class="p">,</span> <span class="n">S_ref</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">welch</span><span class="p">(</span><span class="n">o1</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs_eeg</span><span class="p">,</span> <span class="n">nperseg</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mi">8</span> <span class="o">*</span> <span class="n">fs_eeg</span><span class="p">),</span> <span class="n">nfft</span><span class="o">=</span><span class="n">nfft</span><span class="p">)</span>
+<span class="n">iaf_ref</span> <span class="o">=</span> <span class="n">f_ref</span><span class="p">[(</span><span class="n">f_ref</span> <span class="o">&gt;=</span> <span class="mi">7</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">f_ref</span> <span class="o">&lt;=</span> <span class="mi">14</span><span class="p">)][</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">S_ref</span><span class="p">[(</span><span class="n">f_ref</span> <span class="o">&gt;=</span> <span class="mi">7</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">f_ref</span> <span class="o">&lt;=</span> <span class="mi">14</span><span class="p">)])]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Model order (median AIC choice over epochs): </span><span class="si">{</span><span class="n">p_eeg</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Reference IAF from the whole minute (Welch, 8 s segments): </span><span class="si">{</span><span class="n">iaf_ref</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> Hz"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">iaf</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">20s</span><span class="si">}</span><span class="s2">: IAF mean </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> Hz, SD across epochs </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> Hz, "</span>
+          <span class="sa">f</span><span class="s2">"range </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> Hz"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model order (median AIC choice over epochs): 13
+Reference IAF from the whole minute (Welch, 8 s segments): 9.95 Hz
+Periodogram (Hann)  : IAF mean 10.08 Hz, SD across epochs 0.42 Hz, range 9.25-10.95 Hz
+Burg AR(13)         : IAF mean 10.05 Hz, SD across epochs 0.32 Hz, range 9.55-10.70 Hz
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">9.6</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">),</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">"width_ratios"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]})</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">i_show</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_e</span><span class="p">,</span> <span class="n">dB</span><span class="p">(</span><span class="n">S_ep_pg</span><span class="p">[</span><span class="n">i_show</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Periodogram (Hann), 2 s"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_e</span><span class="p">,</span> <span class="n">dB</span><span class="p">(</span><span class="n">S_ep_ar</span><span class="p">[</span><span class="n">i_show</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Burg AR(</span><span class="si">{</span><span class="n">p_eeg</span><span class="si">}</span><span class="s2">), 2 s"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_ref</span><span class="p">,</span> <span class="n">dB</span><span class="p">(</span><span class="n">S_ref</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Welch, whole minute"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.12</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">45</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Frequency (Hz)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"PSD (dB re 1 µV$^2$/Hz)"</span><span class="p">,</span>
+       <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"One 2 s epoch of O1, eyes closed (epoch </span><span class="si">{</span><span class="n">i_show</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iaf</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">v</span><span class="p">,</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">j</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">iaf_ref</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Whole-minute reference"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="s2">"Periodogram"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Burg AR(</span><span class="si">{</span><span class="n">p_eeg</span><span class="si">}</span><span class="s2">)"</span><span class="p">],</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">),</span>
+       <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Alpha peak frequency (Hz)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Alpha peak in 30 epochs"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/0e049030e662ad5dd15801920783d6d914ec28d8e906bf846bde8a35ba90386b.png" src="../_images/0e049030e662ad5dd15801920783d6d914ec28d8e906bf846bde8a35ba90386b.png" />
+</div>
+</div>
+</section>
+<section id="step-5-interpret">
+<h3>Step 5: Interpret<a class="headerlink" href="#step-5-interpret" title="Link to this heading">#</a></h3>
+<p>On a single two-second epoch the periodogram is the familiar ragged curve, while the AR spectrum is smooth and places a single well-defined peak in the alpha band, close to the peak of the whole-minute Welch estimate. Across the 30 epochs the AR estimates of the alpha frequency scatter less than the periodogram estimates, because the model averages the information in the whole epoch into a pole position instead of picking the tallest of several noisy bins. This is why AR models have long been popular for tracking the dominant frequency of short EEG epochs, and why they are used as features in brain–computer interfaces.</p>
+</section>
+</section>
+<section id="caveats">
+<span id="sec-7-4-8"></span><h2>7.4.8 Caveats<a class="headerlink" href="#caveats" title="Link to this heading">#</a></h2>
+<p>AR spectra look clean, and that is part of the danger: a smooth curve invites more confidence than it deserves. The main pitfalls, discussed at length by <span class="bibtex-citation" id="id12">Kay [<a class="reference internal" href="../bibliography.html#id10" title="Steven M. Kay. Modern Spectral Estimation: Theory and Application. Prentice Hall, Englewood Cliffs, NJ, 1988.">1988</a>]</span> and <span class="bibtex-citation" id="id13">Marple [<a class="reference internal" href="../bibliography.html#id12" title="S. Lawrence Marple. Digital Spectral Analysis with Applications. Prentice Hall, Englewood Cliffs, NJ, 1987.">1987</a>]</span>, are these.</p>
+<ul class="simple">
+<li><p><strong>The model is an assumption.</strong> An all-pole model represents peaks well and valleys poorly. Spectra with deep notches (a signal after a notch filter, for example) or with broad flat regions need high orders, and a moving-average or ARMA model would be more natural. When the AR assumption is wrong, the estimate is biased in ways that no confidence interval reveals.</p></li>
+<li><p><strong>Additive noise flattens peaks.</strong> An AR process observed in white measurement noise is no longer AR; its spectrum is <span class="math notranslate nohighlight">\(\sigma^2/|A|^2 + \sigma_v^2\)</span>, which has zeros as well as poles. A low-order AR fit then blunts and broadens the peaks, so the resolution advantage shrinks as the signal-to-noise ratio falls.</p></li>
+<li><p><strong>Order selection is fragile.</strong> AIC and FPE can disagree, and their minima are often shallow. Too high an order produces spurious peaks; for nearly sinusoidal components, a high order can split one peak into two (“line splitting”). I always compare neighboring orders.</p></li>
+<li><p><strong>Peak heights are not powers.</strong> The height of an AR peak grows without bound as its pole approaches the unit circle, while its width shrinks. Power must be obtained by integrating the spectrum over a band, never by reading the height of a peak.</p></li>
+<li><p><strong>Stationarity still matters.</strong> A short record makes AR estimation possible; it does not make a nonstationary signal stationary. If the heart rate drifts during the record, both Welch and AR spectra describe an average.</p></li>
+</ul>
+<p>My own practice follows from these points. I use Welch’s method by default, because its assumptions are few and its uncertainty is easy to state, and I switch to Burg’s method when the records are short and the spectrum is known to be peaky, as for RR series, short EEG epochs and the dominant frequency of EMG during fatiguing contractions. When both are possible, I compute both, and I treat disagreement as information.</p>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>An autoregressive model describes a signal as white noise passed through an all-pole filter <span class="math notranslate nohighlight">\(1/A(z)\)</span>, so by <span class="math notranslate nohighlight">\(S_y = |H|^2 S_x\)</span> its spectrum is <span class="math notranslate nohighlight">\(\sigma^2/|A(e^{j\Omega})|^2\)</span>, a smooth curve whose peaks sit at the angles of poles near the unit circle. Multiplying the model by past samples and taking expectations gives the Yule–Walker equations, a symmetric Toeplitz system that links the coefficients to the autocorrelation; the Levinson–Durbin recursion solves it order by order in <span class="math notranslate nohighlight">\(O(p^2)\)</span> operations and yields the reflection coefficients and prediction-error variances as by-products. Burg’s method estimates the reflection coefficients directly from forward and backward prediction errors, avoids the zero padding hidden in the biased autocorrelation, and always gives a stable model. On a short record of a sharply peaked AR(4) process, Burg’s method resolved two close peaks that both Yule–Walker and Welch merged. The model order is chosen with criteria such as FPE and AIC, which penalize the extra parameters that would otherwise fit noise. On real data, AR spectra gave a clean HRV spectrum from a one-minute RR series and a more stable alpha-frequency estimate from two-second EEG epochs than the periodogram.</p>
+<p>The AR model will reappear in several roles. The prediction-error filter <span class="math notranslate nohighlight">\(A(z)\)</span> is a whitening filter, which links this section to the Wiener filter of <a class="reference internal" href="../ch16_noise_removal/02_wiener_filter.html"><span class="std std-doc">Section 10.2</span></a> and the adaptive filters of Section 16.3; AR spectra are used for HRV in Section 19.2; and AR coefficients serve as compact features for machine learning in Chapter 27.</p>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Show that the AR(2) process <span class="math notranslate nohighlight">\(x[n] - 2r\cos\Omega_0\,x[n-1] + r^2 x[n-2] = w[n]\)</span> has poles at <span class="math notranslate nohighlight">\(re^{\pm j\Omega_0}\)</span>. Write its PSD using <a class="reference internal" href="#eq-7-35">(7.35)</a> and find the frequency at which it is largest. For which values of <span class="math notranslate nohighlight">\(r\)</span> and <span class="math notranslate nohighlight">\(\Omega_0\)</span> does the peak lie exactly at <span class="math notranslate nohighlight">\(\Omega_0\)</span>?</p></li>
+<li><p>Write out the Yule–Walker equations <a class="reference internal" href="#eq-7-38">(7.38)</a> for <span class="math notranslate nohighlight">\(p = 2\)</span> and solve them by hand in terms of <span class="math notranslate nohighlight">\(\rho_1 = R_x[1]/R_x[0]\)</span> and <span class="math notranslate nohighlight">\(\rho_2 = R_x[2]/R_x[0]\)</span>. Then run two steps of the Levinson–Durbin recursion <a class="reference internal" href="#eq-7-39">(7.39)</a> on the same quantities and confirm that you obtain the same coefficients. Express <span class="math notranslate nohighlight">\(k_1\)</span> and <span class="math notranslate nohighlight">\(k_2\)</span> in terms of <span class="math notranslate nohighlight">\(\rho_1\)</span> and <span class="math notranslate nohighlight">\(\rho_2\)</span>.</p></li>
+<li><p>Prove that <span class="math notranslate nohighlight">\(E_p = R_x[0]\prod_{m=1}^{p}(1 - k_m^2)\)</span>. Using the AR(4) test process, compute the reflection coefficients from the true autocorrelation and verify that all have magnitude less than one.</p></li>
+<li><p>Repeat the experiment of <a class="reference internal" href="#sec-7-4-5">Section 7.4.5</a> for <span class="math notranslate nohighlight">\(N = 64, 128, 256, 1024\)</span> and plot the percentage of records in which each method resolves the two peaks. At what length does the Yule–Walker estimate become competitive with Burg’s?</p></li>
+<li><p>Add white noise to the AR(4) process at signal-to-noise ratios of 30, 20 and 10 dB, fit Burg models of order 4 and of the order chosen by AIC, and describe how the peaks change. Relate your observations to the second caveat in <a class="reference internal" href="#sec-7-4-8">Section 7.4.8</a>.</p></li>
+<li><p>(Applied.) Compute the AR and Welch HRV spectra for six consecutive five-minute windows of record 100 and plot LF power, HF power and the HF peak frequency against time for both methods. Which quantities agree between the methods, and which do not?</p></li>
+</ol>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p><span class="bibtex-citation" id="id14">Kay [<a class="reference internal" href="../bibliography.html#id10" title="Steven M. Kay. Modern Spectral Estimation: Theory and Application. Prentice Hall, Englewood Cliffs, NJ, 1988.">1988</a>]</span> is the standard text on modern spectral estimation and treats AR, MA and ARMA estimators, Burg’s method and order selection in depth; <span class="bibtex-citation" id="id15">Marple [<a class="reference internal" href="../bibliography.html#id12" title="S. Lawrence Marple. Digital Spectral Analysis with Applications. Prentice Hall, Englewood Cliffs, NJ, 1987.">1987</a>]</span> is equally thorough and includes careful comparisons on test signals such as the one used here. <span class="bibtex-citation" id="id16">Stoica and Moses [<a class="reference internal" href="../bibliography.html#id11" title="Petre Stoica and Randolph Moses. Spectral Analysis of Signals. Pearson Prentice Hall, Upper Saddle River, NJ, 2005.">2005</a>]</span> (Chapter 3) gives a compact modern account of parametric methods, and <span class="bibtex-citation" id="id17">Burg [<a class="reference internal" href="../bibliography.html#id40" title="John Parker Burg. Maximum Entropy Spectral Analysis. PhD thesis, Stanford University, 1975.">1975</a>]</span> and <span class="bibtex-citation" id="id18">Akaike [<a class="reference internal" href="../bibliography.html#id41" title="Hirotugu Akaike. A new look at the statistical model identification. IEEE Transactions on Automatic Control, 19(6):716–723, 1974.">1974</a>]</span> are the original sources for the maximum entropy method and the information criterion. For the use of AR spectra in heart rate variability, start with the guidelines of the <span class="bibtex-citation" id="id19">Task Force of the European Society of Cardiology and the North American Society of Pacing and Electrophysiology [<a class="reference internal" href="../bibliography.html#id66" title="Task Force of the European Society of Cardiology and the North American Society of Pacing and Electrophysiology. Heart rate variability: standards of measurement, physiological interpretation, and clinical use. Circulation, 93(5):1043–1065, 1996.">1996</a>]</span>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ch12_spectral_estimation"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03_nonparametric_psd.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">7.3 The Periodogram, Bartlett and Welch Methods</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../ch13_filter_fundamentals/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">8. Filter Fundamentals</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-autoregressive-model-and-its-spectrum">7.4.1 The Autoregressive Model and Its Spectrum</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-yulewalker-equations">7.4.2 The Yule–Walker Equations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-levinsondurbin-recursion">7.4.3 The Levinson–Durbin Recursion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#burgs-method">7.4.4 Burg’s Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recovering-a-known-spectrum-from-a-short-record">7.4.5 Recovering a Known Spectrum from a Short Record</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-model-order">7.4.6 Choosing the Model Order</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applied-example-short-records-of-heart-rhythm-and-eeg">7.4.7 Applied Example: Short Records of Heart Rhythm and EEG</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-build-an-evenly-sampled-rr-series">Step 1: Build an evenly sampled RR series</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-welch-and-ar-spectra-of-five-minutes-and-of-one-minute">Step 2: Welch and AR spectra of five minutes and of one minute</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-read-the-hrv-spectra">Step 3: Read the HRV spectra</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-two-second-eeg-epochs">Step 4: Two-second EEG epochs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-interpret">Step 5: Interpret</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caveats">7.4.8 Caveats</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kim Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on November 08, 2026.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

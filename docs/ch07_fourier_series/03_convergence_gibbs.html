@@ -1,0 +1,1324 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5.3 Convergence and the Gibbs Phenomenon &#8212; Biomedical Signal Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ec5fc9de" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch07_fourier_series/03_convergence_gibbs';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="../_static/equation-previews-data.js?v=1d8d4c5d"></script>
+    <script src="../_static/equation-previews.js?v=9ddb93c8"></script>
+    <link rel="canonical" href="https://kimnguyen2002.github.io/biomedical-signal-processing/ch07_fourier_series/03_convergence_gibbs.html" />
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6. Sampling, Quantization and Reconstruction" href="../ch09_sampling/index.html" />
+    <link rel="prev" title="5.2 The Complex Exponential Fourier Series" href="02_complex_fourier_series.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+    <meta name="docbuild:last-update" content="November 08, 2026"/>
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Biomedical Signal Processing - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Biomedical Signal Processing - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part I. Foundations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch01_introduction/index.html">1. Introduction to Biomedical Signals</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/01_what_is_a_biomedical_signal.html">1.1 What Is a Biomedical Signal?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/02_bioelectric_origins.html">1.2 The Bioelectric Origin of Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/03_acquisition_chain.html">1.3 From Body to Computer: The Acquisition Chain</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch02_math_toolkit/index.html">2. The Mathematical Toolkit</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/01_complex_numbers.html">2.1 Complex Numbers and Euler’s Formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/03_signals_as_vectors.html">2.2 Signals as Vectors: Inner Products and Orthogonality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/04_calculus_for_signals.html">2.3 Calculus for Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch02_math_toolkit/05_probability_and_statistics.html">2.4 Probability and Statistics for Signals</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part II. Linear Time-Invariant Systems</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch04_systems/index.html">3. Systems and Their Properties</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch04_systems/01_what_is_a_system.html">3.1 What Is a System?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch04_systems/02_linearity.html">3.2 Linearity and Superposition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch05_convolution/index.html">4. The Impulse Response and Convolution</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch05_convolution/01_impulse_representation.html">4.1 Building Signals from Impulses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch05_convolution/02_convolution_sum.html">4.2 The Convolution Sum</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part III. Frequency-Domain Analysis</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">5. Fourier Series</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_fourier_series_derivation.html">5.1 Representing Periodic Signals with Sinusoids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_complex_fourier_series.html">5.2 The Complex Exponential Fourier Series</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">5.3 Convergence and the Gibbs Phenomenon</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch09_sampling/index.html">6. Sampling, Quantization and Reconstruction</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch09_sampling/01_sampling_theorem.html">6.1 The Sampling Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch09_sampling/02_aliasing.html">6.2 Aliasing and Anti-Aliasing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch12_spectral_estimation/index.html">7. Random Signals and Spectral Estimation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/01_random_processes.html">7.1 Random Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/02_power_spectral_density.html">7.2 Power Spectral Density and the Wiener–Khinchin Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/03_nonparametric_psd.html">7.3 The Periodogram, Bartlett and Welch Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/04_parametric_psd.html">7.4 Autoregressive Spectral Estimation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part IV. Filtering</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch13_filter_fundamentals/index.html">8. Filter Fundamentals</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch13_filter_fundamentals/01_filter_types_specs.html">8.1 Filter Types and Specifications</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch14_fir/index.html">9. FIR Filter Design</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch14_fir/01_linear_phase_fir.html">9.1 Linear-Phase FIR Filters</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch16_noise_removal/index.html">10. Noise Reduction: Averaging, Wiener and Adaptive Filters</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch16_noise_removal/01_signal_averaging.html">10.1 Signal Averaging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch16_noise_removal/02_wiener_filter.html">10.2 The Wiener Filter</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part V. The Electrocardiogram</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch17_ecg/index.html">11. The Electrocardiogram: Physiology and Recording</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/01_cardiac_electrophysiology.html">11.1 Cardiac Electrophysiology and the ECG Waveform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/02_recording_the_ecg.html">11.2 Recording the ECG: Leads, Amplifiers, Anti-Aliasing and Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/03_ecg_data_in_python.html">11.3 ECG Data in Python: PhysioNet Records, Annotations and Plots</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch18_ecg_preprocessing/index.html">12. ECG Noise and Preprocessing, Step by Step</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch18_ecg_preprocessing/01_ecg_noise_types.html">12.1 Typical Noises in the ECG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch18_ecg_preprocessing/02_highpass_baseline_wander.html">12.2 High-Pass Filtering and Baseline Wander Removal</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part VI. Other Physiological Signals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch20_eeg/index.html">13. The Electroencephalogram</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/01_eeg_fundamentals.html">13.1 Origins of the EEG, Montages and Rhythms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/02_eeg_spectral_analysis.html">13.2 Spectral Analysis of the EEG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/03_event_related_activity.html">13.3 Event-Related Potentials and Desynchronization</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part VII. Advanced Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch24_wavelets/index.html">14. Wavelets and Multiresolution Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch24_wavelets/01_dwt_filter_banks.html">14.1 The Discrete Wavelet Transform and Filter Banks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch24_wavelets/02_wavelet_denoising.html">14.2 Wavelet Denoising</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../appendix/a_python_essentials.html">A. Python Essentials for Signal Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/b_datasets.html">B. Biomedical Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/c_math_reference.html">C. Mathematical Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/d_glossary.html">D. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/e_data_types.html">E. Python Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/f_pandas.html">F. pandas for Biomedical Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/g_numpy.html">G. NumPy for Sampled Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/h_latex.html">H. Writing Equations with LaTeX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/i_math_symbols.html">I. Mathematical Symbols and Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Books and References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch07_fourier_series/03_convergence_gibbs.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>5.3 Convergence and the Gibbs Phenomenon</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-sums-and-what-convergence-means">5.3.1 Partial Sums and What “Convergence” Means</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dirichlet-kernel-and-the-midpoint-rule">5.3.2 The Dirichlet Kernel and the Midpoint Rule</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-the-series-picks-the-midpoint-at-a-jump">Why the series picks the midpoint at a jump</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-square-convergence">5.3.3 Mean-Square Convergence</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-truncated-series-is-the-best-approximation">The truncated series is the best approximation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-gibbs-phenomenon">5.3.4 The Gibbs Phenomenon</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smoothness-and-the-decay-of-the-coefficients">5.3.5 Smoothness and the Decay of the Coefficients</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#softening-the-truncation-fejer-and-lanczos">5.3.6 Softening the Truncation: Fejér and Lanczos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fejer-means">Fejér means</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lanczos-sigma-factors">Lanczos sigma factors</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringing-in-a-band-limited-ecg">5.3.7 Ringing in a Band-Limited ECG</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-a-segment-and-remove-the-end-point-jump">Step 1: Load a segment and remove the end-point jump</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-truncate-the-series-at-a-cutoff-and-taper-it">Step 2: Truncate the series at a cutoff, and taper it</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-measure-the-ringing-at-several-cutoffs">Step 3: Measure the ringing at several cutoffs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="convergence-and-the-gibbs-phenomenon">
+<span id="sec-5-3"></span><h1>5.3 Convergence and the Gibbs Phenomenon<a class="headerlink" href="#convergence-and-the-gibbs-phenomenon" title="Link to this heading">#</a></h1>
+<p>In the previous two sections we computed Fourier coefficients and then wrote, with some confidence, that the infinite sum of harmonics <em>equals</em> the signal. For the smooth ventilator waveform of <a class="reference internal" href="01_fourier_series_derivation.html"><span class="std std-doc">Section 5.1</span></a> that claim is harmless. Physiological signals and the models we build of them are not always smooth, though. A pacemaker stimulus switches on in microseconds, the QRS complex rises by a millivolt in about 20 ms, and the two ends of a finite recording almost never meet at the same value, so its periodic extension has a jump. Whenever such a signal is described by finitely many harmonics, which is what every band-limited amplifier and every low-pass filter effectively does, the reconstruction develops small oscillations next to the steep parts. On an ECG these oscillations can appear in the ST segment, the part of the beat that a cardiologist inspects for signs of ischemia.</p>
+<p>This section answers three questions that <a class="reference internal" href="01_fourier_series_derivation.html"><span class="std std-doc">Section 5.1</span></a> left open. In what sense does the series converge, and what does it converge to at a jump? Why does the overshoot next to a jump refuse to shrink, no matter how many harmonics we add? And how fast must the coefficients decay for a waveform to be well described by a few of them? I close with a practical remedy, tapering the coefficients instead of cutting them off, and test it on a real ECG.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">wfdb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">sici</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">"../bsp.mplstyle"</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"axes.prop_cycle"</span><span class="p">]</span><span class="o">.</span><span class="n">by_key</span><span class="p">()[</span><span class="s2">"color"</span><span class="p">]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="partial-sums-and-what-convergence-means">
+<span id="sec-5-3-1"></span><h2>5.3.1 Partial Sums and What “Convergence” Means<a class="headerlink" href="#partial-sums-and-what-convergence-means" title="Link to this heading">#</a></h2>
+<p>A computer can never add infinitely many terms, so the object we actually work with is the <strong>partial sum</strong> that keeps the harmonics up to order <span class="math notranslate nohighlight">\(K\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-5-25">
+\[\begin{equation*}
+x_K(t) = \sum_{n=-K}^{K} c_n\, e^{jn\omega_0 t}, \qquad c_n = \frac{1}{T}\int_T x(\tau)\,e^{-jn\omega_0 \tau}\,d\tau. \tag{5.25}
+\end{equation*}\]</div>
+<p>For a real signal this is the same as the trigonometric series <a class="reference internal" href="01_fourier_series_derivation.html#eq-5-1"><span class="std std-ref">(5.1)</span></a> truncated after <span class="math notranslate nohighlight">\(K\)</span> harmonics, because the terms <span class="math notranslate nohighlight">\(n\)</span> and <span class="math notranslate nohighlight">\(-n\)</span> combine into one real cosine. Saying that “the Fourier series converges to <span class="math notranslate nohighlight">\(x(t)\)</span>” means that <span class="math notranslate nohighlight">\(x_K\)</span> approaches <span class="math notranslate nohighlight">\(x\)</span> as <span class="math notranslate nohighlight">\(K \to \infty\)</span>. There are several ways in which one function can approach another, and for Fourier series the difference between them is not academic:</p>
+<ul class="simple">
+<li><p><strong>Pointwise convergence</strong>: for every fixed instant <span class="math notranslate nohighlight">\(t\)</span>, the number <span class="math notranslate nohighlight">\(x_K(t)\)</span> tends to the number <span class="math notranslate nohighlight">\(x(t)\)</span>.</p></li>
+<li><p><strong>Uniform convergence</strong>: the worst error over the whole period, <span class="math notranslate nohighlight">\(\max_t |x(t) - x_K(t)|\)</span>, tends to zero. This is stronger, since it forbids any region where the approximation stays poor.</p></li>
+<li><p><strong>Mean-square convergence</strong>: the average squared error over a period, <span class="math notranslate nohighlight">\(\frac{1}{T}\int_T |x(t) - x_K(t)|^2\,dt\)</span>, tends to zero. A large error is still allowed, provided it is confined to a region that becomes vanishingly narrow.</p></li>
+</ul>
+<p>We will see that a square wave enjoys pointwise convergence (with a special value at the jumps) and mean-square convergence, but not uniform convergence. The Gibbs phenomenon lives in the gap between these notions.</p>
+</section>
+<section id="the-dirichlet-kernel-and-the-midpoint-rule">
+<span id="sec-5-3-2"></span><h2>5.3.2 The Dirichlet Kernel and the Midpoint Rule<a class="headerlink" href="#the-dirichlet-kernel-and-the-midpoint-rule" title="Link to this heading">#</a></h2>
+<p>To understand what the partial sum does to a signal, we substitute the coefficient formula into <a class="reference internal" href="#eq-5-25">(5.25)</a> and rearrange. Peter Gustav Lejeune Dirichlet used exactly this argument in 1829 to give the first rigorous convergence proof.</p>
+<p><strong>Step 1: insert the coefficients.</strong> The sum over <span class="math notranslate nohighlight">\(n\)</span> is finite, so we may move it inside the integral:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+x_K(t) &amp;= \sum_{n=-K}^{K}\left[\frac{1}{T}\int_T x(\tau)\,e^{-jn\omega_0\tau}\,d\tau\right] e^{jn\omega_0 t} \\
+       &amp;= \frac{1}{T}\int_T x(\tau)\left[\sum_{n=-K}^{K} e^{jn\omega_0 (t-\tau)}\right] d\tau .
+\end{aligned}
+\end{split}\]</div>
+<p>The bracket depends only on the difference <span class="math notranslate nohighlight">\(u = t - \tau\)</span>. We call it the <strong>Dirichlet kernel</strong> <span class="math notranslate nohighlight">\(D_K(u)\)</span>, and the partial sum becomes a weighted average of the signal,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-5-26">
+\[\begin{equation*}
+x_K(t) = \frac{1}{T}\int_T x(\tau)\,D_K(t - \tau)\,d\tau, \qquad D_K(u) = \sum_{n=-K}^{K} e^{jn\omega_0 u}. \tag{5.26}
+\end{equation*}\]</div>
+<p>This is a periodic convolution: truncating the series is the same as smoothing the signal with the kernel <span class="math notranslate nohighlight">\(D_K\)</span>.</p>
+<p><strong>Step 2: sum the geometric series.</strong> Write <span class="math notranslate nohighlight">\(\theta = \omega_0 u\)</span> and factor out the term with the most negative exponent,</p>
+<div class="math notranslate nohighlight">
+\[
+D_K = \sum_{n=-K}^{K} e^{jn\theta} = e^{-jK\theta}\sum_{m=0}^{2K} e^{jm\theta} = e^{-jK\theta}\,\frac{1 - e^{j(2K+1)\theta}}{1 - e^{j\theta}},
+\]</div>
+<p>which is valid whenever <span class="math notranslate nohighlight">\(e^{j\theta} \neq 1\)</span>. To simplify the ratio we use the half-angle trick <span class="math notranslate nohighlight">\(1 - e^{j\phi} = e^{j\phi/2}\big(e^{-j\phi/2} - e^{j\phi/2}\big) = -2j\,e^{j\phi/2}\sin(\phi/2)\)</span> on the numerator and on the denominator:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1 - e^{j(2K+1)\theta}}{1 - e^{j\theta}} = \frac{e^{j(2K+1)\theta/2}\,\sin\!\big((2K+1)\theta/2\big)}{e^{j\theta/2}\,\sin(\theta/2)} = e^{jK\theta}\,\frac{\sin\!\big((K+\tfrac12)\theta\big)}{\sin(\theta/2)} .
+\]</div>
+<p><strong>Step 3: cancel the phase factors.</strong> The factor <span class="math notranslate nohighlight">\(e^{jK\theta}\)</span> cancels the <span class="math notranslate nohighlight">\(e^{-jK\theta}\)</span> in front, leaving a real function:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-5-27">
+\[\begin{equation*}
+D_K(u) = \frac{\sin\!\big((K + \tfrac12)\,\omega_0 u\big)}{\sin(\omega_0 u/2)}, \qquad D_K(0) = 2K + 1. \tag{5.27}
+\end{equation*}\]</div>
+<p>The value at <span class="math notranslate nohighlight">\(u = 0\)</span> follows from the definition directly (all <span class="math notranslate nohighlight">\(2K+1\)</span> exponentials equal one) or from the limit <span class="math notranslate nohighlight">\(\sin(ax)/\sin(bx) \to a/b\)</span>.</p>
+<p>Three properties of the kernel explain almost everything that follows. It is even, <span class="math notranslate nohighlight">\(D_K(-u) = D_K(u)\)</span>. Its average over a period is exactly one, because integrating the sum in <a class="reference internal" href="#eq-5-26">(5.26)</a> term by term kills every exponential except <span class="math notranslate nohighlight">\(n = 0\)</span> (the orthogonality relation <a class="reference internal" href="02_complex_fourier_series.html#eq-5-17"><span class="std std-ref">(5.17)</span></a>). And as <span class="math notranslate nohighlight">\(K\)</span> grows, its central lobe becomes taller (<span class="math notranslate nohighlight">\(2K+1\)</span>) and narrower (first zeros at <span class="math notranslate nohighlight">\(u = \pm T/(2K+1)\)</span>), while the side lobes oscillate faster but do <strong>not</strong> become smaller: away from the origin they are bounded only by <span class="math notranslate nohighlight">\(1/|\sin(\omega_0 u/2)|\)</span>, which does not depend on <span class="math notranslate nohighlight">\(K\)</span>. The figure shows the kernel for two values of <span class="math notranslate nohighlight">\(K\)</span>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">dirichlet_kernel</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Dirichlet kernel D_K(u) of equation (7.27); u in seconds."""</span>
+    <span class="n">w0</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">T</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">((</span><span class="n">K</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">w0</span> <span class="o">*</span> <span class="n">u</span><span class="p">)</span>
+    <span class="n">den</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">w0</span> <span class="o">*</span> <span class="n">u</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">K</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">ok</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">den</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-12</span>
+    <span class="n">out</span><span class="p">[</span><span class="n">ok</span><span class="p">]</span> <span class="o">=</span> <span class="n">num</span><span class="p">[</span><span class="n">ok</span><span class="p">]</span> <span class="o">/</span> <span class="n">den</span><span class="p">[</span><span class="n">ok</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">4001</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">K</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">]):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">dirichlet_kernel</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">K</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"$K = </span><span class="si">{</span><span class="n">K</span><span class="si">}</span><span class="s2">$ (peak </span><span class="si">{</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.55"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Lag $u$ (s), period $T = 1$ s"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"$D_K(u)$"</span><span class="p">,</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"The Dirichlet kernel: a narrow peak with side lobes that do not die out"</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/ead6afda6164985794c892f4fea0b54f540f08ebd040abe34e446791b49ed0ec.png" src="../_images/ead6afda6164985794c892f4fea0b54f540f08ebd040abe34e446791b49ed0ec.png" />
+</div>
+</div>
+<section id="why-the-series-picks-the-midpoint-at-a-jump">
+<h3>Why the series picks the midpoint at a jump<a class="headerlink" href="#why-the-series-picks-the-midpoint-at-a-jump" title="Link to this heading">#</a></h3>
+<p>Suppose <span class="math notranslate nohighlight">\(x\)</span> jumps at <span class="math notranslate nohighlight">\(t_0\)</span> from the left limit <span class="math notranslate nohighlight">\(x(t_0^-)\)</span> to the right limit <span class="math notranslate nohighlight">\(x(t_0^+)\)</span>. Substituting <span class="math notranslate nohighlight">\(\tau = t_0 - u\)</span> in <a class="reference internal" href="#eq-5-26">(5.26)</a> gives <span class="math notranslate nohighlight">\(x_K(t_0) = \frac{1}{T}\int_{-T/2}^{T/2} x(t_0 - u)\,D_K(u)\,du\)</span>. For <span class="math notranslate nohighlight">\(u &gt; 0\)</span> the integrand samples the signal to the <em>left</em> of the jump, and for <span class="math notranslate nohighlight">\(u &lt; 0\)</span> it samples the right side. Because the kernel is even and averages to one, each half of the integration range carries exactly half of the total weight. As <span class="math notranslate nohighlight">\(K\)</span> grows, the kernel oscillates so quickly away from the origin that it averages out any smooth part of the signal there (this is the Riemann–Lebesgue lemma), and only the values of <span class="math notranslate nohighlight">\(x\)</span> immediately next to <span class="math notranslate nohighlight">\(t_0\)</span> survive. The left half therefore contributes <span class="math notranslate nohighlight">\(\tfrac12 x(t_0^-)\)</span>, the right half contributes <span class="math notranslate nohighlight">\(\tfrac12 x(t_0^+)\)</span>, and</p>
+<div class="amsmath math notranslate nohighlight" id="eq-5-28">
+\[\begin{equation*}
+\lim_{K\to\infty} x_K(t_0) = \frac{x(t_0^-) + x(t_0^+)}{2}. \tag{5.28}
+\end{equation*}\]</div>
+<p>At a point where the signal is continuous, the two limits coincide and the series converges to <span class="math notranslate nohighlight">\(x(t_0)\)</span> itself. The precise statement is known as <strong>Dirichlet’s theorem</strong>. If a periodic signal satisfies the <strong>Dirichlet conditions</strong>,</p>
+<ol class="arabic simple">
+<li><p>it is absolutely integrable over one period, <span class="math notranslate nohighlight">\(\int_T |x(t)|\,dt &lt; \infty\)</span>,</p></li>
+<li><p>it has a finite number of maxima and minima in one period,</p></li>
+<li><p>it has a finite number of discontinuities in one period, each of them a finite jump,</p></li>
+</ol>
+<p>then its Fourier series converges to <span class="math notranslate nohighlight">\(x(t)\)</span> wherever <span class="math notranslate nohighlight">\(x\)</span> is continuous and to the midpoint <a class="reference internal" href="#eq-5-28">(5.28)</a> at every jump. The conditions are sufficient, not necessary, and every waveform you will meet in a physiological recording satisfies them. The functions that violate them are mathematical constructions such as <span class="math notranslate nohighlight">\(\sin(1/t)\)</span>, which has infinitely many extrema near <span class="math notranslate nohighlight">\(t = 0\)</span>.</p>
+<p>We can check <a class="reference internal" href="#eq-5-28">(5.28)</a> on the rectangular pulse train of <a class="reference internal" href="02_complex_fourier_series.html#sec-5-2-5"><span class="std std-ref">Section 5.2.5</span></a>, which equals 1 for <span class="math notranslate nohighlight">\(|t| &lt; \tau/2\)</span> and 0 elsewhere in the period. Its coefficients <span class="math notranslate nohighlight">\(c_n = d\,\operatorname{sinc}(nd)\)</span>, with duty cycle <span class="math notranslate nohighlight">\(d = \tau/T\)</span>, are given by <a class="reference internal" href="02_complex_fourier_series.html#eq-5-21"><span class="std std-ref">(5.21)</span></a>. At the edge <span class="math notranslate nohighlight">\(t = \tau/2\)</span> the signal jumps from 1 to 0, so the partial sums should approach <span class="math notranslate nohighlight">\(0.5\)</span>; at the center they should approach <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">partial_sum</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Partial Fourier sum (7.25) for coefficients c at harmonic numbers n, evaluated at times t."""</span>
+    <span class="n">w0</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">T</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">w0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span> <span class="o">@</span> <span class="n">c</span><span class="p">)</span>
+
+
+<span class="n">d</span> <span class="o">=</span> <span class="mf">0.3</span>                                   <span class="c1"># duty cycle, T = 1 s</span>
+<span class="n">t_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">d</span> <span class="o">/</span> <span class="mi">2</span><span class="p">])</span>           <span class="c1"># pulse center and pulse edge</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">" K      x_K(center)   x_K(edge)"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">5000</span><span class="p">]:</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">K</span><span class="p">,</span> <span class="n">K</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">d</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sinc</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>                <span class="c1"># equation (7.21), np.sinc is sin(pi u)/(pi u)</span>
+    <span class="n">center</span><span class="p">,</span> <span class="n">edge</span> <span class="o">=</span> <span class="n">partial_sum</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">t_test</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">K</span><span class="si">:</span><span class="s2">5d</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">center</span><span class="si">:</span><span class="s2">11.5f</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">edge</span><span class="si">:</span><span class="s2">9.5f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> K      x_K(center)   x_K(edge)
+    5       0.96247     0.52250
+   50       1.01248     0.49769
+  500       0.99875     0.49977
+ 5000       0.99988     0.49998
+</pre></div>
+</div>
+</div>
+</div>
+<p>The value at the edge settles on <span class="math notranslate nohighlight">\(0.5\)</span>, halfway between the two levels, while the value at the center approaches <span class="math notranslate nohighlight">\(1\)</span>. Neither sequence converges monotonically; the center value overshoots and undershoots before it settles, which is a first sign of the oscillations we study in <a class="reference internal" href="#sec-5-3-4">Section 5.3.4</a>.</p>
+</section>
+</section>
+<section id="mean-square-convergence">
+<span id="sec-5-3-3"></span><h2>5.3.3 Mean-Square Convergence<a class="headerlink" href="#mean-square-convergence" title="Link to this heading">#</a></h2>
+<p>Pointwise statements tell us what happens at one instant. For signal processing a global measure is usually more useful, and the natural one is the power of the error. Define the <strong>mean-square error</strong> of the partial sum,</p>
+<div class="math notranslate nohighlight">
+\[
+E_K = \frac{1}{T}\int_T \big|x(t) - x_K(t)\big|^2\,dt .
+\]</div>
+<p>The error signal <span class="math notranslate nohighlight">\(e_K = x - x_K\)</span> is itself periodic, and its Fourier coefficients are easy to read off: they equal <span class="math notranslate nohighlight">\(c_n\)</span> for <span class="math notranslate nohighlight">\(|n| &gt; K\)</span> and zero for <span class="math notranslate nohighlight">\(|n| \le K\)</span>, because <span class="math notranslate nohighlight">\(x_K\)</span> contains exactly the low-order harmonics of <span class="math notranslate nohighlight">\(x\)</span>. Parseval’s theorem <a class="reference internal" href="02_complex_fourier_series.html#eq-5-19"><span class="std std-ref">(5.19)</span></a> applied to <span class="math notranslate nohighlight">\(e_K\)</span> then gives the error power as a sum of discarded coefficient powers:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-5-29">
+\[\begin{equation*}
+E_K = \sum_{|n| &gt; K} |c_n|^2 . \tag{5.29}
+\end{equation*}\]</div>
+<p>The full sum <span class="math notranslate nohighlight">\(\sum_n |c_n|^2\)</span> is the power of <span class="math notranslate nohighlight">\(x\)</span>, which is finite for every physical signal. The tail of a convergent series tends to zero, so <strong>every finite-power periodic signal is the mean-square limit of its Fourier series</strong>. This requirement is much weaker than the Dirichlet conditions, and it is the reason engineers rarely worry about convergence: in the sense of energy, the series always works.</p>
+<section id="the-truncated-series-is-the-best-approximation">
+<h3>The truncated series is the best approximation<a class="headerlink" href="#the-truncated-series-is-the-best-approximation" title="Link to this heading">#</a></h3>
+<p>There is a second reason to like <a class="reference internal" href="#eq-5-29">(5.29)</a>. Suppose we approximate <span class="math notranslate nohighlight">\(x\)</span> by <em>any</em> trigonometric polynomial with <span class="math notranslate nohighlight">\(2K+1\)</span> terms, <span class="math notranslate nohighlight">\(p(t) = \sum_{|n|\le K} d_n e^{jn\omega_0 t}\)</span>, with coefficients <span class="math notranslate nohighlight">\(d_n\)</span> of our choosing. The difference <span class="math notranslate nohighlight">\(x - p\)</span> has coefficients <span class="math notranslate nohighlight">\(c_n - d_n\)</span> for <span class="math notranslate nohighlight">\(|n| \le K\)</span> and <span class="math notranslate nohighlight">\(c_n\)</span> for <span class="math notranslate nohighlight">\(|n| &gt; K\)</span>, so by Parseval again,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-5-30">
+\[\begin{equation*}
+\frac{1}{T}\int_T |x(t) - p(t)|^2\,dt = \sum_{|n|\le K} |c_n - d_n|^2 + \sum_{|n|&gt;K} |c_n|^2 \;\ge\; E_K , \tag{5.30}
+\end{equation*}\]</div>
+<p>with equality only when <span class="math notranslate nohighlight">\(d_n = c_n\)</span> for every <span class="math notranslate nohighlight">\(|n| \le K\)</span>. Among all sums of <span class="math notranslate nohighlight">\(2K+1\)</span> harmonics, the truncated Fourier series has the smallest mean-square error. It is the orthogonal projection of <span class="math notranslate nohighlight">\(x\)</span> onto the subspace spanned by the first harmonics, the same projection idea we met in <a class="reference internal" href="../ch02_math_toolkit/03_signals_as_vectors.html"><span class="std std-doc">Section 2.2</span></a>. A practical consequence is that adding harmonics never forces us to recompute the ones we already have.</p>
+<p><strong>Example 5.3.1.</strong> For the unit square wave <a class="reference internal" href="01_fourier_series_derivation.html#eq-5-7"><span class="std std-ref">(5.7)</span></a>, <span class="math notranslate nohighlight">\(b_n = 4/(\pi n)\)</span> for odd <span class="math notranslate nohighlight">\(n\)</span>, so by <a class="reference internal" href="02_complex_fourier_series.html#eq-5-12"><span class="std std-ref">(5.12)</span></a> <span class="math notranslate nohighlight">\(c_n = -jb_n/2 = -2j/(\pi n)\)</span> and <span class="math notranslate nohighlight">\(|c_n|^2 = 4/(\pi^2 n^2)\)</span> for odd <span class="math notranslate nohighlight">\(n\)</span>. Counting both signs of <span class="math notranslate nohighlight">\(n\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+E_K = 2\sum_{\substack{n &gt; K \\ n\ \text{odd}}} \frac{4}{\pi^2 n^2} \approx \frac{8}{\pi^2}\int_K^{\infty}\frac{dn}{2n^2} = \frac{4}{\pi^2 K}.
+\end{split}\]</div>
+<p>The factor <span class="math notranslate nohighlight">\(\tfrac12\)</span> inside the integral accounts for the fact that only every second integer is odd. The square wave has power 1, so the relative error power falls like <span class="math notranslate nohighlight">\(0.41/K\)</span>: slowly, but steadily, to zero. The next cell compares a direct numerical integration of the error, the tail sum <a class="reference internal" href="#eq-5-29">(5.29)</a> and the approximation <span class="math notranslate nohighlight">\(4/(\pi^2 K)\)</span>. It also records the largest value of <span class="math notranslate nohighlight">\(x_K\)</span>, which tells a different story.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">T</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">T</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">200_001</span><span class="p">)</span>
+<span class="n">square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">t</span> <span class="o">/</span> <span class="n">T</span><span class="p">))</span>          <span class="c1"># +1 on (0, T/2), -1 on (-T/2, 0)</span>
+
+<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">159</span><span class="p">,</span> <span class="mi">639</span><span class="p">]:</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">K</span><span class="p">,</span> <span class="n">K</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="n">j</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)),</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">xK</span> <span class="o">=</span> <span class="n">partial_sum</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+    <span class="n">E_numeric</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">((</span><span class="n">square</span> <span class="o">-</span> <span class="n">xK</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="n">T</span>
+    <span class="n">n_tail</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">K</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">400_001</span><span class="p">)</span>
+    <span class="n">E_tail</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">n_tail</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n_tail</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"K"</span><span class="p">:</span> <span class="n">K</span><span class="p">,</span> <span class="s2">"E_K (integral)"</span><span class="p">:</span> <span class="n">E_numeric</span><span class="p">,</span> <span class="s2">"E_K (tail sum)"</span><span class="p">:</span> <span class="n">E_tail</span><span class="p">,</span>
+                 <span class="s2">"4/(pi^2 K)"</span><span class="p">:</span> <span class="mi">4</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">K</span><span class="p">),</span> <span class="s2">"max x_K"</span><span class="p">:</span> <span class="n">xK</span><span class="o">.</span><span class="n">max</span><span class="p">()})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"K"</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">float_format</span><span class="o">=</span><span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">"</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     E_K (integral)  E_K (tail sum)  4/(pi^2 K)  max x_K
+K                                                       
+9           0.04039         0.04039     0.04503  1.18233
+39          0.01013         0.01013     0.01039  1.17919
+159         0.00253         0.00253     0.00255  1.17899
+639         0.00063         0.00063     0.00063  1.17898
+</pre></div>
+</div>
+</div>
+</div>
+<p>The integral and the tail sum agree, and both shrink roughly in proportion to <span class="math notranslate nohighlight">\(1/K\)</span>. The last column does not shrink at all. Whatever <span class="math notranslate nohighlight">\(K\)</span> we choose, the partial sum climbs to about <span class="math notranslate nohighlight">\(1.179\)</span>, almost 18% above the level of the square wave. The mean-square error vanishes, but the maximum error does not, so the convergence is not uniform.</p>
+</section>
+</section>
+<section id="the-gibbs-phenomenon">
+<span id="sec-5-3-4"></span><h2>5.3.4 The Gibbs Phenomenon<a class="headerlink" href="#the-gibbs-phenomenon" title="Link to this heading">#</a></h2>
+<p>The persistent overshoot is called the <strong>Gibbs phenomenon</strong>. Henry Wilbraham described it in 1848, and it became widely known only fifty years later, after an exchange in <em>Nature</em> in 1898 and 1899 in which Albert Michelson reported odd peaks in the output of his mechanical harmonic analyzer and Josiah Willard Gibbs explained them <span class="bibtex-citation" id="id1">[]</span>. We can compute the height of the peak exactly.</p>
+<p>Keep <span class="math notranslate nohighlight">\(M\)</span> nonzero terms of the square-wave series, which means harmonics up to <span class="math notranslate nohighlight">\(K = 2M - 1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+S_M(t) = \frac{4}{\pi}\sum_{k=1}^{M}\frac{\sin\!\big((2k-1)\omega_0 t\big)}{2k-1}.
+\]</div>
+<p><strong>Step 1: differentiate.</strong> Differentiating term by term removes the awkward denominators,</p>
+<div class="math notranslate nohighlight">
+\[
+S_M'(t) = \frac{4\omega_0}{\pi}\sum_{k=1}^{M}\cos\!\big((2k-1)\omega_0 t\big).
+\]</div>
+<p><strong>Step 2: sum the cosines.</strong> Write <span class="math notranslate nohighlight">\(\theta = \omega_0 t\)</span>. Multiplying each term by <span class="math notranslate nohighlight">\(2\sin\theta\)</span> and using the product-to-sum identity <span class="math notranslate nohighlight">\(2\sin\theta\cos\big((2k-1)\theta\big) = \sin(2k\theta) - \sin\big((2k-2)\theta\big)\)</span>, the sum telescopes:</p>
+<div class="math notranslate nohighlight">
+\[
+2\sin\theta\sum_{k=1}^{M}\cos\big((2k-1)\theta\big) = \sin(2M\theta) - \sin(0) = \sin(2M\theta).
+\]</div>
+<p>Hence</p>
+<div class="math notranslate nohighlight">
+\[
+S_M'(t) = \frac{2\omega_0}{\pi}\,\frac{\sin(2M\omega_0 t)}{\sin(\omega_0 t)}.
+\]</div>
+<p><strong>Step 3: locate the first peak.</strong> Just to the right of the jump at <span class="math notranslate nohighlight">\(t = 0\)</span>, the denominator is positive and the derivative is positive until the numerator first changes sign, at <span class="math notranslate nohighlight">\(2M\omega_0 t = \pi\)</span>. The first and highest maximum therefore sits at</p>
+<div class="math notranslate nohighlight">
+\[
+t_M = \frac{\pi}{2M\omega_0} = \frac{T}{4M}.
+\]</div>
+<p>As <span class="math notranslate nohighlight">\(M\)</span> grows, the peak moves toward the jump.</p>
+<p><strong>Step 4: evaluate the peak as a Riemann sum.</strong> At <span class="math notranslate nohighlight">\(t = t_M\)</span> the argument of the <span class="math notranslate nohighlight">\(k\)</span>-th sine is <span class="math notranslate nohighlight">\(u_k = (2k-1)\pi/(2M)\)</span>. These are the midpoints of <span class="math notranslate nohighlight">\(M\)</span> equal subintervals of <span class="math notranslate nohighlight">\([0, \pi]\)</span>, each of width <span class="math notranslate nohighlight">\(\Delta u = \pi/M\)</span>. Since <span class="math notranslate nohighlight">\(\frac{1}{2k-1} = \frac{\pi}{2M u_k} = \frac{\Delta u}{2u_k}\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+S_M(t_M) = \frac{4}{\pi}\sum_{k=1}^{M}\sin(u_k)\,\frac{\Delta u}{2u_k} = \frac{2}{\pi}\sum_{k=1}^{M}\frac{\sin u_k}{u_k}\,\Delta u .
+\]</div>
+<p><strong>Step 5: take the limit.</strong> The last sum is a midpoint rule for the integral of <span class="math notranslate nohighlight">\(\sin u/u\)</span> over <span class="math notranslate nohighlight">\([0,\pi]\)</span>. As <span class="math notranslate nohighlight">\(M \to \infty\)</span> it converges to the <strong>sine integral</strong> <span class="math notranslate nohighlight">\(\operatorname{Si}(\pi) = \int_0^\pi \frac{\sin u}{u}\,du \approx 1.85194\)</span>, so</p>
+<div class="amsmath math notranslate nohighlight" id="eq-5-31">
+\[\begin{equation*}
+\lim_{M\to\infty} S_M(t_M) = \frac{2}{\pi}\operatorname{Si}(\pi) \approx 1.17898 . \tag{5.31}
+\end{equation*}\]</div>
+<p>The overshoot above the level 1 is <span class="math notranslate nohighlight">\(0.17898\)</span>. Expressed as a fraction of the jump, which is 2, it is <span class="math notranslate nohighlight">\(8.95\%\)</span>. The same fraction appears for every jump in every piecewise-smooth signal: near a discontinuity the signal looks locally like a scaled and shifted square wave, so a jump of size <span class="math notranslate nohighlight">\(J\)</span> produces an overshoot of <span class="math notranslate nohighlight">\(\big(\operatorname{Si}(\pi)/\pi - \tfrac12\big)J \approx 0.0895\,J\)</span> on each side.</p>
+<p>The result reconciles the two kinds of convergence. The overshoot keeps its height but its width is of order <span class="math notranslate nohighlight">\(T/(4M)\)</span>, so its contribution to the error power shrinks like <span class="math notranslate nohighlight">\(1/M\)</span>, exactly as Example 5.3.1 found. At any fixed <span class="math notranslate nohighlight">\(t \neq 0\)</span>, the peak eventually passes by and <span class="math notranslate nohighlight">\(S_M(t) \to 1\)</span>. The partial sums converge everywhere, yet there is always a point near the jump where they are 9% wrong.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Si_pi</span> <span class="o">=</span> <span class="n">sici</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">limit</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">Si_pi</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Si(pi) = </span><span class="si">{</span><span class="n">Si_pi</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">,  (2/pi) Si(pi) = </span><span class="si">{</span><span class="n">limit</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">" M     K    peak location (s)   T/(4M)    peak value   midpoint-rule value"</span><span class="p">)</span>
+<span class="n">t_fine</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">100_001</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">M</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">320</span><span class="p">]:</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">M</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">t_fine</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">@</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">uk</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">M</span><span class="p">)</span>
+    <span class="n">riemann</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">uk</span><span class="p">)</span> <span class="o">/</span> <span class="n">uk</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">M</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">M</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">:</span><span class="s2">4d</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">t_fine</span><span class="p">[</span><span class="n">S</span><span class="o">.</span><span class="n">argmax</span><span class="p">()]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">          </span><span class="si">{</span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">M</span><span class="p">)</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">   "</span>
+          <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">S</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">      </span><span class="si">{</span><span class="n">riemann</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Si(pi) = 1.85194,  (2/pi) Si(pi) = 1.17898
+ M     K    peak location (s)   T/(4M)    peak value   midpoint-rule value
+  5     9   0.050000          0.050000   1.18233      1.18233
+ 20    39   0.012500          0.012500   1.17919      1.17919
+ 80   159   0.003125          0.003125   1.17899      1.17899
+320   639   0.000781          0.000781   1.17898      1.17898
+</pre></div>
+</div>
+</div>
+</div>
+<p>The numerically located peak sits exactly at <span class="math notranslate nohighlight">\(T/(4M)\)</span>, and its height approaches <span class="math notranslate nohighlight">\(1.17898\)</span> from above. Already with five terms the peak is within 0.3% of its limit. The figure makes the shape of the problem clear: the ripple is squeezed toward the jump but keeps its height.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_zoom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">6000</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_zoom</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">t_zoom</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">2.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Square wave"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">M</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">80</span><span class="p">]):</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">M</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">t_zoom</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">@</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_zoom</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"$K = </span><span class="si">{</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$\frac</span><span class="si">{2}</span><span class="s2">{\pi}\mathrm</span><span class="si">{Si}</span><span class="s2">(\pi) = 1.179$"</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s2">"offset points"</span><span class="p">,</span>
+            <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (s), period $T = 1$ s"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">1.45</span><span class="p">),</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">),</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Partial sums of a square wave near its jump"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower right"</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/dab56239a1f22337bfef90738a393875941cb7ddfaacf5ac7abb4d1c67ccb82b.png" src="../_images/dab56239a1f22337bfef90738a393875941cb7ddfaacf5ac7abb4d1c67ccb82b.png" />
+</div>
+</div>
+<p>The same ripple explains the “rounded bump” left by the band-limited pacing stimulus in <a class="reference internal" href="02_complex_fourier_series.html"><span class="std std-doc">Section 5.2.7</span></a>: a narrow pulse has two jumps close together, and truncating its series leaves Gibbs oscillations on both sides.</p>
+</section>
+<section id="smoothness-and-the-decay-of-the-coefficients">
+<span id="sec-5-3-5"></span><h2>5.3.5 Smoothness and the Decay of the Coefficients<a class="headerlink" href="#smoothness-and-the-decay-of-the-coefficients" title="Link to this heading">#</a></h2>
+<p>The square wave needs many harmonics because its coefficients fall off only as <span class="math notranslate nohighlight">\(1/n\)</span>, while the triangle wave <a class="reference internal" href="01_fourier_series_derivation.html#eq-5-10"><span class="std std-ref">(5.10)</span></a> gets away with fewer because its coefficients fall as <span class="math notranslate nohighlight">\(1/n^2\)</span>. <a class="reference internal" href="01_fourier_series_derivation.html"><span class="std std-doc">Section 5.1</span></a> promised that this is no coincidence. Integration by parts shows why.</p>
+<p>Let <span class="math notranslate nohighlight">\(x\)</span> be smooth on each piece of the period, with finite jumps <span class="math notranslate nohighlight">\(J_i = x(t_i^+) - x(t_i^-)\)</span> at the instants <span class="math notranslate nohighlight">\(t_i\)</span>. On each smooth piece we integrate <span class="math notranslate nohighlight">\(c_n = \frac{1}{T}\int_T x(t)\,e^{-jn\omega_0 t}\,dt\)</span> by parts, with <span class="math notranslate nohighlight">\(x\)</span> as the function to differentiate and <span class="math notranslate nohighlight">\(e^{-jn\omega_0 t}\)</span> as the one to integrate (its antiderivative is <span class="math notranslate nohighlight">\(e^{-jn\omega_0 t}/(-jn\omega_0)\)</span>, for <span class="math notranslate nohighlight">\(n \ne 0\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{t_i}^{t_{i+1}} x(t)\,e^{-jn\omega_0 t}\,dt = \left[\frac{x(t)\,e^{-jn\omega_0 t}}{-jn\omega_0}\right]_{t_i^+}^{t_{i+1}^-} + \frac{1}{jn\omega_0}\int_{t_i}^{t_{i+1}} x'(t)\,e^{-jn\omega_0 t}\,dt .
+\]</div>
+<p>When we add the pieces of one period, each jump instant <span class="math notranslate nohighlight">\(t_i\)</span> appears twice in the boundary terms: once as the upper limit of the piece to its left, with value <span class="math notranslate nohighlight">\(x(t_i^-)\)</span> and a minus sign from the antiderivative, and once as the lower limit of the piece to its right, with value <span class="math notranslate nohighlight">\(x(t_i^+)\)</span>. Together they leave <span class="math notranslate nohighlight">\(\big(x(t_i^+) - x(t_i^-)\big)\,e^{-jn\omega_0 t_i}/(jn\omega_0) = J_i\,e^{-jn\omega_0 t_i}/(jn\omega_0)\)</span>, and periodicity takes care of the ends of the period. Dividing by <span class="math notranslate nohighlight">\(T\)</span> and using <span class="math notranslate nohighlight">\(\omega_0 T = 2\pi\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-5-32">
+\[\begin{equation*}
+c_n = \underbrace{\frac{1}{j2\pi n}\sum_i J_i\,e^{-jn\omega_0 t_i}}_{\text{jumps of } x} \;+\; \frac{1}{jn\omega_0}\,c_n[x'], \qquad n \neq 0, \tag{5.32}
+\end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(c_n[x']\)</span> denotes the Fourier coefficients of the derivative. The equation reads like a recipe:</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(x\)</span> has jumps, the first term has magnitude of order <span class="math notranslate nohighlight">\(1/n\)</span> and dominates for large <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(x\)</span> is continuous, the first term vanishes and <span class="math notranslate nohighlight">\(c_n = c_n[x']/(jn\omega_0)\)</span>. Now the jumps of <span class="math notranslate nohighlight">\(x'\)</span> (corners of <span class="math notranslate nohighlight">\(x\)</span>) give <span class="math notranslate nohighlight">\(c_n[x'] \sim 1/n\)</span>, so <span class="math notranslate nohighlight">\(c_n \sim 1/n^2\)</span>.</p></li>
+<li><p>Repeating the argument: if <span class="math notranslate nohighlight">\(x\)</span> and its first <span class="math notranslate nohighlight">\(k-1\)</span> derivatives are continuous and the <span class="math notranslate nohighlight">\(k\)</span>-th derivative has jumps, then <span class="math notranslate nohighlight">\(|c_n|\)</span> decays like <span class="math notranslate nohighlight">\(1/n^{k+1}\)</span>. A signal with infinitely many continuous derivatives has coefficients that decay faster than any power of <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+</ul>
+<p>As a check, the unit square wave has <span class="math notranslate nohighlight">\(J = +2\)</span> at <span class="math notranslate nohighlight">\(t = 0\)</span>, <span class="math notranslate nohighlight">\(J = -2\)</span> at <span class="math notranslate nohighlight">\(t = T/2\)</span>, and <span class="math notranslate nohighlight">\(x' = 0\)</span> elsewhere. Equation <a class="reference internal" href="#eq-5-32">(5.32)</a> gives <span class="math notranslate nohighlight">\(c_n = \frac{2 - 2e^{-jn\pi}}{j2\pi n}\)</span>, which is <span class="math notranslate nohighlight">\(\frac{4}{j2\pi n} = -\frac{2j}{\pi n}\)</span> for odd <span class="math notranslate nohighlight">\(n\)</span> and zero for even <span class="math notranslate nohighlight">\(n\)</span>, the same result we obtained by integration in Example 5.3.1, but now without computing a single integral.</p>
+<p>To see the rule at work we compare four periodic waveforms with increasing smoothness: the square wave (jumps), the triangle wave (corners), a “parabolic” wave <span class="math notranslate nohighlight">\(x(t) = t\,(T/2 - |t|)\)</span> on <span class="math notranslate nohighlight">\(|t| \le T/2\)</span> (continuous slope, jumps in curvature), and a train of Gaussian pulses with <span class="math notranslate nohighlight">\(\sigma = 0.05\,T\)</span> (smooth everywhere). We compute their coefficients with the sampled-period formula <a class="reference internal" href="02_complex_fourier_series.html#eq-5-23"><span class="std std-ref">(5.23)</span></a>, using <span class="math notranslate nohighlight">\(2^{16}\)</span> samples per period so that aliasing of the coefficients is negligible over the range we plot, and fit the slope of <span class="math notranslate nohighlight">\(\log|c_n|\)</span> against <span class="math notranslate nohighlight">\(\log n\)</span> over the odd harmonics <span class="math notranslate nohighlight">\(11 \le n \le 301\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">16</span>
+<span class="n">tp</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">-</span> <span class="n">N</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span> <span class="o">*</span> <span class="n">T</span>                    <span class="c1"># one period, -T/2 &lt;= t &lt; T/2</span>
+<span class="n">waves</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"square (jumps)"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">tp</span><span class="p">)),</span>
+    <span class="s2">"triangle (corners)"</span><span class="p">:</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tp</span><span class="p">)</span> <span class="o">/</span> <span class="n">T</span><span class="p">,</span>
+    <span class="s2">"parabolic (curvature jumps)"</span><span class="p">:</span> <span class="n">tp</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tp</span><span class="p">)),</span>
+    <span class="s2">"Gaussian train (smooth)"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">tp</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.05</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)),</span>
+<span class="p">}</span>
+<span class="n">n_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">coeffs</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">waves</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">ck</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="n">N</span>              <span class="c1"># equation (7.23), t = 0 at index 0</span>
+    <span class="n">coeffs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ck</span><span class="p">[</span><span class="n">n_plot</span><span class="p">])</span>
+
+<span class="n">fit</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_plot</span> <span class="o">&gt;=</span> <span class="mi">11</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">n_plot</span> <span class="o">&lt;=</span> <span class="mi">301</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">n_plot</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">waves</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]:</span>
+    <span class="n">mag</span> <span class="o">=</span> <span class="n">coeffs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+    <span class="n">slope</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">n_plot</span><span class="p">[</span><span class="n">fit</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mag</span><span class="p">[</span><span class="n">fit</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">28s</span><span class="si">}</span><span class="s2"> log-log slope = </span><span class="si">{</span><span class="n">slope</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">T</span>
+<span class="k">for</span> <span class="n">n_check</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">21</span><span class="p">]:</span>
+    <span class="n">closed</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">/</span> <span class="n">T</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n_check</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">T</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Gaussian train, n = </span><span class="si">{</span><span class="n">n_check</span><span class="si">:</span><span class="s2">2d</span><span class="si">}</span><span class="s2">: |c_n| = </span><span class="si">{</span><span class="n">coeffs</span><span class="p">[</span><span class="s1">'Gaussian train (smooth)'</span><span class="p">][</span><span class="n">n_check</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2">"</span>
+          <span class="sa">f</span><span class="s2">"   closed form </span><span class="si">{</span><span class="n">closed</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>square (jumps)               log-log slope =  -1.00
+triangle (corners)           log-log slope =  -2.00
+parabolic (curvature jumps)  log-log slope =  -3.00
+Gaussian train, n =  1: |c_n| = 1.193e-01   closed form 1.193e-01
+Gaussian train, n = 11: |c_n| = 3.198e-04   closed form 3.198e-04
+Gaussian train, n = 21: |c_n| = 4.433e-11   closed form 4.433e-11
+</pre></div>
+</div>
+</div>
+</div>
+<p>The fitted slopes are <span class="math notranslate nohighlight">\(-1\)</span>, <span class="math notranslate nohighlight">\(-2\)</span> and <span class="math notranslate nohighlight">\(-3\)</span> for the first three waveforms, as <a class="reference internal" href="#eq-5-32">(5.32)</a> predicts. The Gaussian train follows no power law at all. Its coefficients agree with the closed form <span class="math notranslate nohighlight">\((\sigma\sqrt{2\pi}/T)\,e^{-2\pi^2\sigma^2 n^2/T^2}\)</span>, which comes from the Fourier transform of a Gaussian derived in Section 8.2, and they decay like <span class="math notranslate nohighlight">\(e^{-n^2}\)</span>: from <span class="math notranslate nohighlight">\(n = 11\)</span> to <span class="math notranslate nohighlight">\(n = 21\)</span> they lose six orders of magnitude, and a few harmonics later they sink below the rounding error of double-precision arithmetic. On log–log axes, power laws are straight lines and the smooth pulse plunges off the chart.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">))</span>
+<span class="n">odd</span> <span class="o">=</span> <span class="n">n_plot</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mag</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coeffs</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">keep</span> <span class="o">=</span> <span class="n">odd</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">mag</span> <span class="o">&gt;</span> <span class="mf">1e-15</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">n_plot</span><span class="p">[</span><span class="n">keep</span><span class="p">],</span> <span class="n">mag</span><span class="p">[</span><span class="n">keep</span><span class="p">],</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mf">2.6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">y0</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.64</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.41</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">)]:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">n_plot</span><span class="p">,</span> <span class="mf">1.6</span> <span class="o">*</span> <span class="n">y0</span> <span class="o">*</span> <span class="n">n_plot</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">330</span><span class="p">,</span> <span class="mf">1.6</span> <span class="o">*</span> <span class="n">y0</span> <span class="o">*</span> <span class="mf">330.0</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="p">),</span> <span class="sa">f</span><span class="s2">"$n^</span><span class="se">{{</span><span class="s2">-</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="se">}}</span><span class="s2">$"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.4"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"bottom"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Harmonic number $n$"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"$|c_n|$"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mf">1e-12</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Smoother waveforms have faster-decaying Fourier coefficients"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower left"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mf">8.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/6467fd2ec04785f582d78c7adb3d341a62779254eb4398193a82cf98b9bcb178.png" src="../_images/6467fd2ec04785f582d78c7adb3d341a62779254eb4398193a82cf98b9bcb178.png" />
+</div>
+</div>
+<p>The rule has direct consequences for biomedical signals. A real QRS complex is steep but continuous, so its harmonics decay faster than those of a pulse, and a modest number of them describes it well; Section 7.4 measures how many. A pacing artifact, by contrast, is close to a pair of jumps and spreads its power over hundreds of harmonics. And any finite recording whose last sample differs from its first acquires a jump in its periodic extension, which produces slowly decaying <span class="math notranslate nohighlight">\(1/n\)</span> components that have nothing to do with the physiology. This is the origin of the <strong>spectral leakage</strong> that we treat with windows in Section 10.4.</p>
+</section>
+<section id="softening-the-truncation-fejer-and-lanczos">
+<span id="sec-5-3-6"></span><h2>5.3.6 Softening the Truncation: Fejér and Lanczos<a class="headerlink" href="#softening-the-truncation-fejer-and-lanczos" title="Link to this heading">#</a></h2>
+<p>The Gibbs overshoot comes from the abrupt way we cut the series: harmonics up to <span class="math notranslate nohighlight">\(K\)</span> get full weight, and the next one gets none. If we let the weights fall gradually, the oscillations can be tamed. Two classical choices show the idea.</p>
+<section id="fejer-means">
+<h3>Fejér means<a class="headerlink" href="#fejer-means" title="Link to this heading">#</a></h3>
+<p>In 1900 Lipót Fejér proposed averaging the partial sums instead of taking the last one,</p>
+<div class="math notranslate nohighlight">
+\[
+\sigma_K(t) = \frac{1}{K+1}\sum_{m=0}^{K} x_m(t).
+\]</div>
+<p>The harmonic <span class="math notranslate nohighlight">\(c_n e^{jn\omega_0 t}\)</span> appears in every partial sum <span class="math notranslate nohighlight">\(x_m\)</span> with <span class="math notranslate nohighlight">\(m \ge |n|\)</span>, which is <span class="math notranslate nohighlight">\(K + 1 - |n|\)</span> of the <span class="math notranslate nohighlight">\(K+1\)</span> sums. Collecting terms,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-5-33">
+\[\begin{equation*}
+\sigma_K(t) = \sum_{n=-K}^{K}\left(1 - \frac{|n|}{K+1}\right) c_n\,e^{jn\omega_0 t}. \tag{5.33}
+\end{equation*}\]</div>
+<p>The weights decrease linearly, a triangular window over the harmonics. The corresponding kernel is the average of the Dirichlet kernels <span class="math notranslate nohighlight">\(D_0, \ldots, D_K\)</span>. With <span class="math notranslate nohighlight">\(\theta = \omega_0 u\)</span>, multiplying the numerators <span class="math notranslate nohighlight">\(\sin\big((m+\tfrac12)\theta\big)\)</span> by <span class="math notranslate nohighlight">\(2\sin(\theta/2)\)</span> turns each into <span class="math notranslate nohighlight">\(\cos(m\theta) - \cos\big((m+1)\theta\big)\)</span>, and the sum telescopes to <span class="math notranslate nohighlight">\(1 - \cos\big((K+1)\theta\big) = 2\sin^2\!\big((K+1)\theta/2\big)\)</span>. Hence the <strong>Fejér kernel</strong> is</p>
+<div class="math notranslate nohighlight">
+\[
+F_K(u) = \frac{1}{K+1}\sum_{m=0}^{K} D_m(u) = \frac{1}{K+1}\,\frac{\sin^2\!\big((K+1)\,\omega_0 u/2\big)}{\sin^2(\omega_0 u/2)} \;\ge\; 0 .
+\]</div>
+<p>The kernel is never negative and still averages to one over a period, so <span class="math notranslate nohighlight">\(\sigma_K(t)\)</span> is a genuine weighted average of the signal values. A weighted average cannot exceed the largest value being averaged, and therefore <strong>Fejér means never overshoot</strong>. Fejér also proved that <span class="math notranslate nohighlight">\(\sigma_K\)</span> converges uniformly to every continuous periodic signal, something the plain partial sums cannot guarantee.</p>
+</section>
+<section id="lanczos-sigma-factors">
+<h3>Lanczos sigma factors<a class="headerlink" href="#lanczos-sigma-factors" title="Link to this heading">#</a></h3>
+<p>Cornelius Lanczos suggested a different repair <span class="bibtex-citation" id="id2">[]</span>. The ripple of <span class="math notranslate nohighlight">\(x_K\)</span> oscillates at roughly the frequency of the first discarded harmonic, so averaging <span class="math notranslate nohighlight">\(x_K\)</span> over one period of that harmonic, a window of length <span class="math notranslate nohighlight">\(\Delta = T/(K+1)\)</span>, should wash it out. The moving average of a single harmonic is</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{\Delta}\int_{t-\Delta/2}^{t+\Delta/2} e^{jn\omega_0 s}\,ds = e^{jn\omega_0 t}\,\frac{e^{jn\omega_0\Delta/2} - e^{-jn\omega_0\Delta/2}}{jn\omega_0\Delta} = e^{jn\omega_0 t}\,\frac{\sin(n\omega_0\Delta/2)}{n\omega_0\Delta/2},
+\]</div>
+<p>and with <span class="math notranslate nohighlight">\(\Delta = T/(K+1)\)</span> the argument is <span class="math notranslate nohighlight">\(n\omega_0\Delta/2 = n\pi/(K+1)\)</span>. The smoothed sum therefore multiplies each coefficient by a <strong>sigma factor</strong>,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-5-34">
+\[\begin{equation*}
+\tilde{x}_K(t) = \sum_{n=-K}^{K}\operatorname{sinc}\!\left(\frac{n}{K+1}\right) c_n\,e^{jn\omega_0 t}, \qquad \operatorname{sinc}(v) = \frac{\sin(\pi v)}{\pi v}. \tag{5.34}
+\end{equation*}\]</div>
+<p>Both remedies are windows applied to the coefficients: a rectangle (plain truncation), a triangle (Fejér) and a sinc main lobe (Lanczos). The next cell applies them to the square wave with <span class="math notranslate nohighlight">\(K = 21\)</span> and measures the overshoot as a percentage of the jump and the 10–90% rise time, the time the reconstruction needs to climb from <span class="math notranslate nohighlight">\(-0.8\)</span> to <span class="math notranslate nohighlight">\(+0.8\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">rise_time</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lo</span><span class="o">=-</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">hi</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""10-90% rise time of a reconstruction that steps from -1 to +1 near t = 0."""</span>
+    <span class="n">t_hi</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="n">hi</span><span class="p">)]</span>
+    <span class="n">t_lo</span> <span class="o">=</span> <span class="n">t</span><span class="p">[(</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">t_hi</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="n">lo</span><span class="p">)][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">t_hi</span> <span class="o">-</span> <span class="n">t_lo</span>
+
+
+<span class="n">K</span> <span class="o">=</span> <span class="mi">21</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">K</span><span class="p">,</span> <span class="n">K</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">c_sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="n">j</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)),</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"plain truncation"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">size</span><span class="p">),</span>
+           <span class="s2">"Fejer (7.33)"</span><span class="p">:</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">K</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+           <span class="s2">"Lanczos (7.34)"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sinc</span><span class="p">(</span><span class="n">n</span> <span class="o">/</span> <span class="p">(</span><span class="n">K</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))}</span>
+<span class="n">t_jump</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">20_001</span><span class="p">)</span>
+<span class="n">recon</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">partial_sum</span><span class="p">(</span><span class="n">w</span> <span class="o">*</span> <span class="n">c_sq</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">t_jump</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">weights</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">recon</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">overshoot</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">17s</span><span class="si">}</span><span class="s2"> peak = </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">   overshoot = </span><span class="si">{</span><span class="n">overshoot</span><span class="si">:</span><span class="s2">4.2f</span><span class="si">}</span><span class="s2"> % of the jump   "</span>
+          <span class="sa">f</span><span class="s2">"rise time = </span><span class="si">{</span><span class="mf">1e3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rise_time</span><span class="p">(</span><span class="n">t_jump</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="si">:</span><span class="s2">4.1f</span><span class="si">}</span><span class="s2"> ms"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>plain truncation  peak = 1.1797   overshoot = 8.98 % of the jump   rise time = 20.3 ms
+Fejer (7.33)      peak = 0.9710   overshoot = 0.00 % of the jump   rise time = 48.8 ms
+Lanczos (7.34)    peak = 1.0235   overshoot = 1.18 % of the jump   rise time = 37.0 ms
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">),</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">"width_ratios"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]})</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="s2">"o-"</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Harmonic number $n$"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Weight"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Weights on the coefficients, $K = </span><span class="si">{</span><span class="n">K</span><span class="si">}</span><span class="s2">$"</span><span class="p">,</span>
+       <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.12</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_jump</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">t_jump</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">2.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Square wave"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">recon</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_jump</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (s), period $T = 1$ s"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude"</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">),</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Reconstructions near the jump"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/fcf17f1b281b6eebb84fa5be282c860b98a519fc3ed32766eaa0abbc165d23f4.png" src="../_images/fcf17f1b281b6eebb84fa5be282c860b98a519fc3ed32766eaa0abbc165d23f4.png" />
+</div>
+</div>
+<p>The plain partial sum overshoots by about 9% of the jump, as <a class="reference internal" href="#eq-5-31">(5.31)</a> predicts, and rings for several cycles. The Lanczos sum cuts the overshoot to about 1%, and the Fejér sum has no overshoot at all; at <span class="math notranslate nohighlight">\(K = 21\)</span> its peak stays below the level of the square wave. Neither repair is free: both edges rise more slowly than the plain sum, and Fejér’s is the slowest. Less ringing for a wider transition is a trade-off we will meet again and again, in spectral windows (Section 10.4) and in the window method of FIR filter design (Section 14.2). I find it helpful to remember that the trade-off was first understood here, in the humble problem of summing a square wave.</p>
+</section>
+</section>
+<section id="ringing-in-a-band-limited-ecg">
+<span id="sec-5-3-7"></span><h2>5.3.7 Ringing in a Band-Limited ECG<a class="headerlink" href="#ringing-in-a-band-limited-ecg" title="Link to this heading">#</a></h2>
+<p>We now test the theory on a real recording. Imagine an ECG passed through an ideal “brick-wall” low-pass filter, one that keeps every component below a cutoff unchanged and removes everything above it. If we treat a 10-second segment as one period, such a filter is exactly a truncated Fourier series, and the Gibbs analysis applies to every steep part of the waveform. The QRS complex is not a true discontinuity, but at a cutoff of 20 to 40 Hz its upstroke is steep compared with the slowest discarded oscillation, and we should expect ripple next to it.</p>
+<section id="step-1-load-a-segment-and-remove-the-end-point-jump">
+<h3>Step 1: Load a segment and remove the end-point jump<a class="headerlink" href="#step-1-load-a-segment-and-remove-the-end-point-jump" title="Link to this heading">#</a></h3>
+<p>We read 10 s of lead MLII from MIT-BIH record 100 <span class="bibtex-citation" id="id3">[<a class="reference internal" href="../bibliography.html#id84" title="Ary L. Goldberger, Luis A. N. Amaral, Leon Glass, Jeffrey M. Hausdorff, Plamen Ch. Ivanov, Roger G. Mark, Joseph E. Mietus, George B. Moody, Chung-Kang Peng, and H. Eugene Stanley. PhysioBank, PhysioToolkit, and PhysioNet: components of a new research resource for complex physiologic signals. Circulation, 101(23):e215–e220, 2000.">Goldberger <em>et al.</em>, 2000</a>, <a class="reference internal" href="../bibliography.html#id85" title="George B. Moody and Roger G. Mark. The impact of the MIT-BIH arrhythmia database. IEEE Engineering in Medicine and Biology Magazine, 20(3):45–50, 2001.">Moody and Mark, 2001</a>]</span> together with the beat annotations. The periodic extension of the segment would have a jump wherever the last sample differs from the first, and by <a class="reference internal" href="#sec-5-3-5">Section 5.3.5</a> that jump would ring on its own. We remove it by subtracting the straight line that joins the two end points, a minimal correction that leaves the shape of every beat intact.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span> <span class="o">=</span> <span class="mi">360</span>
+<span class="n">seg</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span>
+<span class="n">rec</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdrecord</span><span class="p">(</span><span class="s2">"../data/mitdb/100"</span><span class="p">,</span> <span class="n">sampfrom</span><span class="o">=</span><span class="n">seg</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">sampto</span><span class="o">=</span><span class="n">seg</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ann</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdann</span><span class="p">(</span><span class="s2">"../data/mitdb/100"</span><span class="p">,</span> <span class="s2">"atr"</span><span class="p">,</span> <span class="n">sampfrom</span><span class="o">=</span><span class="n">seg</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">sampto</span><span class="o">=</span><span class="n">seg</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+<span class="n">ecg_raw</span> <span class="o">=</span> <span class="n">rec</span><span class="o">.</span><span class="n">p_signal</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">N</span> <span class="o">=</span> <span class="n">ecg_raw</span><span class="o">.</span><span class="n">size</span>
+<span class="n">line</span> <span class="o">=</span> <span class="n">ecg_raw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">ecg_raw</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ecg_raw</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ecg</span> <span class="o">=</span> <span class="n">ecg_raw</span> <span class="o">-</span> <span class="n">line</span>
+<span class="n">t_ecg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">fs</span>
+<span class="n">r_peaks</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">sample</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">symbol</span><span class="p">,</span> <span class="p">[</span><span class="s2">"N"</span><span class="p">])]</span>
+<span class="n">r_peaks</span> <span class="o">=</span> <span class="n">r_peaks</span><span class="p">[(</span><span class="n">r_peaks</span> <span class="o">&gt;</span> <span class="n">fs</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">r_peaks</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">-</span> <span class="n">fs</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Samples: </span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">,  fundamental of the 10-s period: </span><span class="si">{</span><span class="n">fs</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">N</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> Hz"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"End-point mismatch removed: </span><span class="si">{</span><span class="mf">1e3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">ecg_raw</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ecg_raw</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> uV"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Normal beats used for measurements: </span><span class="si">{</span><span class="n">r_peaks</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Samples: 3600,  fundamental of the 10-s period: 0.10 Hz
+End-point mismatch removed: -260 uV
+Normal beats used for measurements: 10
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-truncate-the-series-at-a-cutoff-and-taper-it">
+<h3>Step 2: Truncate the series at a cutoff, and taper it<a class="headerlink" href="#step-2-truncate-the-series-at-a-cutoff-and-taper-it" title="Link to this heading">#</a></h3>
+<p>With a fundamental of 0.1 Hz, a 25 Hz cutoff keeps the harmonics <span class="math notranslate nohighlight">\(|n| \le 250\)</span>. We compute all coefficients with the FFT (equation <a class="reference internal" href="02_complex_fourier_series.html#eq-5-23"><span class="std std-ref">(5.23)</span></a> for every <span class="math notranslate nohighlight">\(k\)</span> at once, which Chapter 10 explains) and rebuild the signal from the kept ones. For comparison we taper the coefficients with a raised-cosine weight that equals 1 up to 20 Hz, falls smoothly to 0 at 30 Hz and passes through 0.5 at the 25 Hz cutoff. Both versions keep the same amount of the spectrum in the half-amplitude sense; only the abruptness of the edge differs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">spectral_lowpass</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">fc</span><span class="p">,</span> <span class="n">taper_width</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Keep Fourier components below fc; taper_width &gt; 0 uses a raised-cosine edge centered on fc."""</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfftfreq</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">fs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">taper_width</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span> <span class="o">&lt;=</span> <span class="n">fc</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">edge</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">((</span><span class="n">f</span> <span class="o">-</span> <span class="p">(</span><span class="n">fc</span> <span class="o">-</span> <span class="n">taper_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="n">taper_width</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">edge</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="n">weight</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+
+<span class="n">ecg_brick</span> <span class="o">=</span> <span class="n">spectral_lowpass</span><span class="p">(</span><span class="n">ecg</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="n">ecg_taper</span> <span class="o">=</span> <span class="n">spectral_lowpass</span><span class="p">(</span><span class="n">ecg</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">taper_width</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">5.4</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">"height_ratios"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]})</span>
+<span class="n">win</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_ecg</span> <span class="o">&gt;</span> <span class="mf">2.45</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">t_ecg</span> <span class="o">&lt;</span> <span class="mf">3.35</span><span class="p">)</span>
+<span class="n">rp</span> <span class="o">=</span> <span class="n">r_peaks</span><span class="p">[(</span><span class="n">r_peaks</span> <span class="o">/</span> <span class="n">fs</span> <span class="o">&gt;</span> <span class="mf">2.45</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">r_peaks</span> <span class="o">/</span> <span class="n">fs</span> <span class="o">&lt;</span> <span class="mf">3.35</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">fs</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_ecg</span><span class="p">[</span><span class="n">win</span><span class="p">],</span> <span class="n">ecg</span><span class="p">[</span><span class="n">win</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Original"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_ecg</span><span class="p">[</span><span class="n">win</span><span class="p">],</span> <span class="n">ecg_brick</span><span class="p">[</span><span class="n">win</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Truncated at 25 Hz"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_ecg</span><span class="p">[</span><span class="n">win</span><span class="p">],</span> <span class="n">ecg_taper</span><span class="p">[</span><span class="n">win</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Tapered, 20-30 Hz"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.55</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">),</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"One beat of record 100 after abrupt and tapered truncation of the series"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_ecg</span><span class="p">[</span><span class="n">win</span><span class="p">],</span> <span class="p">(</span><span class="n">ecg_brick</span> <span class="o">-</span> <span class="n">ecg</span><span class="p">)[</span><span class="n">win</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Truncated minus original"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_ecg</span><span class="p">[</span><span class="n">win</span><span class="p">],</span> <span class="p">(</span><span class="n">ecg_taper</span> <span class="o">-</span> <span class="n">ecg</span><span class="p">)[</span><span class="n">win</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Tapered minus original"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.55"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (s)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Deviation (mV)"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Deviation from the original: ringing on both sides of the QRS"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mf">8.5</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="n">rp</span> <span class="o">+</span> <span class="mf">0.08</span><span class="p">,</span> <span class="n">rp</span> <span class="o">+</span> <span class="mf">0.18</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">rp</span> <span class="o">+</span> <span class="mf">0.13</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.47</span><span class="p">,</span> <span class="s2">"ST segment"</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ce99e42bfda348f0ce3508e51dea4ef0dd0f63098548b18abdc49111de93a8fd.png" src="../_images/ce99e42bfda348f0ce3508e51dea4ef0dd0f63098548b18abdc49111de93a8fd.png" />
+</div>
+</div>
+<p>The truncated version (blue) oscillates before the Q wave and after the S wave, with a period of about 40 ms, which is one cycle of the 25 Hz cutoff frequency. The ripple appears <em>before</em> the QRS as well as after it, because the Dirichlet kernel is symmetric: an ideal truncation is not a causal operation, and it spreads every steep event in both directions of time. The tapered version (orange) loses about the same amount of R-wave height but is visibly calmer in the ST segment, shaded in the figure.</p>
+</section>
+<section id="step-3-measure-the-ringing-at-several-cutoffs">
+<h3>Step 3: Measure the ringing at several cutoffs<a class="headerlink" href="#step-3-measure-the-ringing-at-several-cutoffs" title="Link to this heading">#</a></h3>
+<p>To put numbers on the picture, we measure for every normal beat the mean R-wave amplitude and the peak-to-peak deviation from the original in the ST segment, taken as 80 to 180 ms after the R peak. The original ECG varies slowly there, so any deviation that a low-pass filter introduces in this window is dominated by ringing rather than by the legitimate removal of high-frequency content.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">beat_metrics</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">r_peaks</span><span class="p">,</span> <span class="n">fs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Mean R amplitude (mV) and mean ST-segment peak-to-peak deviation from x (uV)."""</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.08</span> <span class="o">*</span> <span class="n">fs</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.18</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span>
+    <span class="n">r_amp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">y</span><span class="p">[</span><span class="n">r</span> <span class="o">-</span> <span class="mi">5</span><span class="p">:</span><span class="n">r</span> <span class="o">+</span> <span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">r_peaks</span><span class="p">])</span>
+    <span class="n">st_dev</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="n">a</span><span class="p">:</span><span class="n">r</span> <span class="o">+</span> <span class="n">b</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="n">a</span><span class="p">:</span><span class="n">r</span> <span class="o">+</span> <span class="n">b</span><span class="p">])</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">r_peaks</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">r_amp</span><span class="p">,</span> <span class="mf">1e3</span> <span class="o">*</span> <span class="n">st_dev</span>
+
+
+<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">r_orig</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">beat_metrics</span><span class="p">(</span><span class="n">ecg</span><span class="p">,</span> <span class="n">ecg</span><span class="p">,</span> <span class="n">r_peaks</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">fc</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]:</span>
+    <span class="n">rb</span><span class="p">,</span> <span class="n">sb</span> <span class="o">=</span> <span class="n">beat_metrics</span><span class="p">(</span><span class="n">spectral_lowpass</span><span class="p">(</span><span class="n">ecg</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">fc</span><span class="p">),</span> <span class="n">ecg</span><span class="p">,</span> <span class="n">r_peaks</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+    <span class="n">rt</span><span class="p">,</span> <span class="n">st</span> <span class="o">=</span> <span class="n">beat_metrics</span><span class="p">(</span><span class="n">spectral_lowpass</span><span class="p">(</span><span class="n">ecg</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">fc</span><span class="p">,</span> <span class="n">taper_width</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">ecg</span><span class="p">,</span> <span class="n">r_peaks</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"cutoff (Hz)"</span><span class="p">:</span> <span class="n">fc</span><span class="p">,</span> <span class="s2">"R truncated (mV)"</span><span class="p">:</span> <span class="n">rb</span><span class="p">,</span> <span class="s2">"R tapered (mV)"</span><span class="p">:</span> <span class="n">rt</span><span class="p">,</span>
+                 <span class="s2">"ST ripple truncated (uV)"</span><span class="p">:</span> <span class="n">sb</span><span class="p">,</span> <span class="s2">"ST ripple tapered (uV)"</span><span class="p">:</span> <span class="n">st</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Mean R amplitude of the original: </span><span class="si">{</span><span class="n">r_orig</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mV"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"cutoff (Hz)"</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean R amplitude of the original: 1.172 mV
+             R truncated (mV)  R tapered (mV)  ST ripple truncated (uV)  ST ripple tapered (uV)
+cutoff (Hz)                                                                                    
+20                      0.706           0.698                   127.238                  58.941
+25                      0.868           0.860                   107.689                  52.168
+30                      0.982           0.979                    83.677                  49.238
+40                      1.111           1.110                    51.240                  35.851
+</pre></div>
+</div>
+</div>
+</div>
+<p>At every cutoff the two versions preserve the R wave equally well, to within about 0.01 mV, yet the abrupt truncation leaves between roughly 1.4 and 2.2 times more ST ripple than the tapered one. At 20 and 25 Hz the truncated reconstruction deviates by more than 0.1 mV peak to peak in the ST segment. That is the order of the ST deviations used as diagnostic thresholds for myocardial ischemia (1 mm on standard paper, or 0.1 mV), so a sharp filter of this kind could create or mask a clinically relevant change.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>A low cutoff alone does not cause ringing; an <em>abrupt</em> cutoff does. Real ECG filters are never brick walls, but filters with very steep transitions (high-order elliptic or long FIR designs with a narrow transition band) approach this behavior. When the shape of the ST segment matters, prefer filters with a gentle roll-off, and inspect a few beats in the time domain after filtering. Chapters <a class="reference internal" href="../ch14_fir/index.html"><span class="std std-doc">14</span></a> and 15 return to this compromise.</p>
+</div>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>The partial sum of a Fourier series is the periodic convolution of the signal with the Dirichlet kernel <span class="math notranslate nohighlight">\(D_K(u) = \sin\big((K+\tfrac12)\omega_0 u\big)/\sin(\omega_0 u/2)\)</span>. Because this kernel is even and averages to one, the series converges to the signal wherever the signal is continuous and to the midpoint of every jump, provided the Dirichlet conditions hold. In the mean-square sense, convergence holds for every finite-power signal, the error power is the sum of the discarded <span class="math notranslate nohighlight">\(|c_n|^2\)</span>, and the truncated series is the best possible approximation with that many harmonics. Uniform convergence fails at jumps. The partial sums overshoot by <span class="math notranslate nohighlight">\((\operatorname{Si}(\pi)/\pi - \tfrac12)J \approx 0.0895\,J\)</span> on each side of a jump of size <span class="math notranslate nohighlight">\(J\)</span>, however many harmonics we keep, while the overshoot region shrinks in width. Integration by parts links smoothness to decay: jumps give coefficients of order <span class="math notranslate nohighlight">\(1/n\)</span>, corners <span class="math notranslate nohighlight">\(1/n^2\)</span>, and each further continuous derivative one more power of <span class="math notranslate nohighlight">\(n\)</span>. Tapering the coefficients (Fejér’s triangular weights, Lanczos’s sigma factors) trades ringing for a slower transition, and on a real ECG an abrupt 25 Hz truncation leaves roughly twice the ST-segment ripple of a tapered one with the same cutoff.</p>
+<p>Section 7.4 uses the decay of the coefficients to ask how many harmonics real ECG and PPG cycles need. The ringing of abrupt truncation returns as the ringing of the ideal low-pass filter in Section 8.2, as spectral leakage in Section 10.4, and as the starting point of window-based filter design in Section 14.2.</p>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Show directly from the sawtooth series <a class="reference internal" href="01_fourier_series_derivation.html#eq-5-8"><span class="std std-ref">(5.8)</span></a> that every partial sum equals zero at <span class="math notranslate nohighlight">\(t = T/2\)</span>, and explain why this agrees with <a class="reference internal" href="#eq-5-28">(5.28)</a>. Then use <a class="reference internal" href="#eq-5-32">(5.32)</a> to recover the coefficients <span class="math notranslate nohighlight">\(b_n\)</span> of the sawtooth from its single jump and its constant slope, without computing any integral.</p></li>
+<li><p>A half-wave rectified sine, <span class="math notranslate nohighlight">\(x(t) = \max\big(\sin(\omega_0 t), 0\big)\)</span>, is a crude model of the arterial pulse during systole. Is it continuous? Is its derivative continuous? Predict the decay rate of its coefficients from <a class="reference internal" href="#eq-5-32">(5.32)</a>, then verify the prediction numerically with a log–log fit as in <a class="reference internal" href="#sec-5-3-5">Section 5.3.5</a>.</p></li>
+<li><p>For the triangle wave <a class="reference internal" href="01_fourier_series_derivation.html#eq-5-10"><span class="std std-ref">(5.10)</span></a>, find <span class="math notranslate nohighlight">\(|c_n|\)</span>, then use <a class="reference internal" href="#eq-5-29">(5.29)</a> and the same integral approximation as in Example 5.3.1 to show that <span class="math notranslate nohighlight">\(E_K \approx 16/(3\pi^4 K^3)\)</span>. Check the approximation numerically for <span class="math notranslate nohighlight">\(K = 9, 39, 159\)</span>. Does the triangle wave show a Gibbs overshoot? Why or why not?</p></li>
+<li><p>Complete the derivation of the Fejér kernel: show that <span class="math notranslate nohighlight">\(\sum_{m=0}^{K}\sin\big((m+\tfrac12)\theta\big) = \sin^2\big((K+1)\theta/2\big)/\sin(\theta/2)\)</span>, verify numerically that <span class="math notranslate nohighlight">\(\frac{1}{T}\int_T F_K(u)\,du = 1\)</span>, and plot <span class="math notranslate nohighlight">\(F_K\)</span> next to <span class="math notranslate nohighlight">\(D_K\)</span> for <span class="math notranslate nohighlight">\(K = 16\)</span>.</p></li>
+<li><p>Repeat the measurements of <a class="reference internal" href="#sec-5-3-7">Section 5.3.7</a> with Lanczos sigma factors <a class="reference internal" href="#eq-5-34">(5.34)</a> in place of the raised-cosine taper, choosing <span class="math notranslate nohighlight">\(K\)</span> so that the sigma factor reaches zero at 30 Hz. Compare R amplitude and ST ripple with the two other methods at the same 25 Hz half-amplitude frequency.</p></li>
+<li><p>Load 10 s of MIT-BIH record 119, which contains premature ventricular beats with wide QRS complexes. Apply the 25 Hz truncation of <a class="reference internal" href="#sec-5-3-7">Section 5.3.7</a> and compute the ST ripple separately for normal (<code class="docutils literal notranslate"><span class="pre">N</span></code>) and ventricular (<code class="docutils literal notranslate"><span class="pre">V</span></code>) beats. Which beats ring more, and how does your answer relate to <a class="reference internal" href="#sec-5-3-5">Section 5.3.5</a>?</p></li>
+</ol>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p><span class="bibtex-citation" id="id4">Oppenheim <em>et al.</em> [<a class="reference internal" href="../bibliography.html#id5" title="Alan V. Oppenheim, Alan S. Willsky, and S. Hamid Nawab. Signals and Systems. Prentice Hall, Upper Saddle River, NJ, 2nd edition, 1997.">1997</a>]</span> (Chapter 3) states the Dirichlet conditions and illustrates the Gibbs phenomenon for the square wave, and <span class="bibtex-citation" id="id5"></span> gives a rigorous yet readable account of Dirichlet’s and Fejér’s theorems together with much of their history. The story of Wilbraham, Michelson and Gibbs is told in detail by <span class="bibtex-citation" id="id6"></span>. Lanczos’s sigma factors and his view of Fourier series as a practical computing tool appear in <span class="bibtex-citation" id="id7"></span>, and the connection with window design is developed in <span class="bibtex-citation" id="id8">Harris [<a class="reference internal" href="../bibliography.html#id37" title="Fredric J. Harris. On the use of windows for harmonic analysis with the discrete Fourier transform. Proceedings of the IEEE, 66(1):51–83, 1978.">1978</a>]</span>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ch07_fourier_series"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02_complex_fourier_series.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">5.2 The Complex Exponential Fourier Series</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../ch09_sampling/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">6. Sampling, Quantization and Reconstruction</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-sums-and-what-convergence-means">5.3.1 Partial Sums and What “Convergence” Means</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dirichlet-kernel-and-the-midpoint-rule">5.3.2 The Dirichlet Kernel and the Midpoint Rule</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-the-series-picks-the-midpoint-at-a-jump">Why the series picks the midpoint at a jump</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-square-convergence">5.3.3 Mean-Square Convergence</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-truncated-series-is-the-best-approximation">The truncated series is the best approximation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-gibbs-phenomenon">5.3.4 The Gibbs Phenomenon</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smoothness-and-the-decay-of-the-coefficients">5.3.5 Smoothness and the Decay of the Coefficients</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#softening-the-truncation-fejer-and-lanczos">5.3.6 Softening the Truncation: Fejér and Lanczos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fejer-means">Fejér means</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lanczos-sigma-factors">Lanczos sigma factors</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringing-in-a-band-limited-ecg">5.3.7 Ringing in a Band-Limited ECG</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-a-segment-and-remove-the-end-point-jump">Step 1: Load a segment and remove the end-point jump</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-truncate-the-series-at-a-cutoff-and-taper-it">Step 2: Truncate the series at a cutoff, and taper it</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-measure-the-ringing-at-several-cutoffs">Step 3: Measure the ringing at several cutoffs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kim Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on November 08, 2026.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

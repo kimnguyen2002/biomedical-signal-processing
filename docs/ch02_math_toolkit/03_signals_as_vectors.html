@@ -1,0 +1,1400 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2.2 Signals as Vectors: Inner Products and Orthogonality &#8212; Biomedical Signal Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ec5fc9de" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch02_math_toolkit/03_signals_as_vectors';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="../_static/equation-previews-data.js?v=1d8d4c5d"></script>
+    <script src="../_static/equation-previews.js?v=9ddb93c8"></script>
+    <link rel="canonical" href="https://kimnguyen2002.github.io/biomedical-signal-processing/ch02_math_toolkit/03_signals_as_vectors.html" />
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.3 Calculus for Signals" href="04_calculus_for_signals.html" />
+    <link rel="prev" title="2.1 Complex Numbers and Euler’s Formula" href="01_complex_numbers.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+    <meta name="docbuild:last-update" content="November 08, 2026"/>
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Biomedical Signal Processing - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Biomedical Signal Processing - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part I. Foundations</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch01_introduction/index.html">1. Introduction to Biomedical Signals</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/01_what_is_a_biomedical_signal.html">1.1 What Is a Biomedical Signal?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/02_bioelectric_origins.html">1.2 The Bioelectric Origin of Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/03_acquisition_chain.html">1.3 From Body to Computer: The Acquisition Chain</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">2. The Mathematical Toolkit</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_complex_numbers.html">2.1 Complex Numbers and Euler’s Formula</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">2.2 Signals as Vectors: Inner Products and Orthogonality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_calculus_for_signals.html">2.3 Calculus for Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_probability_and_statistics.html">2.4 Probability and Statistics for Signals</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part II. Linear Time-Invariant Systems</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch04_systems/index.html">3. Systems and Their Properties</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch04_systems/01_what_is_a_system.html">3.1 What Is a System?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch04_systems/02_linearity.html">3.2 Linearity and Superposition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch05_convolution/index.html">4. The Impulse Response and Convolution</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch05_convolution/01_impulse_representation.html">4.1 Building Signals from Impulses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch05_convolution/02_convolution_sum.html">4.2 The Convolution Sum</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part III. Frequency-Domain Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch07_fourier_series/index.html">5. Fourier Series</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/01_fourier_series_derivation.html">5.1 Representing Periodic Signals with Sinusoids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/02_complex_fourier_series.html">5.2 The Complex Exponential Fourier Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/03_convergence_gibbs.html">5.3 Convergence and the Gibbs Phenomenon</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch09_sampling/index.html">6. Sampling, Quantization and Reconstruction</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch09_sampling/01_sampling_theorem.html">6.1 The Sampling Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch09_sampling/02_aliasing.html">6.2 Aliasing and Anti-Aliasing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch12_spectral_estimation/index.html">7. Random Signals and Spectral Estimation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/01_random_processes.html">7.1 Random Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/02_power_spectral_density.html">7.2 Power Spectral Density and the Wiener–Khinchin Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/03_nonparametric_psd.html">7.3 The Periodogram, Bartlett and Welch Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/04_parametric_psd.html">7.4 Autoregressive Spectral Estimation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part IV. Filtering</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch13_filter_fundamentals/index.html">8. Filter Fundamentals</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch13_filter_fundamentals/01_filter_types_specs.html">8.1 Filter Types and Specifications</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch14_fir/index.html">9. FIR Filter Design</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch14_fir/01_linear_phase_fir.html">9.1 Linear-Phase FIR Filters</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch16_noise_removal/index.html">10. Noise Reduction: Averaging, Wiener and Adaptive Filters</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch16_noise_removal/01_signal_averaging.html">10.1 Signal Averaging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch16_noise_removal/02_wiener_filter.html">10.2 The Wiener Filter</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part V. The Electrocardiogram</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch17_ecg/index.html">11. The Electrocardiogram: Physiology and Recording</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/01_cardiac_electrophysiology.html">11.1 Cardiac Electrophysiology and the ECG Waveform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/02_recording_the_ecg.html">11.2 Recording the ECG: Leads, Amplifiers, Anti-Aliasing and Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/03_ecg_data_in_python.html">11.3 ECG Data in Python: PhysioNet Records, Annotations and Plots</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch18_ecg_preprocessing/index.html">12. ECG Noise and Preprocessing, Step by Step</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch18_ecg_preprocessing/01_ecg_noise_types.html">12.1 Typical Noises in the ECG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch18_ecg_preprocessing/02_highpass_baseline_wander.html">12.2 High-Pass Filtering and Baseline Wander Removal</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part VI. Other Physiological Signals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch20_eeg/index.html">13. The Electroencephalogram</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/01_eeg_fundamentals.html">13.1 Origins of the EEG, Montages and Rhythms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/02_eeg_spectral_analysis.html">13.2 Spectral Analysis of the EEG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/03_event_related_activity.html">13.3 Event-Related Potentials and Desynchronization</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part VII. Advanced Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch24_wavelets/index.html">14. Wavelets and Multiresolution Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch24_wavelets/01_dwt_filter_banks.html">14.1 The Discrete Wavelet Transform and Filter Banks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch24_wavelets/02_wavelet_denoising.html">14.2 Wavelet Denoising</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../appendix/a_python_essentials.html">A. Python Essentials for Signal Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/b_datasets.html">B. Biomedical Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/c_math_reference.html">C. Mathematical Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/d_glossary.html">D. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/e_data_types.html">E. Python Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/f_pandas.html">F. pandas for Biomedical Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/g_numpy.html">G. NumPy for Sampled Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/h_latex.html">H. Writing Equations with LaTeX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/i_math_symbols.html">I. Mathematical Symbols and Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Books and References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch02_math_toolkit/03_signals_as_vectors.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>2.2 Signals as Vectors: Inner Products and Orthogonality</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-signal-is-a-point-in-mathbb-r-n">2.2.1 A Signal Is a Point in <span class="math notranslate nohighlight">\(\mathbb{R}^N\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inner-product-norm-and-energy">2.2.2 Inner Product, Norm and Energy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-cauchyschwarz-inequality-and-the-angle-between-signals">2.2.3 The Cauchy–Schwarz Inequality and the Angle Between Signals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#projection-and-least-squares">2.2.4 Projection and Least Squares</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#orthonormal-bases-and-gramschmidt">2.2.5 Orthonormal Bases and Gram–Schmidt</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-gramschmidt-procedure">The Gram–Schmidt procedure</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#orthogonal-sinusoids-and-the-complex-inner-product">2.2.6 Orthogonal Sinusoids and the Complex Inner Product</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complex-signals">Complex signals</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-heartbeats-by-template-matching">2.2.7 Finding Heartbeats by Template Matching</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-the-record-and-its-annotations">Step 1: Load the record and its annotations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-build-a-template-from-the-first-normal-beats">Step 2: Build a template from the first normal beats</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-compute-the-correlation-coefficient-at-every-position">Step 3: Compute the correlation coefficient at every position</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-pick-the-peaks-and-compare-with-the-annotations">Step 4: Pick the peaks and compare with the annotations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#removing-baseline-wander-by-projection">2.2.8 Removing Baseline Wander by Projection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-add-real-baseline-wander-to-a-clean-segment">Step 1: Add real baseline wander to a clean segment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-project-onto-polynomials-of-increasing-degree">Step 2: Project onto polynomials of increasing degree</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-look-at-the-result">Step 3: Look at the result</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="signals-as-vectors-inner-products-and-orthogonality">
+<span id="sec-2-2"></span><h1>2.2 Signals as Vectors: Inner Products and Orthogonality<a class="headerlink" href="#signals-as-vectors-inner-products-and-orthogonality" title="Link to this heading">#</a></h1>
+<p>A cardiologist who looks at a Holter recording does not read each heartbeat from scratch. After a few seconds the eye has learned what a normal beat from this patient looks like, and every new beat is judged against that picture: this one matches, that one is wider and points the wrong way. Computers can do the same thing, and the mathematics that makes it precise is surprisingly old. If we treat a stretch of <span class="math notranslate nohighlight">\(N\)</span> samples as a single point in an <span class="math notranslate nohighlight">\(N\)</span>-dimensional space, then “how similar are these two beats” becomes “what is the angle between these two vectors,” and “how much of this recording is baseline drift” becomes “how long is the shadow of this vector on the subspace of slow curves.”</p>
+<p>I find this geometric view the most useful single idea in the first part of the book. The inner product, the norm and orthogonality explain why signal energy is a squared length, why the correlation coefficient can never exceed one, why least-squares fitting works, and why sinusoids are the natural building blocks of Fourier analysis. In this section we build those ideas one at a time, verify each numerically, and then put them to work on a real ECG from the MIT-BIH Arrhythmia Database: first to find every QRS complex in a 30-minute record by matching it against a template, and then to remove baseline wander by projecting the signal onto a set of polynomials.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">wfdb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">signal</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">"../bsp.mplstyle"</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"axes.prop_cycle"</span><span class="p">]</span><span class="o">.</span><span class="n">by_key</span><span class="p">()[</span><span class="s2">"color"</span><span class="p">]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="a-signal-is-a-point-in-mathbb-r-n">
+<span id="sec-2-2-1"></span><h2>2.2.1 A Signal Is a Point in <span class="math notranslate nohighlight">\(\mathbb{R}^N\)</span><a class="headerlink" href="#a-signal-is-a-point-in-mathbb-r-n" title="Link to this heading">#</a></h2>
+<p>A sampled signal of finite length is nothing more than an ordered list of numbers. One second of ECG at <span class="math notranslate nohighlight">\(f_s = 360\)</span> Hz is a list of 360 voltages, and we can write it as a column vector</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x} = \big(x[0],\, x[1],\, \ldots,\, x[N-1]\big)^{\mathsf T} \in \mathbb{R}^N .
+\]</div>
+<p>With <span class="math notranslate nohighlight">\(N = 2\)</span> we could draw <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> as an arrow in the plane, with <span class="math notranslate nohighlight">\(N = 3\)</span> as an arrow in ordinary space. For <span class="math notranslate nohighlight">\(N = 360\)</span> we can no longer draw it, but every geometric fact that holds in two or three dimensions (lengths, angles, right triangles, shadows) still holds, and that is the whole point. We reason with pictures in the plane and let the algebra carry the result to any <span class="math notranslate nohighlight">\(N\)</span>.</p>
+<p>The two operations that make <span class="math notranslate nohighlight">\(\mathbb{R}^N\)</span> a vector space are already familiar signal operations. Adding two vectors sample by sample is what happens when noise adds to an ECG, <span class="math notranslate nohighlight">\(\mathbf{y} = \mathbf{x} + \mathbf{v}\)</span>. Multiplying a vector by a number is what an amplifier with gain <span class="math notranslate nohighlight">\(a\)</span> does, <span class="math notranslate nohighlight">\(\mathbf{y} = a\mathbf{x}\)</span>. Linear combinations <span class="math notranslate nohighlight">\(a_1\mathbf{x}_1 + a_2\mathbf{x}_2 + \cdots\)</span> are exactly the superpositions of <a class="reference internal" href="../ch04_systems/02_linearity.html"><span class="std std-doc">Section 3.2</span></a>.</p>
+<p>The <strong>standard basis</strong> of <span class="math notranslate nohighlight">\(\mathbb{R}^N\)</span> consists of the vectors <span class="math notranslate nohighlight">\(\mathbf{e}_k\)</span> that are zero everywhere except for a one in position <span class="math notranslate nohighlight">\(k\)</span>. As signals, these are shifted unit impulses <span class="math notranslate nohighlight">\(\delta[n-k]\)</span>, and writing <span class="math notranslate nohighlight">\(\mathbf{x} = \sum_k x[k]\,\mathbf{e}_k\)</span> is the vector form of the impulse decomposition used in <a class="reference internal" href="../ch05_convolution/01_impulse_representation.html"><span class="std std-doc">Section 4.1</span></a>. Much of signal processing consists of choosing a <em>different</em> basis in which the signal, or the problem, looks simpler.</p>
+</section>
+<section id="inner-product-norm-and-energy">
+<span id="sec-2-2-2"></span><h2>2.2.2 Inner Product, Norm and Energy<a class="headerlink" href="#inner-product-norm-and-energy" title="Link to this heading">#</a></h2>
+<p>The <strong>inner product</strong> of two real signals of the same length multiplies them sample by sample and adds the products:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-4">
+\[\begin{equation*}
+\langle \mathbf{x}, \mathbf{y} \rangle = \sum_{n=0}^{N-1} x[n]\,y[n] = \mathbf{x}^{\mathsf T}\mathbf{y}. \tag{2.4}
+\end{equation*}\]</div>
+<p>It is symmetric, <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle = \langle \mathbf{y}, \mathbf{x} \rangle\)</span>, linear in each argument, <span class="math notranslate nohighlight">\(\langle a\mathbf{x} + b\mathbf{z}, \mathbf{y} \rangle = a\langle \mathbf{x}, \mathbf{y} \rangle + b\langle \mathbf{z}, \mathbf{y} \rangle\)</span>, and positive when a vector is paired with itself, <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{x} \rangle &gt; 0\)</span> unless <span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{0}\)</span>. These three properties are all we will use.</p>
+<p>The inner product of a vector with itself is the sum of its squared samples, which is the <strong>energy</strong> of the signal (defined formally in Section 3.4). Its square root is the <strong>norm</strong>, the length of the arrow:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-5">
+\[\begin{equation*}
+\|\mathbf{x}\| = \sqrt{\langle \mathbf{x}, \mathbf{x} \rangle} = \sqrt{\sum_{n=0}^{N-1} x[n]^2}, \qquad E_x = \|\mathbf{x}\|^2. \tag{2.5}
+\end{equation*}\]</div>
+<p>So the energy of a signal is its squared length. Dividing by <span class="math notranslate nohighlight">\(N\)</span> and taking the root gives the RMS value, <span class="math notranslate nohighlight">\(x_{\text{rms}} = \|\mathbf{x}\|/\sqrt{N}\)</span>, and the distance between two signals, <span class="math notranslate nohighlight">\(\|\mathbf{x} - \mathbf{y}\|\)</span>, is <span class="math notranslate nohighlight">\(\sqrt{N}\)</span> times the RMS error between them. When we later say that a filter “reduced the error from 0.36 mV to 0.06 mV RMS,” we are measuring the distance between two points in <span class="math notranslate nohighlight">\(\mathbb{R}^N\)</span>.</p>
+<p>Two vectors are <strong>orthogonal</strong> when their inner product is zero. For orthogonal vectors the Pythagorean theorem holds in any dimension. Expanding with linearity,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\|\mathbf{x} + \mathbf{y}\|^2 &amp;= \langle \mathbf{x} + \mathbf{y}, \mathbf{x} + \mathbf{y} \rangle \\
+&amp;= \langle \mathbf{x}, \mathbf{x} \rangle + 2\langle \mathbf{x}, \mathbf{y} \rangle + \langle \mathbf{y}, \mathbf{y} \rangle \\
+&amp;= \|\mathbf{x}\|^2 + \|\mathbf{y}\|^2 \qquad \text{when } \langle \mathbf{x}, \mathbf{y} \rangle = 0 .
+\end{aligned}
+\end{split}\]</div>
+<p>In signal language: <strong>the energies of orthogonal signals add</strong>. If an ECG and the noise on it are orthogonal, the energy of the noisy recording is the energy of the ECG plus the energy of the noise, with no cross term. This is why signal-to-noise ratios can be computed from separately measured energies. The cell below checks the expansion on a short ECG-like pulse and a 50 Hz sinusoid sampled over a whole number of cycles.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span> <span class="o">=</span> <span class="mi">360</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span> <span class="o">/</span> <span class="n">fs</span>                                   <span class="c1"># one second</span>
+<span class="n">qrs</span> <span class="o">=</span> <span class="mf">1.2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">t</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">/</span> <span class="mf">0.012</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>      <span class="c1"># 1.2 mV Gaussian "R wave"</span>
+<span class="n">hum</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">50</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>                   <span class="c1"># 0.1 mV mains interference</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Energy of a finite sequence, equation (2.16) squared."""</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="n">cross</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">qrs</span><span class="p">,</span> <span class="n">hum</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"&lt;qrs, hum&gt;             = </span><span class="si">{</span><span class="n">cross</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"E(qrs) + E(hum)        = </span><span class="si">{</span><span class="n">energy</span><span class="p">(</span><span class="n">qrs</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">energy</span><span class="p">(</span><span class="n">hum</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> mV^2"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"E(qrs + hum)           = </span><span class="si">{</span><span class="n">energy</span><span class="p">(</span><span class="n">qrs</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hum</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> mV^2"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"RMS of hum             = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">hum</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">hum</span><span class="o">.</span><span class="n">size</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> mV (0.1/sqrt(2) = </span><span class="si">{</span><span class="mf">0.1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qrs, hum&gt;             = 3.99e-15
+E(qrs) + E(hum)        = 12.8261 mV^2
+E(qrs + hum)           = 12.8261 mV^2
+RMS of hum             = 0.0707 mV (0.1/sqrt(2) = 0.0707)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The inner product is zero to machine precision. The pulse is symmetric about <span class="math notranslate nohighlight">\(t = 0.5\)</span> s and the sine is odd about the same point, so every positive product has a matching negative one, and the energies add exactly.</p>
+</section>
+<section id="the-cauchyschwarz-inequality-and-the-angle-between-signals">
+<span id="sec-2-2-3"></span><h2>2.2.3 The Cauchy–Schwarz Inequality and the Angle Between Signals<a class="headerlink" href="#the-cauchyschwarz-inequality-and-the-angle-between-signals" title="Link to this heading">#</a></h2>
+<p>In the plane, <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle = \|\mathbf{x}\|\,\|\mathbf{y}\|\cos\theta\)</span>, where <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between the arrows. We would like to <em>define</em> the angle between two 360-sample signals the same way, but that is only legitimate if the ratio <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle / (\|\mathbf{x}\|\,\|\mathbf{y}\|)\)</span> is guaranteed to lie between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. The <strong>Cauchy–Schwarz inequality</strong> provides exactly that guarantee:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-6">
+\[\begin{equation*}
+|\langle \mathbf{x}, \mathbf{y} \rangle| \le \|\mathbf{x}\|\,\|\mathbf{y}\|, \tag{2.6}
+\end{equation*}\]</div>
+<p>with equality if and only if one vector is a scalar multiple of the other.</p>
+<p>The proof I like best asks a practical question: how well can a scaled copy of <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> approximate <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>?</p>
+<p><strong>Step 1: write the squared error as a function of the scale.</strong> Assume <span class="math notranslate nohighlight">\(\mathbf{y} \ne \mathbf{0}\)</span> (otherwise both sides are zero). For any real number <span class="math notranslate nohighlight">\(a\)</span>, the error <span class="math notranslate nohighlight">\(\mathbf{x} - a\mathbf{y}\)</span> has a non-negative squared length, and expanding it as in the Pythagorean calculation gives a quadratic in <span class="math notranslate nohighlight">\(a\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+0 \le \|\mathbf{x} - a\mathbf{y}\|^2 = \|\mathbf{x}\|^2 - 2a\,\langle \mathbf{x}, \mathbf{y} \rangle + a^2\,\|\mathbf{y}\|^2 .
+\]</div>
+<p><strong>Step 2: choose the best scale.</strong> The quadratic opens upward, so it is smallest where its derivative vanishes, <span class="math notranslate nohighlight">\(-2\langle \mathbf{x}, \mathbf{y} \rangle + 2a\|\mathbf{y}\|^2 = 0\)</span>, that is at</p>
+<div class="math notranslate nohighlight">
+\[
+a^\star = \frac{\langle \mathbf{x}, \mathbf{y} \rangle}{\|\mathbf{y}\|^2}.
+\]</div>
+<p><strong>Step 3: substitute.</strong> At <span class="math notranslate nohighlight">\(a = a^\star\)</span> the inequality still holds:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+0 &amp;\le \|\mathbf{x}\|^2 - 2\frac{\langle \mathbf{x}, \mathbf{y} \rangle^2}{\|\mathbf{y}\|^2} + \frac{\langle \mathbf{x}, \mathbf{y} \rangle^2}{\|\mathbf{y}\|^4}\|\mathbf{y}\|^2 \\
+&amp;= \|\mathbf{x}\|^2 - \frac{\langle \mathbf{x}, \mathbf{y} \rangle^2}{\|\mathbf{y}\|^2}.
+\end{aligned}
+\end{split}\]</div>
+<p><strong>Step 4: rearrange.</strong> Multiplying by <span class="math notranslate nohighlight">\(\|\mathbf{y}\|^2 &gt; 0\)</span> gives <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle^2 \le \|\mathbf{x}\|^2\|\mathbf{y}\|^2\)</span>, and taking square roots gives equation <a class="reference internal" href="#eq-2-6">(2.6)</a>. Equality requires <span class="math notranslate nohighlight">\(\|\mathbf{x} - a^\star\mathbf{y}\| = 0\)</span>, which means <span class="math notranslate nohighlight">\(\mathbf{x} = a^\star\mathbf{y}\)</span> exactly.</p>
+<p>The inequality lets us define the angle <span class="math notranslate nohighlight">\(\theta\)</span> between any two non-zero signals through</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-7">
+\[\begin{equation*}
+\cos\theta = \frac{\langle \mathbf{x}, \mathbf{y} \rangle}{\|\mathbf{x}\|\,\|\mathbf{y}\|}, \qquad
+\rho_{xy} = \frac{\langle \tilde{\mathbf{x}}, \tilde{\mathbf{y}} \rangle}{\|\tilde{\mathbf{x}}\|\,\|\tilde{\mathbf{y}}\|}, \quad \tilde{\mathbf{x}} = \mathbf{x} - \bar{x}\,\mathbf{1}. \tag{2.7}
+\end{equation*}\]</div>
+<p>The second expression is the familiar <strong>Pearson correlation coefficient</strong>: it is the cosine of the angle between the two signals after each has had its mean <span class="math notranslate nohighlight">\(\bar{x}\)</span> subtracted (<span class="math notranslate nohighlight">\(\mathbf{1}\)</span> is the vector of ones). Subtracting the mean removes any DC offset, and dividing by the norms removes any gain, so <span class="math notranslate nohighlight">\(\rho_{xy}\)</span> responds only to <em>shape</em>. That is precisely the property we want when comparing heartbeats, because the amplitude of the QRS complex changes with respiration and electrode contact while its shape stays the same.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">beat</span> <span class="o">=</span> <span class="n">qrs</span><span class="p">[</span><span class="mi">150</span><span class="p">:</span><span class="mi">210</span><span class="p">]</span>                                 <span class="c1"># 60 samples around the R wave</span>
+<span class="n">other</span> <span class="o">=</span> <span class="mf">0.7</span> <span class="o">*</span> <span class="n">beat</span> <span class="o">+</span> <span class="mf">0.3</span> <span class="o">+</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">beat</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>   <span class="c1"># gain, offset, noise</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">corr_coef</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Pearson correlation as the cosine of centred vectors, equation (2.18)."""</span>
+    <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">xc</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">yc</span><span class="p">))</span>
+
+<span class="n">lhs</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">beat</span><span class="p">,</span> <span class="n">other</span><span class="p">))</span>
+<span class="n">rhs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">beat</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"|&lt;x, y&gt;| = </span><span class="si">{</span><span class="n">lhs</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">  &lt;=  ||x|| ||y|| = </span><span class="si">{</span><span class="n">rhs</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"cos(theta), raw vectors      : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">beat</span><span class="p">,</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">rhs</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"rho, centred (ours)          : </span><span class="si">{</span><span class="n">corr_coef</span><span class="p">(</span><span class="n">beat</span><span class="p">,</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"rho, np.corrcoef             : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">beat</span><span class="p">,</span><span class="w"> </span><span class="n">other</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"rho after gain 5 and -2 mV   : </span><span class="si">{</span><span class="n">corr_coef</span><span class="p">(</span><span class="n">beat</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>|&lt;x, y&gt;| = 11.7678  &lt;=  ||x|| ||y|| = 13.5621
+cos(theta), raw vectors      : 0.8677
+rho, centred (ours)          : 0.9894
+rho, np.corrcoef             : 0.9894
+rho after gain 5 and -2 mV   : 0.9894
+</pre></div>
+</div>
+</div>
+</div>
+<p>The raw cosine is pulled away from one by the 0.3 mV offset. Once both vectors are centred, the correlation reflects only the added noise, and multiplying the second beat by 5 and shifting it by <span class="math notranslate nohighlight">\(-2\)</span> mV leaves the coefficient untouched.</p>
+</section>
+<section id="projection-and-least-squares">
+<span id="sec-2-2-4"></span><h2>2.2.4 Projection and Least Squares<a class="headerlink" href="#projection-and-least-squares" title="Link to this heading">#</a></h2>
+<p>Step 2 of the proof above contained a second result that deserves its own name. The best multiple of <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> for approximating <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is the <strong>orthogonal projection</strong> of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> onto <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-8">
+\[\begin{equation*}
+\hat{\mathbf{x}} = \frac{\langle \mathbf{x}, \mathbf{y} \rangle}{\langle \mathbf{y}, \mathbf{y} \rangle}\,\mathbf{y}, \qquad \langle \mathbf{x} - \hat{\mathbf{x}},\, \mathbf{y} \rangle = 0. \tag{2.8}
+\end{equation*}\]</div>
+<p>The second statement follows by direct substitution: <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle - a^\star\langle \mathbf{y}, \mathbf{y} \rangle = 0\)</span>. Geometrically, the error of the best approximation is perpendicular to the direction we were allowed to move in, like the shadow of a pole when the sun is directly overhead. The left panel of the figure shows this in two dimensions.</p>
+<p>Most practical problems allow more than one direction. Suppose we want to approximate <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> by a combination of <span class="math notranslate nohighlight">\(p\)</span> given signals <span class="math notranslate nohighlight">\(\mathbf{a}_1, \ldots, \mathbf{a}_p\)</span>, for example the polynomials <span class="math notranslate nohighlight">\(1, t, t^2, \ldots\)</span> that could describe a slowly drifting baseline. Stacking them as the columns of an <span class="math notranslate nohighlight">\(N \times p\)</span> matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, every candidate approximation has the form <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{c}\)</span> for a coefficient vector <span class="math notranslate nohighlight">\(\mathbf{c} \in \mathbb{R}^p\)</span>. We look for the <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> that minimizes the squared error <span class="math notranslate nohighlight">\(\|\mathbf{x} - \mathbf{A}\mathbf{c}\|^2\)</span>.</p>
+<p><strong>Step 1: state the orthogonality principle.</strong> Extending the one-vector picture, the error of the best approximation must be orthogonal to every allowed direction. If it had a component along some column <span class="math notranslate nohighlight">\(\mathbf{a}_i\)</span>, we could reduce the error further by moving a little along <span class="math notranslate nohighlight">\(\mathbf{a}_i\)</span>, exactly as in the scalar case. So</p>
+<div class="math notranslate nohighlight">
+\[
+\langle \mathbf{x} - \mathbf{A}\mathbf{c},\, \mathbf{a}_i \rangle = 0 \quad \text{for } i = 1, \ldots, p .
+\]</div>
+<p><strong>Step 2: collect the <span class="math notranslate nohighlight">\(p\)</span> conditions into one matrix equation.</strong> The <span class="math notranslate nohighlight">\(p\)</span> inner products with the columns of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are the entries of <span class="math notranslate nohighlight">\(\mathbf{A}^{\mathsf T}(\mathbf{x} - \mathbf{A}\mathbf{c})\)</span>, so the conditions read <span class="math notranslate nohighlight">\(\mathbf{A}^{\mathsf T}(\mathbf{x} - \mathbf{A}\mathbf{c}) = \mathbf{0}\)</span>.</p>
+<p><strong>Step 3: rearrange into the normal equations.</strong></p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-9">
+\[\begin{equation*}
+\mathbf{A}^{\mathsf T}\mathbf{A}\,\mathbf{c} = \mathbf{A}^{\mathsf T}\mathbf{x}
+\quad\Longrightarrow\quad
+\mathbf{c} = (\mathbf{A}^{\mathsf T}\mathbf{A})^{-1}\mathbf{A}^{\mathsf T}\mathbf{x}, \qquad
+\hat{\mathbf{x}} = \mathbf{A}\mathbf{c}. \tag{2.9}
+\end{equation*}\]</div>
+<p>The inverse exists whenever the columns of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are linearly independent. The matrix <span class="math notranslate nohighlight">\(\mathbf{A}^{\mathsf T}\mathbf{A}\)</span> is the <strong>Gram matrix</strong>: its <span class="math notranslate nohighlight">\((i, k)\)</span> entry is <span class="math notranslate nohighlight">\(\langle \mathbf{a}_i, \mathbf{a}_k \rangle\)</span>. With a single column it reduces to the number <span class="math notranslate nohighlight">\(\|\mathbf{y}\|^2\)</span> and equation (2.9) becomes equation <a class="reference internal" href="#eq-2-8">(2.8)</a>.</p>
+<p>The same answer comes out of calculus. Writing <span class="math notranslate nohighlight">\(J(\mathbf{c}) = \|\mathbf{x} - \mathbf{A}\mathbf{c}\|^2 = \mathbf{x}^{\mathsf T}\mathbf{x} - 2\mathbf{c}^{\mathsf T}\mathbf{A}^{\mathsf T}\mathbf{x} + \mathbf{c}^{\mathsf T}\mathbf{A}^{\mathsf T}\mathbf{A}\mathbf{c}\)</span> and setting the gradient <span class="math notranslate nohighlight">\(-2\mathbf{A}^{\mathsf T}\mathbf{x} + 2\mathbf{A}^{\mathsf T}\mathbf{A}\mathbf{c}\)</span> to zero gives equation (2.9) again. I prefer the geometric argument because it explains <em>why</em> the residual of every least-squares fit is uncorrelated with the regressors, a fact we will meet again in the Wiener filter of <a class="reference internal" href="../ch16_noise_removal/02_wiener_filter.html"><span class="std std-doc">Section 10.2</span></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">u</span><span class="p">,</span> <span class="n">u</span><span class="o">**</span><span class="mi">2</span><span class="p">])</span>               <span class="c1"># p = 3 basis signals</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="o">-</span> <span class="mf">0.8</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">u</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
+<span class="n">c_normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">x</span><span class="p">)</span>             <span class="c1"># equation (2.20)</span>
+<span class="n">c_lstsq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">rcond</span><span class="o">=</span><span class="kc">None</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">residual</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">A</span> <span class="o">@</span> <span class="n">c_normal</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"normal equations : </span><span class="si">{</span><span class="n">c_normal</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"np.linalg.lstsq  : </span><span class="si">{</span><span class="n">c_lstsq</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"A^T (x - Ac)     : </span><span class="si">{</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">residual</span><span class="si">}</span><span class="s2">   (orthogonality principle)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>normal equations : [ 0.3952 -0.7871  0.466 ]
+np.linalg.lstsq  : [ 0.3952 -0.7871  0.466 ]
+A^T (x - Ac)     : [-0. -0. -0.]   (orthogonality principle)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">3.9</span><span class="p">),</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">"width_ratios"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]})</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">xv</span><span class="p">,</span> <span class="n">yv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">xhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xv</span><span class="p">,</span> <span class="n">yv</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">yv</span><span class="p">,</span> <span class="n">yv</span><span class="p">)</span> <span class="o">*</span> <span class="n">yv</span>
+<span class="k">for</span> <span class="n">vec</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">lab</span> <span class="ow">in</span> <span class="p">[(</span><span class="n">xv</span><span class="p">,</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="sa">r</span><span class="s2">"$\mathbf</span><span class="si">{x}</span><span class="s2">$"</span><span class="p">),</span> <span class="p">(</span><span class="n">yv</span><span class="p">,</span> <span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="sa">r</span><span class="s2">"$\mathbf</span><span class="si">{y}</span><span class="s2">$"</span><span class="p">),</span> <span class="p">(</span><span class="n">xhat</span><span class="p">,</span> <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="sa">r</span><span class="s2">"$\hat{\mathbf</span><span class="si">{x}</span><span class="s2">}$"</span><span class="p">)]:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="n">vec</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">"-|&gt;"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.8</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.08</span><span class="p">,</span> <span class="n">vec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xv</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xhat</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">xv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">xhat</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s2">"--"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.4"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.95</span><span class="p">,</span> <span class="mf">1.65</span><span class="p">,</span> <span class="sa">r</span><span class="s2">"$\mathbf</span><span class="si">{x}</span><span class="s2"> - \hat{\mathbf</span><span class="si">{x}</span><span class="s2">}$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.3"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">yv</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">yv</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.18</span>
+<span class="n">e</span> <span class="o">=</span> <span class="p">(</span><span class="n">xv</span> <span class="o">-</span> <span class="n">xhat</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">xv</span> <span class="o">-</span> <span class="n">xhat</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.18</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xhat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xhat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xhat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+        <span class="p">[</span><span class="n">xhat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">xhat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">xhat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.4"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">2.6</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Sample $x[0]$"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Sample $x[1]$"</span><span class="p">,</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Projection onto one vector"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">"equal"</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s2">"."</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"data $</span><span class="se">\\</span><span class="s2">mathbf</span><span class="si">{x}</span><span class="s2">$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">A</span> <span class="o">@</span> <span class="n">c_normal</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"projection $\mathbf</span><span class="si">{A}</span><span class="s2">\mathbf</span><span class="si">{c}</span><span class="s2">$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Normalised time $u$"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (a.u.)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Least squares: projection onto span{1, u, u²}"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/7839a51aa549692f7507df3de4b469520e360b17a49c6ab54920a8f31cfd57ab.png" src="../_images/7839a51aa549692f7507df3de4b469520e360b17a49c6ab54920a8f31cfd57ab.png" />
+</div>
+</div>
+</section>
+<section id="orthonormal-bases-and-gramschmidt">
+<span id="sec-2-2-5"></span><h2>2.2.5 Orthonormal Bases and Gram–Schmidt<a class="headerlink" href="#orthonormal-bases-and-gramschmidt" title="Link to this heading">#</a></h2>
+<p>The normal equations become trivial when the basis vectors are <strong>orthonormal</strong>, meaning mutually orthogonal and of unit length: <span class="math notranslate nohighlight">\(\langle \mathbf{q}_i, \mathbf{q}_k \rangle = 1\)</span> if <span class="math notranslate nohighlight">\(i = k\)</span> and <span class="math notranslate nohighlight">\(0\)</span> otherwise. In matrix form <span class="math notranslate nohighlight">\(\mathbf{Q}^{\mathsf T}\mathbf{Q} = \mathbf{I}\)</span>, so the Gram matrix is the identity and equation <a class="reference internal" href="#eq-2-9">(2.9)</a> collapses to <span class="math notranslate nohighlight">\(\mathbf{c} = \mathbf{Q}^{\mathsf T}\mathbf{x}\)</span>. Each coefficient is a single inner product, computed independently of all the others:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-10">
+\[\begin{equation*}
+c_k = \langle \mathbf{x}, \mathbf{q}_k \rangle, \qquad \hat{\mathbf{x}} = \sum_{k} \langle \mathbf{x}, \mathbf{q}_k \rangle\, \mathbf{q}_k . \tag{2.10}
+\end{equation*}\]</div>
+<p>If the <span class="math notranslate nohighlight">\(\mathbf{q}_k\)</span> form a complete basis of <span class="math notranslate nohighlight">\(\mathbb{R}^N\)</span> (there are <span class="math notranslate nohighlight">\(N\)</span> of them), the approximation is exact, <span class="math notranslate nohighlight">\(\hat{\mathbf{x}} = \mathbf{x}\)</span>, and taking the squared norm of both sides with the Pythagorean theorem applied term by term gives a finite-dimensional <strong>Parseval relation</strong>:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-11">
+\[\begin{equation*}
+\|\mathbf{x}\|^2 = \sum_{k} c_k^2 . \tag{2.11}
+\end{equation*}\]</div>
+<p>The energy of the signal equals the energy of its coefficients. Orthonormal transforms, including the DFT (after scaling) and the orthogonal wavelet transforms of <a class="reference internal" href="../ch24_wavelets/index.html"><span class="std std-doc">Chapter 14</span></a>, redistribute energy among coefficients without creating or destroying any.</p>
+<p>Two practical advantages follow. Adding one more basis vector does not change the coefficients already computed, so we can increase the order of an approximation one term at a time. And the computation is numerically safe: the Gram matrix of the plain monomials <span class="math notranslate nohighlight">\(1, u, u^2, \ldots, u^{12}\)</span> on 3600 points has a condition number of about <span class="math notranslate nohighlight">\(3\times 10^{8}\)</span>, meaning that solving with it can lose eight of our sixteen decimal digits, while an orthonormal basis has condition number exactly one.</p>
+<section id="the-gramschmidt-procedure">
+<h3>The Gram–Schmidt procedure<a class="headerlink" href="#the-gramschmidt-procedure" title="Link to this heading">#</a></h3>
+<p>Any set of linearly independent vectors <span class="math notranslate nohighlight">\(\mathbf{a}_1, \ldots, \mathbf{a}_p\)</span> can be turned into an orthonormal set spanning the same subspace. The idea is to take the vectors in order and, from each new one, subtract its projections onto the directions already built, keeping only the part that is genuinely new:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-12">
+\[\begin{equation*}
+\mathbf{v}_k = \mathbf{a}_k - \sum_{i=1}^{k-1} \langle \mathbf{a}_k, \mathbf{q}_i \rangle\, \mathbf{q}_i, \qquad \mathbf{q}_k = \frac{\mathbf{v}_k}{\|\mathbf{v}_k\|}. \tag{2.12}
+\end{equation*}\]</div>
+<p>By equation <a class="reference internal" href="#eq-2-8">(2.8)</a>, each subtracted term removes the component of <span class="math notranslate nohighlight">\(\mathbf{a}_k\)</span> along one earlier <span class="math notranslate nohighlight">\(\mathbf{q}_i\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{v}_k\)</span> is orthogonal to all of them; dividing by its length makes it a unit vector. In floating point it is better to subtract the projections one at a time from the running remainder (the <em>modified</em> Gram–Schmidt procedure), which gives the same result in exact arithmetic but loses less orthogonality to rounding. We implement that version and compare it with NumPy’s QR factorization, which computes the same orthonormal basis by a more stable method (Householder reflections). The columns may differ in sign, because <span class="math notranslate nohighlight">\(-\mathbf{q}_k\)</span> is just as orthonormal as <span class="math notranslate nohighlight">\(\mathbf{q}_k\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">gram_schmidt</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Orthonormalise the columns of A with modified Gram-Schmidt, equation (2.23)."""</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+            <span class="n">Q</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Q</span><span class="p">[:,</span> <span class="n">k</span><span class="p">],</span> <span class="n">Q</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">Q</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+        <span class="n">Q</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Q</span><span class="p">[:,</span> <span class="n">k</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">Q</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">monomials</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">u</span><span class="o">**</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">gram_schmidt</span><span class="p">(</span><span class="n">monomials</span><span class="p">)</span>
+<span class="n">Q_np</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">qr</span><span class="p">(</span><span class="n">monomials</span><span class="p">)</span>
+<span class="n">signs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Q</span> <span class="o">*</span> <span class="n">Q_np</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"max |Q^T Q - I|                : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">T</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"max difference from np.linalg.qr: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Q</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Q_np</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">signs</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"condition number of monomial Gram matrix : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">monomials</span><span class="o">.</span><span class="n">T</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">monomials</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"condition number of orthonormal Gram matrix: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">T</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">Q</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>max |Q^T Q - I|                : 1.08e-15
+max difference from np.linalg.qr: 1.44e-15
+condition number of monomial Gram matrix : 353.6
+condition number of orthonormal Gram matrix: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Applied to the powers <span class="math notranslate nohighlight">\(1, u, u^2, \ldots\)</span> on a symmetric grid, Gram–Schmidt produces sampled versions of the <strong>Legendre polynomials</strong>, scaled to unit norm. They are drawn below. Notice how each new polynomial has one more zero crossing than the previous one, a pattern shared by every orthogonal family we will meet, sinusoids and wavelets included.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">),</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">"width_ratios"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.6</span><span class="p">,</span> <span class="mi">1</span><span class="p">]})</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">Q</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">N</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"$q_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Normalised time $u$"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (scaled)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Orthonormalised monomials (Legendre)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"lower center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">monomials</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">monomials</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">G</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">G</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">G</span><span class="p">))),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"RdBu_r"</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xticks</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">yticks</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Power $k$ of $u^k$"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Power $i$ of $u^i$"</span><span class="p">,</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Cosines between monomials"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"cos θ"</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.85</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/3b93fba6add1f40a507a2fcc68c13d3e63c37087c4ae74491889099119245a4e.png" src="../_images/3b93fba6add1f40a507a2fcc68c13d3e63c37087c4ae74491889099119245a4e.png" />
+</div>
+</div>
+<p>The right panel shows why the monomials are a poor basis: <span class="math notranslate nohighlight">\(u^2\)</span> and <span class="math notranslate nohighlight">\(u^4\)</span> point in almost the same direction (the cosine of the angle between them is close to 0.9), so the least-squares solver must separate two nearly parallel arrows, which is where the digits are lost.</p>
+</section>
+</section>
+<section id="orthogonal-sinusoids-and-the-complex-inner-product">
+<span id="sec-2-2-6"></span><h2>2.2.6 Orthogonal Sinusoids and the Complex Inner Product<a class="headerlink" href="#orthogonal-sinusoids-and-the-complex-inner-product" title="Link to this heading">#</a></h2>
+<p>The most important orthogonal family in this book is the set of sinusoids that complete a whole number of cycles in the observation window. Consider <span class="math notranslate nohighlight">\(N\)</span> samples and the cosines <span class="math notranslate nohighlight">\(c_k[n] = \cos(2\pi k n/N)\)</span>, which complete <span class="math notranslate nohighlight">\(k\)</span> cycles in the window. We want the inner product <span class="math notranslate nohighlight">\(\langle c_k, c_m \rangle\)</span> for integers <span class="math notranslate nohighlight">\(0 &lt; k, m &lt; N/2\)</span>.</p>
+<p><strong>Step 1: turn the product into a sum.</strong> The product-to-sum identity <span class="math notranslate nohighlight">\(\cos a\cos b = \tfrac{1}{2}[\cos(a - b) + \cos(a + b)]\)</span> (add the angle-sum formulas for <span class="math notranslate nohighlight">\(\cos(a - b)\)</span> and <span class="math notranslate nohighlight">\(\cos(a + b)\)</span> from exercise 3 of <a class="reference internal" href="01_complex_numbers.html"><span class="std std-doc">Section 2.1</span></a>) gives</p>
+<div class="math notranslate nohighlight">
+\[
+\langle c_k, c_m \rangle = \frac{1}{2}\sum_{n=0}^{N-1} \cos\!\Big(\frac{2\pi (k - m) n}{N}\Big) + \frac{1}{2}\sum_{n=0}^{N-1} \cos\!\Big(\frac{2\pi (k + m) n}{N}\Big).
+\]</div>
+<p><strong>Step 2: evaluate a sum of cosines over whole cycles.</strong> For an integer <span class="math notranslate nohighlight">\(\ell\)</span> that is not a multiple of <span class="math notranslate nohighlight">\(N\)</span>, the sum <span class="math notranslate nohighlight">\(\sum_n \cos(2\pi \ell n/N)\)</span> is the real part of <span class="math notranslate nohighlight">\(\sum_n w^n\)</span> with <span class="math notranslate nohighlight">\(w = e^{j2\pi\ell/N} \neq 1\)</span>. In <a class="reference internal" href="01_complex_numbers.html#sec-2-1-5"><span class="std std-ref">Section 2.1.5</span></a> we showed with the geometric series that this sum is <span class="math notranslate nohighlight">\((1 - w^N)/(1 - w) = 0\)</span>, because <span class="math notranslate nohighlight">\(w^N = e^{j2\pi\ell} = 1\)</span>. When <span class="math notranslate nohighlight">\(\ell = 0\)</span> every term is <span class="math notranslate nohighlight">\(\cos 0 = 1\)</span> and the sum is <span class="math notranslate nohighlight">\(N\)</span>.</p>
+<p><strong>Step 3: combine.</strong> Since <span class="math notranslate nohighlight">\(0 &lt; k + m &lt; N\)</span>, the second sum always vanishes. The first vanishes unless <span class="math notranslate nohighlight">\(k = m\)</span>, in which case it equals <span class="math notranslate nohighlight">\(N\)</span>. Therefore</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-13">
+\[\begin{equation*}
+\sum_{n=0}^{N-1} \cos\!\Big(\frac{2\pi k n}{N}\Big)\cos\!\Big(\frac{2\pi m n}{N}\Big) = \begin{cases} N/2, &amp; k = m, \\ 0, &amp; k \neq m, \end{cases} \qquad 0 &lt; k, m &lt; \tfrac{N}{2}. \tag{2.13}
+\end{equation*}\]</div>
+<p>The same steps with <span class="math notranslate nohighlight">\(\sin a\cos b = \tfrac{1}{2}[\sin(a + b) + \sin(a - b)]\)</span> show that every sine is orthogonal to every cosine in the family, including when <span class="math notranslate nohighlight">\(k = m\)</span>. In continuous time the sums become integrals over one period <span class="math notranslate nohighlight">\(T\)</span>, and <span class="math notranslate nohighlight">\(\int_0^T \cos(2\pi k t/T)\cos(2\pi m t/T)\,dt = (T/2)\,\delta_{km}\)</span> by the same argument. These relations are the foundation of the Fourier series in <a class="reference internal" href="../ch07_fourier_series/index.html"><span class="std std-doc">Chapter 5</span></a>.</p>
+<p>The condition “whole number of cycles” matters. The cell below builds the Gram matrix of cosines at 1 to 6 cycles per window and compares it with cosines spaced 0.7 cycles apart (0.7, 1.4, …, 4.2 cycles), most of which do not fit the window exactly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">360</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">cosine_gram</span><span class="p">(</span><span class="n">cycles</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Normalised Gram matrix of cosines completing the given numbers of cycles in N samples."""</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">n</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">cycles</span><span class="p">])</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">B</span>
+    <span class="k">return</span> <span class="n">G</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">G</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">G</span><span class="p">)))</span>
+
+<span class="n">G_whole</span> <span class="o">=</span> <span class="n">cosine_gram</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">G_frac</span> <span class="o">=</span> <span class="n">cosine_gram</span><span class="p">(</span><span class="mf">0.7</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"largest off-diagonal cosine, whole cycles     : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">G_whole</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"largest off-diagonal cosine, 0.7..4.2 cycles  : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">G_frac</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">8.4</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">ttl</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="p">[(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">G_whole</span><span class="p">,</span> <span class="s2">"Whole cycles: orthogonal"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)),</span>
+                           <span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">G_frac</span><span class="p">,</span> <span class="s2">"Spacing 0.7 cycles: not orthogonal"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mf">0.7</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="mi">1</span><span class="p">))]:</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"RdBu_r"</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xticks</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">yticks</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">xticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+           <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Cycles per window"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Cycles per window"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">ttl</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"cos θ"</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.85</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>largest off-diagonal cosine, whole cycles     : 1.68e-16
+largest off-diagonal cosine, 0.7..4.2 cycles  : 0.231
+</pre></div>
+</div>
+<img alt="../_images/f2142f0ef69aeb43aacbe28602e5afd2e6c81789e5d70317dca391f8cb95d8fb.png" src="../_images/f2142f0ef69aeb43aacbe28602e5afd2e6c81789e5d70317dca391f8cb95d8fb.png" />
+</div>
+</div>
+<p>When the frequencies are spaced more closely than one cycle per window, neighbouring cosines are no longer perpendicular: the largest cosine between them is about 0.23, and the overlap decays only slowly with distance from the diagonal. This overlap is the vector-space face of <strong>spectral leakage</strong>, which we study in Section 10.4.</p>
+<section id="complex-signals">
+<h3>Complex signals<a class="headerlink" href="#complex-signals" title="Link to this heading">#</a></h3>
+<p>For complex vectors the definition must change slightly. If we used <span class="math notranslate nohighlight">\(\sum x[n]y[n]\)</span>, the “squared length” of <span class="math notranslate nohighlight">\(\mathbf{x} = (j)\)</span> would be <span class="math notranslate nohighlight">\(j^2 = -1\)</span>, which makes no sense. Conjugating the second argument fixes this:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-14">
+\[\begin{equation*}
+\langle \mathbf{x}, \mathbf{y} \rangle = \sum_{n=0}^{N-1} x[n]\,y^*[n], \qquad \langle \mathbf{x}, \mathbf{x} \rangle = \sum_{n=0}^{N-1} |x[n]|^2 \ge 0. \tag{2.14}
+\end{equation*}\]</div>
+<p>The price is that the inner product is no longer symmetric: <span class="math notranslate nohighlight">\(\langle \mathbf{y}, \mathbf{x} \rangle = \langle \mathbf{x}, \mathbf{y} \rangle^*\)</span>. Cauchy–Schwarz, projection and Gram–Schmidt carry over unchanged once this conjugate is respected. Using equation (2.14) with the complex exponentials <span class="math notranslate nohighlight">\(\mathbf{e}_k[n] = e^{j2\pi k n/N}\)</span>, the inner product is again a geometric series,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\langle \mathbf{e}_k, \mathbf{e}_m \rangle = \sum_{n=0}^{N-1} e^{j2\pi (k - m) n/N} = \begin{cases} N, &amp; k = m, \\ 0, &amp; k \neq m, \end{cases} \qquad 0 \le k, m &lt; N,
+\end{split}\]</div>
+<p>so the <span class="math notranslate nohighlight">\(N\)</span> complex exponentials form an orthogonal basis of <span class="math notranslate nohighlight">\(\mathbb{C}^N\)</span>, each of squared length <span class="math notranslate nohighlight">\(N\)</span>. By equation <a class="reference internal" href="#eq-2-10">(2.10)</a>, the coefficient of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> along <span class="math notranslate nohighlight">\(\mathbf{e}_k\)</span> is <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{e}_k \rangle / N\)</span>, and the inner product itself is</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-15">
+\[\begin{equation*}
+X[k] = \langle \mathbf{x}, \mathbf{e}_k \rangle = \sum_{n=0}^{N-1} x[n]\,e^{-j2\pi k n/N}. \tag{2.15}
+\end{equation*}\]</div>
+<p>This is the <strong>discrete Fourier transform</strong>. The “tuning dial” of <a class="reference internal" href="01_complex_numbers.html#sec-2-1-7"><span class="std std-ref">Section 2.1.7</span></a> was an inner product all along, and the DFT is nothing more than the list of coordinates of a signal in the orthogonal basis of complex exponentials. Parseval’s relation (2.11), adjusted for the squared length <span class="math notranslate nohighlight">\(N\)</span>, becomes <span class="math notranslate nohighlight">\(\sum_n |x[n]|^2 = \frac{1}{N}\sum_k |X[k]|^2\)</span>, which we verify on one second of ECG-like data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">qrs</span> <span class="o">+</span> <span class="n">hum</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">qrs</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">E_basis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span>          <span class="c1"># columns e_k[n]</span>
+<span class="n">X_inner</span> <span class="o">=</span> <span class="n">E_basis</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">x</span>                             <span class="c1"># inner products &lt;x, e_k&gt;, equation (2.26)</span>
+<span class="n">X_fft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"max |&lt;x, e_k&gt; - FFT|           : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">X_inner</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">X_fft</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"energy in time  sum |x|^2      : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> mV^2"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"energy in coefficients /N      : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">X_fft</span><span class="p">)</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">N</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> mV^2"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>max |&lt;x, e_k&gt; - FFT|           : 8.08e-13
+energy in time  sum |x|^2      : 12.8605 mV^2
+energy in coefficients /N      : 12.8605 mV^2
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="finding-heartbeats-by-template-matching">
+<span id="sec-2-2-7"></span><h2>2.2.7 Finding Heartbeats by Template Matching<a class="headerlink" href="#finding-heartbeats-by-template-matching" title="Link to this heading">#</a></h2>
+<p>We now use the normalized inner product on a real recording. Record 100 of the MIT-BIH Arrhythmia Database <span class="bibtex-citation" id="id1">[<a class="reference internal" href="../bibliography.html#id84" title="Ary L. Goldberger, Luis A. N. Amaral, Leon Glass, Jeffrey M. Hausdorff, Plamen Ch. Ivanov, Roger G. Mark, Joseph E. Mietus, George B. Moody, Chung-Kang Peng, and H. Eugene Stanley. PhysioBank, PhysioToolkit, and PhysioNet: components of a new research resource for complex physiologic signals. Circulation, 101(23):e215–e220, 2000.">Goldberger <em>et al.</em>, 2000</a>, <a class="reference internal" href="../bibliography.html#id85" title="George B. Moody and Roger G. Mark. The impact of the MIT-BIH arrhythmia database. IEEE Engineering in Medicine and Biology Magazine, 20(3):45–50, 2001.">Moody and Mark, 2001</a>]</span> is 30 minutes of a two-lead ambulatory ECG sampled at 360 Hz, with every beat annotated by cardiologists. It is a clean record dominated by normal sinus beats, which makes it a good first test.</p>
+<p>The plan is simple. Build a template <span class="math notranslate nohighlight">\(\mathbf{t}\)</span> of a typical QRS complex, slide it along the recording, and at every position compute the correlation coefficient (2.7) between the template and the stretch of signal under it. Where a QRS complex lines up with the template, the two vectors point in almost the same direction and <span class="math notranslate nohighlight">\(\rho\)</span> approaches one.</p>
+<section id="step-1-load-the-record-and-its-annotations">
+<h3>Step 1: Load the record and its annotations<a class="headerlink" href="#step-1-load-the-record-and-its-annotations" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rec</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdrecord</span><span class="p">(</span><span class="s2">"../data/mitdb/100"</span><span class="p">)</span>
+<span class="n">ann</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdann</span><span class="p">(</span><span class="s2">"../data/mitdb/100"</span><span class="p">,</span> <span class="s2">"atr"</span><span class="p">)</span>
+<span class="n">ecg</span><span class="p">,</span> <span class="n">fs</span> <span class="o">=</span> <span class="n">rec</span><span class="o">.</span><span class="n">p_signal</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">rec</span><span class="o">.</span><span class="n">fs</span>                     <span class="c1"># lead MLII, mV</span>
+
+<span class="n">beat_symbols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s2">"NLRBAaJSVrFejnE/fQ"</span><span class="p">)</span>
+<span class="n">is_beat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">s</span> <span class="ow">in</span> <span class="n">beat_symbols</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">ann</span><span class="o">.</span><span class="n">symbol</span><span class="p">])</span>
+<span class="n">r_ref</span> <span class="o">=</span> <span class="n">ann</span><span class="o">.</span><span class="n">sample</span><span class="p">[</span><span class="n">is_beat</span><span class="p">]</span>
+<span class="n">sym_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">symbol</span><span class="p">)[</span><span class="n">is_beat</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">rec</span><span class="o">.</span><span class="n">sig_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">ecg</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> samples at </span><span class="si">{</span><span class="n">fs</span><span class="si">}</span><span class="s2"> Hz (</span><span class="si">{</span><span class="n">ecg</span><span class="o">.</span><span class="n">size</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">fs</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">60</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> min)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"annotated beats: </span><span class="si">{</span><span class="n">r_ref</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">  "</span> <span class="o">+</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sym_ref</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">sym_ref</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MLII: 650000 samples at 360 Hz (30.1 min)
+annotated beats: 2273  A: 33, N: 2239, V: 1
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-build-a-template-from-the-first-normal-beats">
+<h3>Step 2: Build a template from the first normal beats<a class="headerlink" href="#step-2-build-a-template-from-the-first-normal-beats" title="Link to this heading">#</a></h3>
+<p>Each annotation marks the R wave. We cut a window from 80 ms before to 120 ms after it, which covers the QRS complex (about 100 ms wide) with a little baseline on each side, and average the first 100 normal beats. Averaging suppresses noise that is not synchronized with the beat, an idea developed fully in <a class="reference internal" href="../ch16_noise_removal/01_signal_averaging.html"><span class="std std-doc">Section 10.1</span></a>. Subtracting the mean gives the centred template <span class="math notranslate nohighlight">\(\tilde{\mathbf{t}}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.08</span> <span class="o">*</span> <span class="n">fs</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.12</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">pre</span> <span class="o">+</span> <span class="n">post</span>                                           <span class="c1"># template length in samples</span>
+<span class="n">first_normals</span> <span class="o">=</span> <span class="n">r_ref</span><span class="p">[(</span><span class="n">sym_ref</span> <span class="o">==</span> <span class="s2">"N"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">r_ref</span> <span class="o">&gt;</span> <span class="n">pre</span><span class="p">)][:</span><span class="mi">100</span><span class="p">]</span>
+<span class="n">segments</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">ecg</span><span class="p">[</span><span class="n">r</span> <span class="o">-</span> <span class="n">pre</span><span class="p">:</span><span class="n">r</span> <span class="o">+</span> <span class="n">post</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">first_normals</span><span class="p">])</span>
+<span class="n">template</span> <span class="o">=</span> <span class="n">segments</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">tc</span> <span class="o">=</span> <span class="n">template</span> <span class="o">-</span> <span class="n">template</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"template: </span><span class="si">{</span><span class="n">M</span><span class="si">}</span><span class="s2"> samples (</span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">fs</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ms), averaged over </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span><span class="si">}</span><span class="s2"> beats"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>template: 71 samples (197 ms), averaged over 100 beats
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-compute-the-correlation-coefficient-at-every-position">
+<h3>Step 3: Compute the correlation coefficient at every position<a class="headerlink" href="#step-3-compute-the-correlation-coefficient-at-every-position" title="Link to this heading">#</a></h3>
+<p>A direct loop over 650,000 positions would recompute each window’s mean and norm from scratch. Two observations make this fast. First, because <span class="math notranslate nohighlight">\(\tilde{\mathbf{t}}\)</span> has zero mean, <span class="math notranslate nohighlight">\(\langle \mathbf{w} - \bar{w}\mathbf{1}, \tilde{\mathbf{t}} \rangle = \langle \mathbf{w}, \tilde{\mathbf{t}} \rangle - \bar{w}\,\langle \mathbf{1}, \tilde{\mathbf{t}} \rangle = \langle \mathbf{w}, \tilde{\mathbf{t}} \rangle\)</span>, so the numerator for every window <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> is a plain sliding inner product, which <code class="docutils literal notranslate"><span class="pre">np.correlate</span></code> computes. Second, the squared norm of a centred window can be expanded as</p>
+<div class="math notranslate nohighlight">
+\[
+\|\mathbf{w} - \bar{w}\mathbf{1}\|^2 = \sum_{m} w[m]^2 - 2\bar{w}\sum_m w[m] + M\bar{w}^2 = \sum_{m} w[m]^2 - \frac{1}{M}\Big(\sum_m w[m]\Big)^2 ,
+\]</div>
+<p>and both running sums are differences of cumulative sums. Sliding inner products are so common that they get their own name, <strong>cross-correlation</strong>, and Chapter 6 is devoted to them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">sliding_corrcoef</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">template</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Correlation coefficient between template and every length-M window of x."""</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">tc</span> <span class="o">=</span> <span class="n">template</span> <span class="o">-</span> <span class="n">template</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tc</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"valid"</span><span class="p">)</span>              <span class="c1"># &lt;w_i, tc&gt; for every window i</span>
+    <span class="n">s1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+    <span class="n">s2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)])</span>
+    <span class="n">sum_w</span><span class="p">,</span> <span class="n">sum_w2</span> <span class="o">=</span> <span class="n">s1</span><span class="p">[</span><span class="n">M</span><span class="p">:]</span> <span class="o">-</span> <span class="n">s1</span><span class="p">[:</span><span class="o">-</span><span class="n">M</span><span class="p">],</span> <span class="n">s2</span><span class="p">[</span><span class="n">M</span><span class="p">:]</span> <span class="o">-</span> <span class="n">s2</span><span class="p">[:</span><span class="o">-</span><span class="n">M</span><span class="p">]</span>
+    <span class="n">norm_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">sum_w2</span> <span class="o">-</span> <span class="n">sum_w</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">M</span><span class="p">,</span> <span class="mf">1e-12</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">num</span> <span class="o">/</span> <span class="p">(</span><span class="n">norm_w</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">tc</span><span class="p">))</span>
+
+<span class="n">rho</span> <span class="o">=</span> <span class="n">sliding_corrcoef</span><span class="p">(</span><span class="n">ecg</span><span class="p">,</span> <span class="n">template</span><span class="p">)</span>
+<span class="n">i_check</span> <span class="o">=</span> <span class="n">r_ref</span><span class="p">[</span><span class="mi">500</span><span class="p">]</span> <span class="o">-</span> <span class="n">pre</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"rho at beat 500 (fast)  : </span><span class="si">{</span><span class="n">rho</span><span class="p">[</span><span class="n">i_check</span><span class="p">]</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"rho at beat 500 (direct): </span><span class="si">{</span><span class="n">corr_coef</span><span class="p">(</span><span class="n">ecg</span><span class="p">[</span><span class="n">i_check</span><span class="p">:</span><span class="n">i_check</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">M</span><span class="p">],</span><span class="w"> </span><span class="n">template</span><span class="p">)</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rho at beat 500 (fast)  : 0.99167
+rho at beat 500 (direct): 0.99167
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-pick-the-peaks-and-compare-with-the-annotations">
+<h3>Step 4: Pick the peaks and compare with the annotations<a class="headerlink" href="#step-4-pick-the-peaks-and-compare-with-the-annotations" title="Link to this heading">#</a></h3>
+<p>A beat is declared wherever <span class="math notranslate nohighlight">\(\rho\)</span> has a local maximum above 0.8, with at least 250 ms between detections (a heart rate of 240 bpm, faster than anything in this record). Because the correlation at position <span class="math notranslate nohighlight">\(i\)</span> describes the window that starts at <span class="math notranslate nohighlight">\(i\)</span>, the R wave sits at <span class="math notranslate nohighlight">\(i + 80\)</span> ms. A detection counts as correct when it falls within 50 ms of an annotated beat.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">peaks</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">find_peaks</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.25</span> <span class="o">*</span> <span class="n">fs</span><span class="p">))</span>
+<span class="n">r_det</span> <span class="o">=</span> <span class="n">peaks</span> <span class="o">+</span> <span class="n">pre</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">match_beats</span><span class="p">(</span><span class="n">detected</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">tol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return a boolean array: is each reference beat within tol samples of a detection?"""</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">detected</span><span class="p">,</span> <span class="n">reference</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">detected</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">nearest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">detected</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">reference</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">detected</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">reference</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">nearest</span> <span class="o">&lt;=</span> <span class="n">tol</span>
+
+<span class="n">found</span> <span class="o">=</span> <span class="n">match_beats</span><span class="p">(</span><span class="n">r_det</span><span class="p">,</span> <span class="n">r_ref</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.05</span> <span class="o">*</span> <span class="n">fs</span><span class="p">))</span>
+<span class="n">tp</span> <span class="o">=</span> <span class="n">found</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="n">r_det</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="n">tp</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"detections: </span><span class="si">{</span><span class="n">r_det</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">, reference beats: </span><span class="si">{</span><span class="n">r_ref</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"sensitivity = </span><span class="si">{</span><span class="n">tp</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r_ref</span><span class="o">.</span><span class="n">size</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, positive predictivity = </span><span class="si">{</span><span class="n">tp</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">tp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fp</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"missed beats:"</span><span class="p">,</span> <span class="p">[(</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">sym</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">r_ref</span><span class="p">[</span><span class="o">~</span><span class="n">found</span><span class="p">],</span> <span class="n">sym_ref</span><span class="p">[</span><span class="o">~</span><span class="n">found</span><span class="p">])])</span>
+<span class="n">v_idx</span> <span class="o">=</span> <span class="n">r_ref</span><span class="p">[</span><span class="n">sym_ref</span> <span class="o">==</span> <span class="s2">"V"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">pre</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"rho at the ventricular beat: </span><span class="si">{</span><span class="n">rho</span><span class="p">[</span><span class="n">v_idx</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>detections: 2271, reference beats: 2273
+sensitivity = 0.9991, positive predictivity = 1.0000
+missed beats: [(546792, 'V'), (649991, 'N')]
+rho at the ventricular beat: -0.72
+</pre></div>
+</div>
+</div>
+</div>
+<p>Only two of the 2273 annotated beats are missed and there are no false detections. The second miss is the very last beat of the file, too close to the end for a full window to fit. The first is the single premature ventricular beat (<code class="docutils literal notranslate"><span class="pre">V</span></code>) in the record. Its correlation with the template is strongly negative, as the next figure shows: a ventricular beat starts in the ventricle rather than travelling down the normal conduction pathway, so its QRS complex is wide and, in this lead, points the other way. In this application the “failure” is useful information. A beat that is clearly a heartbeat but correlates poorly with the patient’s normal template is exactly what an arrhythmia monitor should flag, an idea we use in Section 6.2 and Section 19.4.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v_beat</span> <span class="o">=</span> <span class="n">r_ref</span><span class="p">[</span><span class="n">sym_ref</span> <span class="o">==</span> <span class="s2">"V"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">5.4</span><span class="p">))</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">height_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">ax0</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">sharex</span><span class="o">=</span><span class="n">ax0</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">v_beat</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">fs</span><span class="p">,</span> <span class="n">v_beat</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">fs</span>
+<span class="n">tt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="n">fs</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tt</span><span class="p">,</span> <span class="n">ecg</span><span class="p">[</span><span class="n">a</span><span class="p">:</span><span class="n">b</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sel</span> <span class="o">=</span> <span class="p">(</span><span class="n">r_det</span> <span class="o">&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">r_det</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r_det</span><span class="p">[</span><span class="n">sel</span><span class="p">]</span> <span class="o">/</span> <span class="n">fs</span><span class="p">,</span> <span class="n">ecg</span><span class="p">[</span><span class="n">r_det</span><span class="p">[</span><span class="n">sel</span><span class="p">]],</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"detected beats"</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">"PVC (missed)"</span><span class="p">,</span> <span class="p">(</span><span class="n">v_beat</span> <span class="o">/</span> <span class="n">fs</span><span class="p">,</span> <span class="n">ecg</span><span class="p">[</span><span class="n">v_beat</span><span class="p">]),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s2">"offset points"</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Record 100, lead MLII"</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower left"</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tt</span><span class="p">,</span> <span class="n">rho</span><span class="p">[</span><span class="n">a</span> <span class="o">-</span> <span class="n">pre</span><span class="p">:</span><span class="n">b</span> <span class="o">-</span> <span class="n">pre</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>           <span class="c1"># rho[i] describes the beat at i + pre</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.4"</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"threshold 0.8"</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (s)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$\rho$"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Correlation with the template"</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower left"</span><span class="p">)</span>
+
+<span class="n">tm</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">M</span><span class="p">)</span> <span class="o">-</span> <span class="n">pre</span><span class="p">)</span> <span class="o">/</span> <span class="n">fs</span> <span class="o">*</span> <span class="mi">1000</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tm</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"template (100 N beats)"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tm</span><span class="p">,</span> <span class="n">ecg</span><span class="p">[</span><span class="n">v_beat</span> <span class="o">-</span> <span class="n">pre</span><span class="p">:</span><span class="n">v_beat</span> <span class="o">+</span> <span class="n">post</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"PVC"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time from R (ms)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Template vs. PVC"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"center right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/fefff3b7fb6e89b92ec8ca2433d419b922b5c8eac5f6fa0cd113719202ee72b8.png" src="../_images/fefff3b7fb6e89b92ec8ca2433d419b922b5c8eac5f6fa0cd113719202ee72b8.png" />
+</div>
+</div>
+<p>The method has obvious limitations, and I want to name them before we rely on it. The template must come from the same patient and lead, because QRS shape differs a great deal between people and between leads. The threshold of 0.8 was chosen by eye on a clean record, and a noisy record would need a lower one at the price of more false detections. Dedicated QRS detectors such as the Pan–Tompkins algorithm of Section 19.1 are designed to work without a patient-specific template. Still, a few dozen lines of code have taken us from the definition of an inner product to a beat detector with a sensitivity above 99.9% on this record.</p>
+</section>
+</section>
+<section id="removing-baseline-wander-by-projection">
+<span id="sec-2-2-8"></span><h2>2.2.8 Removing Baseline Wander by Projection<a class="headerlink" href="#removing-baseline-wander-by-projection" title="Link to this heading">#</a></h2>
+<p>Breathing, body movement and changes in electrode–skin contact make the ECG baseline drift slowly up and down. This <strong>baseline wander</strong> has most of its energy below about 0.5 Hz, while the clinically important ECG content lies above it. The noise stress test database <span class="bibtex-citation" id="id2">[<a class="reference internal" href="../bibliography.html#id86" title="George B. Moody, W. E. Muldrow, and Roger G. Mark. A noise stress test for arrhythmia detectors. Computers in Cardiology, 11:381–384, 1984.">Moody <em>et al.</em>, 1984</a>]</span> provides real baseline wander recorded from a volunteer with the electrodes placed so that no ECG was picked up, which lets us add a known disturbance to a clean ECG and measure how well we remove it.</p>
+<p>The projection idea is direct. Over a short window, a slowly drifting curve is well described by a low-order polynomial, so it lies (nearly) in the subspace spanned by <span class="math notranslate nohighlight">\(1, u, u^2, \ldots, u^p\)</span>. The ECG, with its sharp QRS complexes, is mostly orthogonal to that subspace. Projecting the noisy recording onto the polynomial subspace with equation <a class="reference internal" href="#eq-2-9">(2.9)</a> therefore estimates the wander, and subtracting the projection removes it.</p>
+<section id="step-1-add-real-baseline-wander-to-a-clean-segment">
+<h3>Step 1: Add real baseline wander to a clean segment<a class="headerlink" href="#step-1-add-real-baseline-wander-to-a-clean-segment" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start</span><span class="p">,</span> <span class="n">dur</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">10</span>                                     <span class="c1"># seconds</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">start</span> <span class="o">*</span> <span class="n">fs</span><span class="p">,</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">dur</span><span class="p">)</span> <span class="o">*</span> <span class="n">fs</span>
+<span class="n">clean</span> <span class="o">=</span> <span class="n">ecg</span><span class="p">[</span><span class="n">a</span><span class="p">:</span><span class="n">b</span><span class="p">]</span>
+<span class="n">bw</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdrecord</span><span class="p">(</span><span class="s2">"../data/nstdb/bw"</span><span class="p">,</span> <span class="n">sampfrom</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">sampto</span><span class="o">=</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">p_signal</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">noisy</span> <span class="o">=</span> <span class="n">clean</span> <span class="o">+</span> <span class="n">bw</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">clean</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">fs</span>
+<span class="n">u</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">t</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>                                    <span class="c1"># map the window onto [-1, 1]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">rms</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Root-mean-square value."""</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="n">target</span> <span class="o">=</span> <span class="n">clean</span> <span class="o">-</span> <span class="n">clean</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"baseline wander: peak-to-peak </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">bw</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mV"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"RMS error before correction: </span><span class="si">{</span><span class="n">rms</span><span class="p">(</span><span class="n">noisy</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">noisy</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mV"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>baseline wander: peak-to-peak 1.40 mV
+RMS error before correction: 0.356 mV
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-project-onto-polynomials-of-increasing-degree">
+<h3>Step 2: Project onto polynomials of increasing degree<a class="headerlink" href="#step-2-project-onto-polynomials-of-increasing-degree" title="Link to this heading">#</a></h3>
+<p>We solve the normal equations for degrees 1 to 12. I map time to <span class="math notranslate nohighlight">\([-1, 1]\)</span> before forming the powers; on the raw time axis in seconds, <span class="math notranslate nohighlight">\(t^{12}\)</span> would reach <span class="math notranslate nohighlight">\(10^{12}\)</span> and the Gram matrix would be hopelessly ill-conditioned. To guard against the conditioning issue noted in <a class="reference internal" href="#sec-2-2-5">Section 2.2.5</a>, we also compute each fit with the orthonormal basis from <code class="docutils literal notranslate"><span class="pre">gram_schmidt</span></code> and check that both routes agree.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">polynomial_baseline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">degree</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Project x onto span{1, u, ..., u^degree} with the normal equations (2.20)."""</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vander</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">degree</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">increasing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">A</span> <span class="o">@</span> <span class="n">c</span>
+
+<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">polynomial_baseline</span><span class="p">(</span><span class="n">noisy</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">Qp</span> <span class="o">=</span> <span class="n">gram_schmidt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vander</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">increasing</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    <span class="n">base_q</span> <span class="o">=</span> <span class="n">Qp</span> <span class="o">@</span> <span class="p">(</span><span class="n">Qp</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">noisy</span><span class="p">)</span>                         <span class="c1"># equation (2.21)</span>
+    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"degree"</span><span class="p">:</span> <span class="n">p</span><span class="p">,</span> <span class="s2">"RMS error (mV)"</span><span class="p">:</span> <span class="n">rms</span><span class="p">(</span><span class="n">noisy</span> <span class="o">-</span> <span class="n">base</span> <span class="o">-</span> <span class="n">target</span><span class="p">),</span>
+                 <span class="s2">"normal eq. vs Q basis (mV)"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">base</span> <span class="o">-</span> <span class="n">base_q</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()})</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"degree"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">formatters</span><span class="o">=</span><span class="p">{</span><span class="s2">"RMS error (mV)"</span><span class="p">:</span> <span class="s2">"</span><span class="si">{:.3f}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">,</span>
+                                    <span class="s2">"normal eq. vs Q basis (mV)"</span><span class="p">:</span> <span class="s2">"</span><span class="si">{:.1e}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">}))</span>
+<span class="n">A12</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vander</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="n">increasing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"condition number of the degree-12 Gram matrix: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">A12</span><span class="o">.</span><span class="n">T</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">A12</span><span class="p">)</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>       RMS error (mV) normal eq. vs Q basis (mV)
+degree                                          
+1               0.307                    5.6e-16
+2               0.236                    1.6e-15
+4               0.151                    9.9e-15
+6               0.088                    8.8e-14
+8               0.059                    5.0e-12
+10              0.046                    9.6e-11
+12              0.044                    4.2e-10
+condition number of the degree-12 Gram matrix: 2.9e+08
+</pre></div>
+</div>
+</div>
+</div>
+<p>The error falls quickly up to degree 8 and then levels off. The last column is a small lesson in numerical linear algebra: the two routes agree to about <span class="math notranslate nohighlight">\(10^{-16}\)</span> mV for a straight line, but the disagreement grows by six orders of magnitude as the Gram matrix of the monomials approaches a condition number of <span class="math notranslate nohighlight">\(3 \times 10^{8}\)</span>. The orthonormal route is the trustworthy one. A degree-<span class="math notranslate nohighlight">\(p\)</span> polynomial over a 10 s window can follow oscillations of roughly <span class="math notranslate nohighlight">\(p/2\)</span> cycles per window, so degree 8 tracks drift up to about 0.4 Hz, which covers most of the respiratory band. Going higher buys little, because the polynomial then starts to bend toward the slow parts of the ECG itself (the T waves), which are not orthogonal to the polynomial subspace.</p>
+</section>
+<section id="step-3-look-at-the-result">
+<h3>Step 3: Look at the result<a class="headerlink" href="#step-3-look-at-the-result" title="Link to this heading">#</a></h3>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">base8</span> <span class="o">=</span> <span class="n">polynomial_baseline</span><span class="p">(</span><span class="n">noisy</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">corrected</span> <span class="o">=</span> <span class="n">noisy</span> <span class="o">-</span> <span class="n">base8</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">4.8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">noisy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"ECG + real baseline wander"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">base8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"projection onto degree-8 polynomials"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Estimating the baseline by projection"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"0.6"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">2.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"clean ECG (mean removed)"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">corrected</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"corrected"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Time (s)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Amplitude (mV)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Residual after subtracting the projection"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/5fc8893c5ba30ff54c24c64b58c865c9c587e6f74f846ac0c95a249ffdaeb8e4.png" src="../_images/5fc8893c5ba30ff54c24c64b58c865c9c587e6f74f846ac0c95a249ffdaeb8e4.png" />
+</div>
+</div>
+<p>The corrected trace follows the clean ECG closely. The remaining error is concentrated in the slow parts of the ECG, as we would expect from the geometry: whatever portion of the true ECG lies inside the polynomial subspace is removed along with the wander. In practice this method is applied in overlapping windows, or replaced by splines fitted through isoelectric points in the PR segments, and <a class="reference internal" href="../ch18_ecg_preprocessing/02_highpass_baseline_wander.html"><span class="std std-doc">Section 12.2</span></a> compares these approaches with high-pass filtering.</p>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>A finite signal is a vector in <span class="math notranslate nohighlight">\(\mathbb{R}^N\)</span> (or <span class="math notranslate nohighlight">\(\mathbb{C}^N\)</span>), and the inner product <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle = \sum_n x[n]y^*[n]\)</span> gives it a geometry. The squared norm is the signal’s energy, orthogonal signals have energies that add, and the Cauchy–Schwarz inequality, which we proved by minimizing the error of a scaled approximation, guarantees that the cosine of the angle between two signals lies in <span class="math notranslate nohighlight">\([-1, 1]\)</span>. After centring, that cosine is the correlation coefficient, a measure of shape that ignores gain and offset. The same minimization, generalized to several directions, gives the orthogonality principle and the normal equations of least squares, and Gram–Schmidt turns any basis into an orthonormal one in which every coefficient is a single inner product and energy is preserved.</p>
+<p>Sinusoids that complete whole cycles in the window are mutually orthogonal, and complex exponentials form an orthogonal basis whose coordinates are the DFT. On record 100, a normalized inner product with a QRS template found 2271 of 2273 beats, and projection onto degree-8 polynomials reduced the error caused by real baseline wander several-fold. Correlation (Chapter 6), the Fourier series and transform (<a class="reference internal" href="../ch07_fourier_series/index.html"><span class="std std-doc">Chapters 5</span></a> to 10), the Wiener filter (<a class="reference internal" href="../ch16_noise_removal/02_wiener_filter.html"><span class="std std-doc">Section 10.2</span></a>), wavelets and principal component analysis (Chapter 25) are all built on these ideas.</p>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Let <span class="math notranslate nohighlight">\(\mathbf{x} = (1, 2, 2)^{\mathsf T}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y} = (2, 0, -1)^{\mathsf T}\)</span>. Compute <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle\)</span>, both norms, the angle between them in degrees, and the projection of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> onto <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>. Verify that the residual is orthogonal to <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>, by hand and in NumPy.</p></li>
+<li><p>Prove the triangle inequality <span class="math notranslate nohighlight">\(\|\mathbf{x} + \mathbf{y}\| \le \|\mathbf{x}\| + \|\mathbf{y}\|\)</span> by expanding <span class="math notranslate nohighlight">\(\|\mathbf{x} + \mathbf{y}\|^2\)</span> and applying Cauchy–Schwarz. What does it imply for the RMS value of an ECG plus noise?</p></li>
+<li><p>Show that the correlation coefficient <span class="math notranslate nohighlight">\(\rho_{xy}\)</span> is unchanged if <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is replaced by <span class="math notranslate nohighlight">\(a\mathbf{x} + b\mathbf{1}\)</span> with <span class="math notranslate nohighlight">\(a &gt; 0\)</span>, and that its sign flips if <span class="math notranslate nohighlight">\(a &lt; 0\)</span>. Why is this a desirable property for comparing heartbeats recorded with different amplifier gains?</p></li>
+<li><p>Repeat the derivation of equation (2.13) for <span class="math notranslate nohighlight">\(\sum_n \sin(2\pi k n/N)\cos(2\pi m n/N)\)</span> and show that it is zero for all integers <span class="math notranslate nohighlight">\(0 &lt; k, m &lt; N/2\)</span>. Then check numerically what happens when <span class="math notranslate nohighlight">\(k + m = N\)</span>.</p></li>
+<li><p>Apply Gram–Schmidt by hand to <span class="math notranslate nohighlight">\(\mathbf{a}_1 = (1, 1, 1, 1)^{\mathsf T}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{a}_2 = (0, 1, 2, 3)^{\mathsf T}\)</span> and compare with <code class="docutils literal notranslate"><span class="pre">gram_schmidt</span></code>. Then construct an example of three vectors for which the classical (not modified) algorithm loses orthogonality noticeably in floating point (hint: make the vectors nearly parallel, e.g. <span class="math notranslate nohighlight">\((1, \epsilon, 0, 0)\)</span>, <span class="math notranslate nohighlight">\((1, 0, \epsilon, 0)\)</span>, <span class="math notranslate nohighlight">\((1, 0, 0, \epsilon)\)</span> with <span class="math notranslate nohighlight">\(\epsilon = 10^{-8}\)</span>).</p></li>
+<li><p>Run the template detector of <a class="reference internal" href="#sec-2-2-7">Section 2.2.7</a> on record 105, which contains heavy noise. Build the template from that record, report sensitivity and positive predictivity for thresholds 0.6, 0.7 and 0.8, and plot a segment where false detections occur. Explain the failures in terms of angles between vectors.</p></li>
+</ol>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p><span class="bibtex-citation" id="id3">Strang [<a class="reference internal" href="../bibliography.html#id15" title="Gilbert Strang. Introduction to Linear Algebra. Wellesley-Cambridge Press, Wellesley, MA, 5th edition, 2016.">2016</a>]</span> develops inner products, projections, least squares and Gram–Schmidt with exactly the geometric emphasis used here, and it is the book I recommend for anyone who wants more linear algebra. <span class="bibtex-citation" id="id4">Smith [<a class="reference internal" href="../bibliography.html#id7" title="Steven W. Smith. The Scientist and Engineer's Guide to Digital Signal Processing. California Technical Publishing, San Diego, CA, 1997.">1997</a>]</span> and <span class="bibtex-citation" id="id5">Proakis and Manolakis [<a class="reference internal" href="../bibliography.html#id3" title="John G. Proakis and Dimitris G. Manolakis. Digital Signal Processing: Principles, Algorithms, and Applications. Pearson Prentice Hall, Upper Saddle River, NJ, 4th edition, 2007.">2007</a>]</span> present the DFT as a change to an orthogonal basis, while <span class="bibtex-citation" id="id6">Sörnmo and Laguna [<a class="reference internal" href="../bibliography.html#id20" title="Leif Sörnmo and Pablo Laguna. Bioelectrical Signal Processing in Cardiac and Neurological Applications. Elsevier Academic Press, Amsterdam, 2005.">2005</a>]</span> discusses template matching and correlation-based beat classification for the ECG in depth. The MIT-BIH and noise stress test databases are described in <span class="bibtex-citation" id="id7">Moody and Mark [<a class="reference internal" href="../bibliography.html#id85" title="George B. Moody and Roger G. Mark. The impact of the MIT-BIH arrhythmia database. IEEE Engineering in Medicine and Biology Magazine, 20(3):45–50, 2001.">2001</a>]</span> and <span class="bibtex-citation" id="id8">Moody <em>et al.</em> [<a class="reference internal" href="../bibliography.html#id86" title="George B. Moody, W. E. Muldrow, and Roger G. Mark. A noise stress test for arrhythmia detectors. Computers in Cardiology, 11:381–384, 1984.">1984</a>]</span> and distributed through PhysioNet <span class="bibtex-citation" id="id9">[<a class="reference internal" href="../bibliography.html#id84" title="Ary L. Goldberger, Luis A. N. Amaral, Leon Glass, Jeffrey M. Hausdorff, Plamen Ch. Ivanov, Roger G. Mark, Joseph E. Mietus, George B. Moody, Chung-Kang Peng, and H. Eugene Stanley. PhysioBank, PhysioToolkit, and PhysioNet: components of a new research resource for complex physiologic signals. Circulation, 101(23):e215–e220, 2000.">Goldberger <em>et al.</em>, 2000</a>]</span>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ch02_math_toolkit"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_complex_numbers.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">2.1 Complex Numbers and Euler’s Formula</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="04_calculus_for_signals.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2.3 Calculus for Signals</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-signal-is-a-point-in-mathbb-r-n">2.2.1 A Signal Is a Point in <span class="math notranslate nohighlight">\(\mathbb{R}^N\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inner-product-norm-and-energy">2.2.2 Inner Product, Norm and Energy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-cauchyschwarz-inequality-and-the-angle-between-signals">2.2.3 The Cauchy–Schwarz Inequality and the Angle Between Signals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#projection-and-least-squares">2.2.4 Projection and Least Squares</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#orthonormal-bases-and-gramschmidt">2.2.5 Orthonormal Bases and Gram–Schmidt</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-gramschmidt-procedure">The Gram–Schmidt procedure</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#orthogonal-sinusoids-and-the-complex-inner-product">2.2.6 Orthogonal Sinusoids and the Complex Inner Product</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complex-signals">Complex signals</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-heartbeats-by-template-matching">2.2.7 Finding Heartbeats by Template Matching</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-the-record-and-its-annotations">Step 1: Load the record and its annotations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-build-a-template-from-the-first-normal-beats">Step 2: Build a template from the first normal beats</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-compute-the-correlation-coefficient-at-every-position">Step 3: Compute the correlation coefficient at every position</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-pick-the-peaks-and-compare-with-the-annotations">Step 4: Pick the peaks and compare with the annotations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#removing-baseline-wander-by-projection">2.2.8 Removing Baseline Wander by Projection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-add-real-baseline-wander-to-a-clean-segment">Step 1: Add real baseline wander to a clean segment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-project-onto-polynomials-of-increasing-degree">Step 2: Project onto polynomials of increasing degree</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-look-at-the-result">Step 3: Look at the result</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kim Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on November 08, 2026.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

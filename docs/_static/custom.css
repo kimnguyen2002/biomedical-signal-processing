@@ -1,0 +1,104 @@
+/* Biomedical Signal Processing: small refinements on top of sphinx-book-theme */
+
+html[data-theme="light"] {
+  --pst-color-primary: #2a78d6;
+  --pst-color-secondary: #eb6834;
+  --pst-color-link: #1c5cab;
+  --pst-color-link-hover: #eb6834;
+}
+
+html[data-theme="dark"] {
+  --pst-color-primary: #3987e5;
+  --pst-color-secondary: #d95926;
+  --pst-color-link: #6da7ec;
+  --pst-color-link-hover: #ec835a;
+}
+
+/* Reading width and rhythm */
+.bd-article-container {
+  max-width: 54rem;
+}
+
+.bd-content p,
+.bd-content li {
+  line-height: 1.68;
+}
+
+h1 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  margin-top: 2.2rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--pst-color-border);
+}
+
+/* Figures produced by notebook cells */
+.cell_output img {
+  display: block;
+  margin: 0.5rem auto;
+  max-width: 100%;
+  height: auto;
+}
+
+html[data-theme="dark"] .cell_output img {
+  border-radius: 4px;
+}
+
+/* Long equations scroll instead of overflowing the page */
+.math-wrapper,
+div.math {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Printed output from code cells */
+.cell_output pre {
+  font-size: 0.86em;
+}
+
+/* Tables */
+table.table,
+.bd-content table {
+  font-size: 0.92em;
+}
+
+.bd-content table th {
+  background-color: var(--pst-color-surface);
+}
+
+/* Book cover block on the landing page */
+#biomedical-signal-processing > p:first-of-type strong {
+  font-size: 1.15em;
+  color: var(--pst-color-text-muted);
+}
+
+/* The sidebar already has a search box; hide the duplicate top bar on wide screens */
+@media (min-width: 960px) {
+  header.bd-header.navbar {
+    display: none;
+  }
+}
+
+/* Equation references show a compact preview without interrupting reading. */
+.equation-preview {
+  position: fixed;
+  z-index: 1080;
+  width: max-content;
+  max-width: min(440px, calc(100vw - 24px));
+  max-height: min(200px, 40vh);
+  padding: 0.75rem 1rem;
+  overflow: auto;
+  background: var(--pst-color-background);
+  color: var(--pst-color-text-base);
+  border: 1px solid var(--pst-color-border);
+  border-radius: 8px;
+  box-shadow: 0 5px 22px rgb(0 0 0 / 16%);
+  font-size: 0.92rem;
+  overscroll-behavior: contain;
+}
+.equation-preview[hidden] { display: none; }
+.equation-preview mjx-container[display="true"] { margin: 0 !important; }
+a.has-equation-preview { text-decoration-style: dotted; text-underline-offset: 3px; }

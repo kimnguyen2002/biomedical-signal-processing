@@ -1,0 +1,1209 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2.4 Probability and Statistics for Signals &#8212; Biomedical Signal Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ec5fc9de" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ch02_math_toolkit/05_probability_and_statistics';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="../_static/equation-previews-data.js?v=1d8d4c5d"></script>
+    <script src="../_static/equation-previews.js?v=9ddb93c8"></script>
+    <link rel="canonical" href="https://kimnguyen2002.github.io/biomedical-signal-processing/ch02_math_toolkit/05_probability_and_statistics.html" />
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. Systems and Their Properties" href="../ch04_systems/index.html" />
+    <link rel="prev" title="2.3 Calculus for Signals" href="04_calculus_for_signals.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+    <meta name="docbuild:last-update" content="November 08, 2026"/>
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Biomedical Signal Processing - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Biomedical Signal Processing - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part I. Foundations</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch01_introduction/index.html">1. Introduction to Biomedical Signals</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/01_what_is_a_biomedical_signal.html">1.1 What Is a Biomedical Signal?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/02_bioelectric_origins.html">1.2 The Bioelectric Origin of Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch01_introduction/03_acquisition_chain.html">1.3 From Body to Computer: The Acquisition Chain</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">2. The Mathematical Toolkit</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_complex_numbers.html">2.1 Complex Numbers and Euler’s Formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_signals_as_vectors.html">2.2 Signals as Vectors: Inner Products and Orthogonality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_calculus_for_signals.html">2.3 Calculus for Signals</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">2.4 Probability and Statistics for Signals</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part II. Linear Time-Invariant Systems</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch04_systems/index.html">3. Systems and Their Properties</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch04_systems/01_what_is_a_system.html">3.1 What Is a System?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch04_systems/02_linearity.html">3.2 Linearity and Superposition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch05_convolution/index.html">4. The Impulse Response and Convolution</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch05_convolution/01_impulse_representation.html">4.1 Building Signals from Impulses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch05_convolution/02_convolution_sum.html">4.2 The Convolution Sum</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part III. Frequency-Domain Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch07_fourier_series/index.html">5. Fourier Series</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/01_fourier_series_derivation.html">5.1 Representing Periodic Signals with Sinusoids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/02_complex_fourier_series.html">5.2 The Complex Exponential Fourier Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch07_fourier_series/03_convergence_gibbs.html">5.3 Convergence and the Gibbs Phenomenon</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch09_sampling/index.html">6. Sampling, Quantization and Reconstruction</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch09_sampling/01_sampling_theorem.html">6.1 The Sampling Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch09_sampling/02_aliasing.html">6.2 Aliasing and Anti-Aliasing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch12_spectral_estimation/index.html">7. Random Signals and Spectral Estimation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/01_random_processes.html">7.1 Random Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/02_power_spectral_density.html">7.2 Power Spectral Density and the Wiener–Khinchin Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/03_nonparametric_psd.html">7.3 The Periodogram, Bartlett and Welch Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch12_spectral_estimation/04_parametric_psd.html">7.4 Autoregressive Spectral Estimation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part IV. Filtering</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch13_filter_fundamentals/index.html">8. Filter Fundamentals</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch13_filter_fundamentals/01_filter_types_specs.html">8.1 Filter Types and Specifications</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch14_fir/index.html">9. FIR Filter Design</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch14_fir/01_linear_phase_fir.html">9.1 Linear-Phase FIR Filters</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch16_noise_removal/index.html">10. Noise Reduction: Averaging, Wiener and Adaptive Filters</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch16_noise_removal/01_signal_averaging.html">10.1 Signal Averaging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch16_noise_removal/02_wiener_filter.html">10.2 The Wiener Filter</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part V. The Electrocardiogram</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch17_ecg/index.html">11. The Electrocardiogram: Physiology and Recording</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/01_cardiac_electrophysiology.html">11.1 Cardiac Electrophysiology and the ECG Waveform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/02_recording_the_ecg.html">11.2 Recording the ECG: Leads, Amplifiers, Anti-Aliasing and Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch17_ecg/03_ecg_data_in_python.html">11.3 ECG Data in Python: PhysioNet Records, Annotations and Plots</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch18_ecg_preprocessing/index.html">12. ECG Noise and Preprocessing, Step by Step</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch18_ecg_preprocessing/01_ecg_noise_types.html">12.1 Typical Noises in the ECG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch18_ecg_preprocessing/02_highpass_baseline_wander.html">12.2 High-Pass Filtering and Baseline Wander Removal</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part VI. Other Physiological Signals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch20_eeg/index.html">13. The Electroencephalogram</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/01_eeg_fundamentals.html">13.1 Origins of the EEG, Montages and Rhythms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/02_eeg_spectral_analysis.html">13.2 Spectral Analysis of the EEG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch20_eeg/03_event_related_activity.html">13.3 Event-Related Potentials and Desynchronization</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part VII. Advanced Methods</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ch24_wavelets/index.html">14. Wavelets and Multiresolution Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ch24_wavelets/01_dwt_filter_banks.html">14.1 The Discrete Wavelet Transform and Filter Banks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch24_wavelets/02_wavelet_denoising.html">14.2 Wavelet Denoising</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../appendix/a_python_essentials.html">A. Python Essentials for Signal Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/b_datasets.html">B. Biomedical Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/c_math_reference.html">C. Mathematical Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/d_glossary.html">D. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/e_data_types.html">E. Python Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/f_pandas.html">F. pandas for Biomedical Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/g_numpy.html">G. NumPy for Sampled Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/h_latex.html">H. Writing Equations with LaTeX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/i_math_symbols.html">I. Mathematical Symbols and Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Books and References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ch02_math_toolkit/05_probability_and_statistics.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>2.4 Probability and Statistics for Signals</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-variables-densities-and-histograms">2.4.1 Random Variables, Densities and Histograms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moments-mean-variance-skewness-and-kurtosis">2.4.2 Moments: Mean, Variance, Skewness and Kurtosis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#three-noise-models">2.4.3 Three Noise Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-gaussian-density">The Gaussian density</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-uniform-density-and-quantization-noise">The uniform density and quantization noise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-laplacian-density">The Laplacian density</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-noise-is-often-gaussian-the-central-limit-theorem">2.4.4 Why Noise Is Often Gaussian: The Central Limit Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance-correlation-and-independence">2.4.5 Covariance, Correlation and Independence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sample-mean-and-its-uncertainty">2.4.6 The Sample Mean and Its Uncertainty</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-mean-heart-rate-of-record-100">The mean heart rate of record 100</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noise-statistics-of-real-recordings-step-by-step">2.4.7 Noise Statistics of Real Recordings, Step by Step</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-the-recordings">Step 1: Load the recordings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-remove-slow-drift">Step 2: Remove slow drift</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-compute-the-moments">Step 3: Compute the moments</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-compare-the-histograms-with-a-gaussian-of-the-same-variance">Step 4: Compare the histograms with a Gaussian of the same variance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-interpret">Step 5: Interpret</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="probability-and-statistics-for-signals">
+<span id="sec-2-4"></span><h1>2.4 Probability and Statistics for Signals<a class="headerlink" href="#probability-and-statistics-for-signals" title="Link to this heading">#</a></h1>
+<p>No two heartbeats are identical. The RR interval of a healthy person at rest changes from beat to beat by tens of milliseconds, the amplitude of the R wave rises and falls with breathing, and every sample of the recording carries a little thermal noise from the amplifier and a little quantization noise from the converter. Some of this variability is a nuisance that we want to remove, and some of it, like heart rate variability, is the clinical information we are after. Either way we need a language for quantities that are not fixed numbers but vary in a way we can describe only on average. That language is probability.</p>
+<p>In this section I collect the parts of probability and statistics that the rest of the book uses. We begin with random variables and their densities, define the moments that summarize them (mean, variance, skewness and kurtosis), and derive the statistics of three noise models that appear throughout biomedical engineering: Gaussian, uniform and Laplacian. We then see numerically why Gaussian noise is so common, distinguish uncorrelated from independent, and derive the most useful formula in experimental science, the <span class="math notranslate nohighlight">\(\sigma^2/N\)</span> variance of a sample mean. The section ends with real recordings: muscle and electrode-motion noise from the MIT-BIH Noise Stress Test Database, needle EMG and resting EEG, whose histograms tell us which noise models are realistic. Random <em>processes</em>, sequences of random variables indexed by time, are the subject of <a class="reference internal" href="../ch12_spectral_estimation/01_random_processes.html"><span class="std std-doc">Section 7.1</span></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">wfdb</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">mne</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">signal</span><span class="p">,</span> <span class="n">stats</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">"../bsp.mplstyle"</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"axes.prop_cycle"</span><span class="p">]</span><span class="o">.</span><span class="n">by_key</span><span class="p">()[</span><span class="s2">"color"</span><span class="p">]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">mne</span><span class="o">.</span><span class="n">set_log_level</span><span class="p">(</span><span class="s2">"ERROR"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="random-variables-densities-and-histograms">
+<span id="sec-2-4-1"></span><h2>2.4.1 Random Variables, Densities and Histograms<a class="headerlink" href="#random-variables-densities-and-histograms" title="Link to this heading">#</a></h2>
+<p>A <strong>random variable</strong> <span class="math notranslate nohighlight">\(X\)</span> is a numerical outcome of an experiment whose result we cannot predict exactly: the voltage of the amplifier noise at a given instant, the next RR interval, the number of ectopic beats in an hour. Before the experiment, all we can state is how likely the different values are.</p>
+<p>For a variable that takes continuous values, this is described by the <strong>probability density function</strong> (PDF) <span class="math notranslate nohighlight">\(f_X(x)\)</span>. Probabilities are areas under the density:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-31">
+\[\begin{equation*}
+P(a &lt; X \le b) = \int_a^b f_X(x)\,dx, \qquad f_X(x) \ge 0, \qquad \int_{-\infty}^{\infty} f_X(x)\,dx = 1. \tag{2.31}
+\end{equation*}\]</div>
+<p>The density itself is not a probability; it has units of “probability per unit of <span class="math notranslate nohighlight">\(x\)</span>” (per mV for an ECG noise voltage), and it can exceed one. The <strong>cumulative distribution function</strong> (CDF) accumulates the density from the left, <span class="math notranslate nohighlight">\(F_X(x) = P(X \le x) = \int_{-\infty}^{x} f_X(u)\,du\)</span>. It rises from 0 to 1, and by the fundamental theorem of calculus <span class="math notranslate nohighlight">\(f_X = dF_X/dx\)</span>. Variables that take only discrete values, such as a count of beats, have a probability mass function <span class="math notranslate nohighlight">\(p_X(k) = P(X = k)\)</span> instead, and every integral below becomes a sum.</p>
+<p>In practice we never see <span class="math notranslate nohighlight">\(f_X\)</span>; we see <span class="math notranslate nohighlight">\(N\)</span> samples <span class="math notranslate nohighlight">\(x_1, \ldots, x_N\)</span>. The <strong>histogram</strong> estimates the density: divide the axis into bins of width <span class="math notranslate nohighlight">\(\Delta\)</span>, count the samples <span class="math notranslate nohighlight">\(n_i\)</span> falling into bin <span class="math notranslate nohighlight">\(i\)</span>, and plot <span class="math notranslate nohighlight">\(n_i/(N\Delta)\)</span>. Dividing by <span class="math notranslate nohighlight">\(N\Delta\)</span> makes the total area one, so the histogram can be overlaid on a PDF (in NumPy and Matplotlib this is <code class="docutils literal notranslate"><span class="pre">density=True</span></code>). The <strong>empirical CDF</strong> is even simpler: sort the samples and plot the fraction of samples at or below each value. It needs no bin width and converges to <span class="math notranslate nohighlight">\(F_X\)</span> as <span class="math notranslate nohighlight">\(N\)</span> grows.</p>
+<p>The cell below draws 2000 samples of amplifier noise, modelled as Gaussian with a standard deviation of 10 µV, and compares both estimates with the true curves.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sigma_amp</span> <span class="o">=</span> <span class="mf">10.0</span>                                         <span class="c1"># µV</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma_amp</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">ecdf</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Empirical CDF: sorted samples and the fraction of samples at or below each."""</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">xs</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">xs</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">xs</span><span class="o">.</span><span class="n">size</span>
+
+<span class="n">xs</span><span class="p">,</span> <span class="n">Fs</span> <span class="o">=</span> <span class="n">ecdf</span><span class="p">(</span><span class="n">noise</span><span class="p">)</span>
+<span class="n">ks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Fs</span> <span class="o">-</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigma_amp</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"fraction of samples within +/-1 sigma: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">noise</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">sigma_amp</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">  (Gaussian: 0.683)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"largest gap between empirical and true CDF: </span><span class="si">{</span><span class="n">ks</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">noise</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"histogram (density)"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigma_amp</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"true PDF"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Noise voltage (µV)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Density (1/µV)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Histogram vs. PDF"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">Fs</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"empirical CDF"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigma_amp</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"true CDF"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Noise voltage (µV)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"P(X ≤ x)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Empirical vs. true CDF"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fraction of samples within +/-1 sigma: 0.679  (Gaussian: 0.683)
+largest gap between empirical and true CDF: 0.033
+</pre></div>
+</div>
+<img alt="../_images/bc94913e17acf9d88f624b738989eccb280c8fb8f6315d675383ffe86af58de2.png" src="../_images/bc94913e17acf9d88f624b738989eccb280c8fb8f6315d675383ffe86af58de2.png" />
+</div>
+</div>
+</section>
+<section id="moments-mean-variance-skewness-and-kurtosis">
+<span id="sec-2-4-2"></span><h2>2.4.2 Moments: Mean, Variance, Skewness and Kurtosis<a class="headerlink" href="#moments-mean-variance-skewness-and-kurtosis" title="Link to this heading">#</a></h2>
+<p>A density contains everything there is to know about a random variable, but a few numbers usually say enough. They are all built from the <strong>expectation</strong>, the density-weighted average of a function of <span class="math notranslate nohighlight">\(X\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}[g(X)] = \int_{-\infty}^{\infty} g(x)\,f_X(x)\,dx .
+\]</div>
+<p>Because the integral is linear, so is the expectation: <span class="math notranslate nohighlight">\(\mathbb{E}[aX + b] = a\,\mathbb{E}[X] + b\)</span> for constants <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. We will use this property constantly.</p>
+<p>The <strong>mean</strong> <span class="math notranslate nohighlight">\(\mu = \mathbb{E}[X]\)</span> locates the distribution; for an ECG electrode it is the DC offset. The <strong>variance</strong> measures spread around the mean, <span class="math notranslate nohighlight">\(\sigma^2 = \mathbb{E}[(X - \mu)^2]\)</span>, and its square root <span class="math notranslate nohighlight">\(\sigma\)</span>, the <strong>standard deviation</strong>, has the same units as <span class="math notranslate nohighlight">\(X\)</span>. For a zero-mean noise, <span class="math notranslate nohighlight">\(\sigma\)</span> is the RMS value and <span class="math notranslate nohighlight">\(\sigma^2\)</span> the average power. Expanding the square and applying linearity gives a formula that is often easier to use:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-32">
+\[\begin{equation*}
+\sigma^2 = \mathbb{E}[X^2 - 2\mu X + \mu^2] = \mathbb{E}[X^2] - 2\mu\,\mathbb{E}[X] + \mu^2 = \mathbb{E}[X^2] - \mu^2 . \tag{2.32}
+\end{equation*}\]</div>
+<p>In words, the total power equals the AC power plus the DC power, the same split we make for deterministic signals in Section 3.4. Scaling a variable scales its spread: <span class="math notranslate nohighlight">\(\operatorname{Var}(aX + b) = \mathbb{E}[(aX + b - a\mu - b)^2] = a^2\sigma^2\)</span>, so an amplifier with gain <span class="math notranslate nohighlight">\(a\)</span> multiplies the noise standard deviation by <span class="math notranslate nohighlight">\(|a|\)</span>, and adding an offset changes nothing.</p>
+<p>Two further moments describe the shape. Using the standardized variable <span class="math notranslate nohighlight">\(Z = (X - \mu)/\sigma\)</span>, which has zero mean and unit variance,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-33">
+\[\begin{equation*}
+\text{skewness} = \mathbb{E}[Z^3], \qquad \text{kurtosis} = \mathbb{E}[Z^4], \qquad \text{excess kurtosis} = \mathbb{E}[Z^4] - 3. \tag{2.33}
+\end{equation*}\]</div>
+<p>The skewness is zero for a symmetric density and positive when the right tail is longer. The kurtosis measures the weight of the tails. A Gaussian has kurtosis 3 (we prove it below), so the <strong>excess kurtosis</strong> compares a density with the Gaussian: positive values mean heavier tails and a sharper peak, typical of spiky signals such as EMG; negative values mean light tails, as in a uniform density. SciPy’s <code class="docutils literal notranslate"><span class="pre">stats.kurtosis</span></code> returns the excess kurtosis by default.</p>
+<p>From samples, we estimate the moments by replacing expectations with averages: <span class="math notranslate nohighlight">\(\bar{x} = \frac{1}{N}\sum_i x_i\)</span> for the mean, and for the variance</p>
+<div class="math notranslate nohighlight">
+\[
+s^2 = \frac{1}{N - 1}\sum_{i=1}^{N} (x_i - \bar{x})^2 .
+\]</div>
+<p>The divisor <span class="math notranslate nohighlight">\(N - 1\)</span> rather than <span class="math notranslate nohighlight">\(N\)</span> compensates for measuring the spread around the sample mean, which is always closer to the data than the true mean; we prove this in <a class="reference internal" href="#sec-2-4-6">Section 2.4.6</a>. In NumPy, <code class="docutils literal notranslate"><span class="pre">np.var(x,</span> <span class="pre">ddof=1)</span></code> uses <span class="math notranslate nohighlight">\(N - 1\)</span> and the default <code class="docutils literal notranslate"><span class="pre">ddof=0</span></code> uses <span class="math notranslate nohighlight">\(N\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">moments</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Sample mean, standard deviation, skewness and excess kurtosis, equations (2.43)-(2.44)."""</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">sd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sd</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">z</span> <span class="o">**</span> <span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">z</span> <span class="o">**</span> <span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">200_000</span><span class="p">)</span>             <span class="c1"># a skewed test variable</span>
+<span class="n">mu</span><span class="p">,</span> <span class="n">sd</span><span class="p">,</span> <span class="n">sk</span><span class="p">,</span> <span class="n">ku</span> <span class="o">=</span> <span class="n">moments</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"ours : mean </span><span class="si">{</span><span class="n">mu</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, sd </span><span class="si">{</span><span class="n">sd</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, skewness </span><span class="si">{</span><span class="n">sk</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, excess kurtosis </span><span class="si">{</span><span class="n">ku</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"scipy: mean </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, sd </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, skewness </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">skew</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, "</span>
+      <span class="sa">f</span><span class="s2">"excess kurtosis </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">kurtosis</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"exact: mean 2, sd 2, skewness 2, excess kurtosis 6 for the exponential density"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ours : mean 1.9980, sd 2.0026, skewness 2.0175, excess kurtosis 6.1854
+scipy: mean 1.9980, sd 2.0026, skewness 2.0175, excess kurtosis 6.1854
+exact: mean 2, sd 2, skewness 2, excess kurtosis 6 for the exponential density
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="three-noise-models">
+<span id="sec-2-4-3"></span><h2>2.4.3 Three Noise Models<a class="headerlink" href="#three-noise-models" title="Link to this heading">#</a></h2>
+<p>Three densities cover most noise models in this book. To compare their shapes fairly, we will give each one the same variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>.</p>
+<section id="the-gaussian-density">
+<h3>The Gaussian density<a class="headerlink" href="#the-gaussian-density" title="Link to this heading">#</a></h3>
+<p>The Gaussian, or normal, density with mean <span class="math notranslate nohighlight">\(\mu\)</span> and variance <span class="math notranslate nohighlight">\(\sigma^2\)</span> is</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-34">
+\[\begin{equation*}
+f_X(x) = \frac{1}{\sigma\sqrt{2\pi}}\,\exp\!\left(-\frac{(x - \mu)^2}{2\sigma^2}\right), \qquad X \sim \mathcal{N}(\mu, \sigma^2). \tag{2.34}
+\end{equation*}\]</div>
+<p>The constant in front comes straight from the Gaussian integral (2.27) of <a class="reference internal" href="04_calculus_for_signals.html#sec-2-3-6"><span class="std std-ref">Section 2.3.6</span></a>, which gives <span class="math notranslate nohighlight">\(\int e^{-(x-\mu)^2/(2\sigma^2)}dx = \sigma\sqrt{2\pi}\)</span>, so the area is one. That the parameter <span class="math notranslate nohighlight">\(\sigma^2\)</span> really is the variance takes one integration by parts. With <span class="math notranslate nohighlight">\(s = x - \mu\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\mathbb{E}[(X - \mu)^2] &amp;= \frac{1}{\sigma\sqrt{2\pi}}\int_{-\infty}^{\infty} s \cdot s\,e^{-s^2/(2\sigma^2)}\,ds \\
+&amp;= \frac{1}{\sigma\sqrt{2\pi}}\left(\Big[-\sigma^2 s\,e^{-s^2/(2\sigma^2)}\Big]_{-\infty}^{\infty} + \sigma^2\int_{-\infty}^{\infty} e^{-s^2/(2\sigma^2)}\,ds\right) \\
+&amp;= \frac{1}{\sigma\sqrt{2\pi}}\left(0 + \sigma^2\cdot\sigma\sqrt{2\pi}\right) = \sigma^2,
+\end{aligned}
+\end{split}\]</div>
+<p>where we took <span class="math notranslate nohighlight">\(f = s\)</span> and <span class="math notranslate nohighlight">\(g' = s\,e^{-s^2/(2\sigma^2)}\)</span>, so that <span class="math notranslate nohighlight">\(g = -\sigma^2 e^{-s^2/(2\sigma^2)}\)</span>. Repeating the trick once more gives <span class="math notranslate nohighlight">\(\mathbb{E}[(X - \mu)^4] = 3\sigma^4\)</span>, hence a kurtosis of 3 and an excess kurtosis of zero. The Gaussian is the model for thermal noise in electrodes and amplifiers and, as we will see, for any noise made of many small independent contributions. About 68% of its probability lies within <span class="math notranslate nohighlight">\(\pm\sigma\)</span> of the mean, 95% within <span class="math notranslate nohighlight">\(\pm 1.96\sigma\)</span> and 99.7% within <span class="math notranslate nohighlight">\(\pm 3\sigma\)</span>.</p>
+</section>
+<section id="the-uniform-density-and-quantization-noise">
+<h3>The uniform density and quantization noise<a class="headerlink" href="#the-uniform-density-and-quantization-noise" title="Link to this heading">#</a></h3>
+<p>An analog-to-digital converter rounds each voltage to the nearest of a set of levels spaced <span class="math notranslate nohighlight">\(\Delta\)</span> apart. If the signal moves over many levels, the rounding error <span class="math notranslate nohighlight">\(e\)</span> is equally likely to be anywhere between <span class="math notranslate nohighlight">\(-\Delta/2\)</span> and <span class="math notranslate nohighlight">\(\Delta/2\)</span>, so its density is the constant <span class="math notranslate nohighlight">\(1/\Delta\)</span> on that interval. Its mean is zero by symmetry and its variance is</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-35">
+\[\begin{equation*}
+\sigma_e^2 = \int_{-\Delta/2}^{\Delta/2} e^2\,\frac{1}{\Delta}\,de = \frac{1}{\Delta}\left[\frac{e^3}{3}\right]_{-\Delta/2}^{\Delta/2} = \frac{1}{\Delta}\cdot\frac{2}{3}\cdot\frac{\Delta^3}{8} = \frac{\Delta^2}{12}. \tag{2.35}
+\end{equation*}\]</div>
+<p>The MIT-BIH recordings were digitized with 200 converter units per millivolt, so <span class="math notranslate nohighlight">\(\Delta = 5\)</span> µV and the quantization noise has a standard deviation of <span class="math notranslate nohighlight">\(5/\sqrt{12} \approx 1.4\)</span> µV, far below the other noise sources. Its fourth moment is <span class="math notranslate nohighlight">\(\Delta^4/80\)</span>, giving a kurtosis of <span class="math notranslate nohighlight">\((\Delta^4/80)/(\Delta^4/144) = 1.8\)</span> and an excess kurtosis of <span class="math notranslate nohighlight">\(-1.2\)</span>: the uniform density has no tails at all. Quantization is treated in detail in Section 9.4.</p>
+</section>
+<section id="the-laplacian-density">
+<h3>The Laplacian density<a class="headerlink" href="#the-laplacian-density" title="Link to this heading">#</a></h3>
+<p>The Laplacian density decays exponentially in <span class="math notranslate nohighlight">\(|x|\)</span> instead of in <span class="math notranslate nohighlight">\(x^2\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-36">
+\[\begin{equation*}
+f_X(x) = \frac{1}{2b}\,e^{-|x|/b}, \qquad \sigma^2 = 2b^2, \qquad \text{excess kurtosis} = 3. \tag{2.36}
+\end{equation*}\]</div>
+<p>The moments follow from the integral <span class="math notranslate nohighlight">\(\int_0^\infty t^n e^{-t/b}\,dt = n!\,b^{n+1}\)</span>, which is equation (2.26) of the previous section generalized by repeated integration by parts (exercise 3 there). Because the density is even, <span class="math notranslate nohighlight">\(\mathbb{E}[X^2] = 2\cdot\frac{1}{2b}\int_0^\infty x^2 e^{-x/b}dx = \frac{1}{b}\cdot 2b^3 = 2b^2\)</span>, and likewise <span class="math notranslate nohighlight">\(\mathbb{E}[X^4] = \frac{1}{b}\cdot 24 b^5 = 24 b^4\)</span>, so the kurtosis is <span class="math notranslate nohighlight">\(24b^4/(2b^2)^2 = 6\)</span>. The sharp peak and heavy tails make the Laplacian a better model than the Gaussian for signals that are mostly quiet with occasional bursts, such as EMG and the coefficients of wavelet transforms (which is why wavelet denoising in <a class="reference internal" href="../ch24_wavelets/02_wavelet_denoising.html"><span class="std std-doc">Section 14.2</span></a> uses soft thresholding).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sigma</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">models</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"Gaussian"</span><span class="p">:</span>  <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">sigma</span><span class="p">),</span>
+    <span class="s2">"uniform"</span><span class="p">:</span>   <span class="n">stats</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">loc</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">),</span>   <span class="c1"># Delta = sqrt(12) sigma</span>
+    <span class="s2">"Laplacian"</span><span class="p">:</span> <span class="n">stats</span><span class="o">.</span><span class="n">laplace</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">sigma</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>                               <span class="c1"># b = sigma / sqrt(2)</span>
+<span class="p">}</span>
+<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">400_000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">sd</span><span class="p">,</span> <span class="n">sk</span><span class="p">,</span> <span class="n">ku</span> <span class="o">=</span> <span class="n">moments</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"model"</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">"sample sd"</span><span class="p">:</span> <span class="n">sd</span><span class="p">,</span> <span class="s2">"sample excess kurtosis"</span><span class="p">:</span> <span class="n">ku</span><span class="p">,</span>
+                 <span class="s2">"theory excess kurtosis"</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="n">moments</span><span class="o">=</span><span class="s2">"k"</span><span class="p">)),</span>
+                 <span class="s2">"P(|X| &gt; 3 sigma)"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">)})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"model"</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">float_format</span><span class="o">=</span><span class="s2">"</span><span class="si">{:.4f}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>           sample sd  sample excess kurtosis  theory excess kurtosis  P(|X| &gt; 3 sigma)
+model                                                                                 
+Gaussian      0.9997                 -0.0009                  0.0000            0.0027
+uniform       1.0001                 -1.2007                 -1.2000            0.0000
+Laplacian     0.9961                  2.9394                  3.0000            0.0140
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"x / σ"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Density"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Three densities with equal variance"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"x / σ"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Density (log scale)"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">"The same densities: tails"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/2be6307730d7eaeaa746ea29ffb5495e39700cc9ea52d60b5396bd86d1577ee4.png" src="../_images/2be6307730d7eaeaa746ea29ffb5495e39700cc9ea52d60b5396bd86d1577ee4.png" />
+</div>
+</div>
+<p>On a linear scale the three densities look broadly similar. The logarithmic scale is where they differ: the Gaussian log-density is a parabola that plunges quickly, the Laplacian falls along straight lines, and the uniform stops abruptly. With the same variance, a Laplacian variable exceeds <span class="math notranslate nohighlight">\(3\sigma\)</span> more than four times as often as a Gaussian one. A detector that sets its threshold at <span class="math notranslate nohighlight">\(3\sigma\)</span> under a Gaussian assumption will raise many more false alarms on Laplacian-like noise than its designer expects.</p>
+</section>
+</section>
+<section id="why-noise-is-often-gaussian-the-central-limit-theorem">
+<span id="sec-2-4-4"></span><h2>2.4.4 Why Noise Is Often Gaussian: The Central Limit Theorem<a class="headerlink" href="#why-noise-is-often-gaussian-the-central-limit-theorem" title="Link to this heading">#</a></h2>
+<p>The voltage measured at a scalp electrode is the sum of the activity of millions of neurons, and thermal noise in a resistor is the sum of the motions of an enormous number of electrons. The <strong>central limit theorem</strong> explains why such sums are nearly Gaussian, whatever the distribution of the individual contributions.</p>
+<p>Let <span class="math notranslate nohighlight">\(X_1, \ldots, X_N\)</span> be independent, each with mean <span class="math notranslate nohighlight">\(\mu\)</span> and variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>. Their sum <span class="math notranslate nohighlight">\(S_N\)</span> has mean <span class="math notranslate nohighlight">\(N\mu\)</span> and, as we prove in the next subsection, variance <span class="math notranslate nohighlight">\(N\sigma^2\)</span>. The theorem states that the standardized sum</p>
+<div class="math notranslate nohighlight">
+\[
+Z_N = \frac{S_N - N\mu}{\sigma\sqrt{N}}
+\]</div>
+<p>has a distribution that approaches <span class="math notranslate nohighlight">\(\mathcal{N}(0, 1)\)</span> as <span class="math notranslate nohighlight">\(N \to \infty\)</span>. The proof requires characteristic functions (Fourier transforms of densities, see <span class="bibtex-citation" id="id1">Papoulis and Pillai [<a class="reference internal" href="../bibliography.html#id14" title="Athanasios Papoulis and S. Unnikrishna Pillai. Probability, Random Variables, and Stochastic Processes. McGraw-Hill, New York, 4th edition, 2002.">2002</a>]</span>), so I show it numerically instead. A clean way to measure the approach is through the excess kurtosis, which for a sum of <span class="math notranslate nohighlight">\(N\)</span> independent identical terms equals the excess kurtosis of one term divided by <span class="math notranslate nohighlight">\(N\)</span>. Starting from the uniform density (<span class="math notranslate nohighlight">\(-1.2\)</span>), the excess kurtosis of the sum should be <span class="math notranslate nohighlight">\(-0.6\)</span> for <span class="math notranslate nohighlight">\(N = 2\)</span>, <span class="math notranslate nohighlight">\(-0.3\)</span> for <span class="math notranslate nohighlight">\(N = 4\)</span> and <span class="math notranslate nohighlight">\(-0.075\)</span> for <span class="math notranslate nohighlight">\(N = 16\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Ns</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">trials</span> <span class="o">=</span> <span class="mi">200_000</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">2.8</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">N</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">Ns</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">trials</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">N</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span>                  <span class="c1"># standardize: each term has variance 1/12</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.6</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Standardized sum"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"N = </span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"N = </span><span class="si">{</span><span class="n">N</span><span class="si">:</span><span class="s2">2d</span><span class="si">}</span><span class="s2">: excess kurtosis </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">kurtosis</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="si">:</span><span class="s2">+.3f</span><span class="si">}</span><span class="s2">  (theory </span><span class="si">{</span><span class="o">-</span><span class="mf">1.2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">N</span><span class="si">:</span><span class="s2">+.3f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Density"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N =  1: excess kurtosis -1.198  (theory -1.200)
+N =  2: excess kurtosis -0.596  (theory -0.600)
+N =  4: excess kurtosis -0.312  (theory -0.300)
+N = 16: excess kurtosis -0.080  (theory -0.075)
+</pre></div>
+</div>
+<img alt="../_images/76211ddfed205db5123fc17f11307a768556a1464ec3d69c368e36d10fd5aad1.png" src="../_images/76211ddfed205db5123fc17f11307a768556a1464ec3d69c368e36d10fd5aad1.png" />
+</div>
+</div>
+<p>Already at <span class="math notranslate nohighlight">\(N = 4\)</span> the histogram of a sum of uniform variables is hard to tell from the Gaussian curve by eye. The theorem has limits that matter for physiological data. It requires many contributions of comparable size; when one or a few sources dominate, as when a needle electrode sits next to a single motor unit, the sum keeps the shape of those sources and is far from Gaussian. We will see this in the EMG data at the end of the section.</p>
+</section>
+<section id="covariance-correlation-and-independence">
+<span id="sec-2-4-5"></span><h2>2.4.5 Covariance, Correlation and Independence<a class="headerlink" href="#covariance-correlation-and-independence" title="Link to this heading">#</a></h2>
+<p>With two random variables we need their <strong>joint density</strong> <span class="math notranslate nohighlight">\(f_{XY}(x, y)\)</span>, and the most important summary of how they vary together is the <strong>covariance</strong></p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-37">
+\[\begin{equation*}
+\operatorname{Cov}(X, Y) = \mathbb{E}\big[(X - \mu_X)(Y - \mu_Y)\big] = \mathbb{E}[XY] - \mu_X\mu_Y, \qquad
+\rho_{XY} = \frac{\operatorname{Cov}(X, Y)}{\sigma_X\,\sigma_Y}. \tag{2.37}
+\end{equation*}\]</div>
+<p>The second form follows by expanding the product, exactly as in equation <a class="reference internal" href="#eq-2-32">(2.32)</a>. The <strong>correlation coefficient</strong> <span class="math notranslate nohighlight">\(\rho_{XY}\)</span> is the probabilistic counterpart of the cosine between centred vectors in <a class="reference internal" href="03_signals_as_vectors.html#sec-2-2-3"><span class="std std-ref">Section 2.2.3</span></a>, and the Cauchy–Schwarz inequality, which holds for expectations just as for sums, guarantees <span class="math notranslate nohighlight">\(|\rho_{XY}| \le 1\)</span>.</p>
+<p>Covariance appears whenever we add random signals. Expanding the square,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-38">
+\[\begin{equation*}
+\operatorname{Var}(X + Y) = \mathbb{E}\big[((X - \mu_X) + (Y - \mu_Y))^2\big] = \sigma_X^2 + \sigma_Y^2 + 2\operatorname{Cov}(X, Y). \tag{2.38}
+\end{equation*}\]</div>
+<p>Powers add only when the covariance is zero, which is the probabilistic version of the Pythagorean theorem of <a class="reference internal" href="03_signals_as_vectors.html#sec-2-2-2"><span class="std std-ref">Section 2.2.2</span></a>.</p>
+<p><strong>Independence implies zero covariance.</strong> Two variables are <strong>independent</strong> when their joint density factors, <span class="math notranslate nohighlight">\(f_{XY}(x, y) = f_X(x)\,f_Y(y)\)</span>: knowing <span class="math notranslate nohighlight">\(X\)</span> tells us nothing about <span class="math notranslate nohighlight">\(Y\)</span>. Then the double integral for <span class="math notranslate nohighlight">\(\mathbb{E}[XY]\)</span> separates,</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}[XY] = \iint xy\,f_X(x)f_Y(y)\,dx\,dy = \int x f_X(x)\,dx \int y f_Y(y)\,dy = \mu_X\mu_Y,
+\]</div>
+<p>so <span class="math notranslate nohighlight">\(\operatorname{Cov}(X, Y) = 0\)</span>. Independent variables are uncorrelated, and by equation (2.38) the variances of independent noise sources add. Amplifier noise and power-line interference come from different physical mechanisms, so their powers add in a recording.</p>
+<p><strong>The converse is false.</strong> Let <span class="math notranslate nohighlight">\(X \sim \mathcal{N}(0, 1)\)</span> and <span class="math notranslate nohighlight">\(Y = X^2\)</span>. Then <span class="math notranslate nohighlight">\(Y\)</span> is completely determined by <span class="math notranslate nohighlight">\(X\)</span>, as dependent as two variables can be. Yet</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{Cov}(X, Y) = \mathbb{E}[X\cdot X^2] - \mathbb{E}[X]\,\mathbb{E}[X^2] = \mathbb{E}[X^3] - 0 = 0,
+\]</div>
+<p>because the third moment of a symmetric density vanishes (the integrand <span class="math notranslate nohighlight">\(x^3 f_X(x)\)</span> is odd). Correlation detects only <em>linear</em> dependence. Uncorrelated noise sources need not be independent, and a correlation coefficient near zero between two physiological signals does not prove that they are unrelated. The coupling between heart rate and respiration, for instance, can be strongly nonlinear. Methods that look beyond second-order statistics, such as independent component analysis (Section 25.2) and the entropy measures of Chapter 26, exist for exactly this reason.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+<span class="n">y_square</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="n">y_linear</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">0.6</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"rho(x, x^2)         = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y_square</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">+.3f</span><span class="si">}</span><span class="s2">   (dependent but uncorrelated)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"rho(x, 0.8x + 0.6n) = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y_linear</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">+.3f</span><span class="si">}</span><span class="s2">   (theory +0.800)"</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y_linear</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Var(x + y) = </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">; sigma_x^2 + sigma_y^2 + 2 Cov = "</span>
+      <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y_linear</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y_linear</span><span class="p">,</span><span class="w"> </span><span class="n">ddof</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">8.4</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">1500</span><span class="p">],</span> <span class="n">y_linear</span><span class="p">[:</span><span class="mi">1500</span><span class="p">],</span> <span class="s2">"."</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"X"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Y"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$Y = 0.8X + $ noise: $\rho = 0.8$"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">1500</span><span class="p">],</span> <span class="n">y_square</span><span class="p">[:</span><span class="mi">1500</span><span class="p">],</span> <span class="s2">"."</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"X"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Y"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$Y = X^2$: dependent, yet $\rho \approx 0$"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rho(x, x^2)         = +0.040   (dependent but uncorrelated)
+rho(x, 0.8x + 0.6n) = +0.793   (theory +0.800)
+Var(x + y) = 3.575; sigma_x^2 + sigma_y^2 + 2 Cov = 3.575
+</pre></div>
+</div>
+<img alt="../_images/4cf1dbc453777279fb76c710f5b8f6b379678aeb2e505cd44ae06a08d1e4e0bd.png" src="../_images/4cf1dbc453777279fb76c710f5b8f6b379678aeb2e505cd44ae06a08d1e4e0bd.png" />
+</div>
+</div>
+</section>
+<section id="the-sample-mean-and-its-uncertainty">
+<span id="sec-2-4-6"></span><h2>2.4.6 The Sample Mean and Its Uncertainty<a class="headerlink" href="#the-sample-mean-and-its-uncertainty" title="Link to this heading">#</a></h2>
+<p>Suppose we measure <span class="math notranslate nohighlight">\(N\)</span> independent values <span class="math notranslate nohighlight">\(X_1, \ldots, X_N\)</span> of the same quantity, each with mean <span class="math notranslate nohighlight">\(\mu\)</span> and variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>: the RR interval of <span class="math notranslate nohighlight">\(N\)</span> beats, the amplitude of an evoked potential on <span class="math notranslate nohighlight">\(N\)</span> trials, the ECG at the same point of <span class="math notranslate nohighlight">\(N\)</span> aligned beats. We estimate <span class="math notranslate nohighlight">\(\mu\)</span> by the sample mean <span class="math notranslate nohighlight">\(\bar{X} = \frac{1}{N}\sum_i X_i\)</span>. How good is this estimate?</p>
+<p><strong>Step 1: the sample mean is unbiased.</strong> By linearity, <span class="math notranslate nohighlight">\(\mathbb{E}[\bar{X}] = \frac{1}{N}\sum_i \mathbb{E}[X_i] = \frac{1}{N}\cdot N\mu = \mu\)</span>. On average, the estimate is right.</p>
+<p><strong>Step 2: its variance.</strong> Applying equation (2.38) repeatedly to a sum of <span class="math notranslate nohighlight">\(N\)</span> terms, the variance of the sum is the sum of all variances plus twice all pairwise covariances. For independent (or merely uncorrelated) terms every covariance vanishes, and since <span class="math notranslate nohighlight">\(\operatorname{Var}(aX) = a^2\operatorname{Var}(X)\)</span> with <span class="math notranslate nohighlight">\(a = 1/N\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-39">
+\[\begin{equation*}
+\operatorname{Var}(\bar{X}) = \frac{1}{N^2}\sum_{i=1}^{N}\operatorname{Var}(X_i) = \frac{1}{N^2}\cdot N\sigma^2 = \frac{\sigma^2}{N}, \qquad \operatorname{SE}(\bar{X}) = \frac{\sigma}{\sqrt{N}}. \tag{2.39}
+\end{equation*}\]</div>
+<p>The <strong>standard error</strong> falls as <span class="math notranslate nohighlight">\(1/\sqrt{N}\)</span>. To halve the uncertainty we need four times as many measurements. This is the principle behind <strong>signal averaging</strong> (<a class="reference internal" href="../ch16_noise_removal/01_signal_averaging.html"><span class="std std-doc">Section 10.1</span></a>): averaging 100 aligned beats or evoked responses reduces the noise standard deviation tenfold, which is how brainstem auditory potentials of a few hundred nanovolts are pulled out of EEG background of tens of microvolts.</p>
+<p><strong>Step 3: why <span class="math notranslate nohighlight">\(s^2\)</span> divides by <span class="math notranslate nohighlight">\(N - 1\)</span>.</strong> Writing <span class="math notranslate nohighlight">\(X_i - \bar{X} = (X_i - \mu) - (\bar{X} - \mu)\)</span> and expanding, the cross terms add up to <span class="math notranslate nohighlight">\(-2N(\bar{X} - \mu)^2\)</span>, so</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i=1}^{N}(X_i - \bar{X})^2 = \sum_{i=1}^{N}(X_i - \mu)^2 - N(\bar{X} - \mu)^2 .
+\]</div>
+<p>Taking expectations and using equation (2.39) for the last term gives <span class="math notranslate nohighlight">\(N\sigma^2 - N\cdot\sigma^2/N = (N - 1)\sigma^2\)</span>. Dividing the sum of squares by <span class="math notranslate nohighlight">\(N - 1\)</span> therefore gives an unbiased estimate of <span class="math notranslate nohighlight">\(\sigma^2\)</span>.</p>
+<p><strong>Step 4: a confidence interval.</strong> By the central limit theorem, <span class="math notranslate nohighlight">\(\bar{X}\)</span> is approximately Gaussian for moderate <span class="math notranslate nohighlight">\(N\)</span> even when the <span class="math notranslate nohighlight">\(X_i\)</span> are not, so with probability about 0.95 it lies within <span class="math notranslate nohighlight">\(1.96\,\sigma/\sqrt{N}\)</span> of <span class="math notranslate nohighlight">\(\mu\)</span>. Turning the statement around gives the 95% <strong>confidence interval</strong></p>
+<div class="amsmath math notranslate nohighlight" id="eq-2-40">
+\[\begin{equation*}
+\bar{x} \pm 1.96\,\frac{s}{\sqrt{N}} . \tag{2.40}
+\end{equation*}\]</div>
+<p>For small <span class="math notranslate nohighlight">\(N\)</span>, replacing <span class="math notranslate nohighlight">\(\sigma\)</span> by <span class="math notranslate nohighlight">\(s\)</span> adds uncertainty and the factor 1.96 should be replaced by the corresponding quantile of Student’s <span class="math notranslate nohighlight">\(t\)</span> distribution with <span class="math notranslate nohighlight">\(N - 1\)</span> degrees of freedom (2.06 for <span class="math notranslate nohighlight">\(N = 25\)</span>). The interpretation is easy to get wrong: if we repeated the whole experiment many times, about 95% of the intervals computed this way would contain the true mean. We check that claim by simulation with Laplacian data, which are far from Gaussian.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span><span class="p">,</span> <span class="n">n_experiments</span> <span class="o">=</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">20_000</span>
+<span class="n">mu_true</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">laplace</span><span class="p">(</span><span class="n">mu_true</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_experiments</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+<span class="n">xbar</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">t_crit</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">covered</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">xbar</span> <span class="o">-</span> <span class="n">mu_true</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">t_crit</span> <span class="o">*</span> <span class="n">s</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"spread of sample means: </span><span class="si">{</span><span class="n">xbar</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">  (sigma/sqrt(N) = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"mean of s^2 (ddof=1)  : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">s</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">  (sigma^2 = </span><span class="si">{</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="o">**</span><span class="mi">2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"t quantile for N = </span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">t_crit</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"coverage of the 95% interval: </span><span class="si">{</span><span class="n">covered</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>spread of sample means: 0.2811  (sigma/sqrt(N) = 0.2828)
+mean of s^2 (ddof=1)  : 1.9981  (sigma^2 = 2.0000)
+t quantile for N = 25: 2.064
+coverage of the 95% interval: 0.954
+</pre></div>
+</div>
+</div>
+</div>
+<section id="the-mean-heart-rate-of-record-100">
+<h3>The mean heart rate of record 100<a class="headerlink" href="#the-mean-heart-rate-of-record-100" title="Link to this heading">#</a></h3>
+<p>As a real example we estimate the mean RR interval of record 100 from the annotated beats, and watch the confidence interval shrink as we include more beats.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ann</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdann</span><span class="p">(</span><span class="s2">"../data/mitdb/100"</span><span class="p">,</span> <span class="s2">"atr"</span><span class="p">)</span>
+<span class="n">is_beat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">symbol</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="s2">"NLRBAaJSVrFejnE/fQ"</span><span class="p">))</span>
+<span class="n">rr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">ann</span><span class="o">.</span><span class="n">sample</span><span class="p">[</span><span class="n">is_beat</span><span class="p">])</span> <span class="o">/</span> <span class="mf">360.0</span>                <span class="c1"># seconds</span>
+<span class="n">n_beats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">rr</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">run_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">rr</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">/</span> <span class="n">n_beats</span>
+<span class="n">run_sd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">rr</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">n_beats</span><span class="p">])</span>
+<span class="n">half_width</span> <span class="o">=</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">run_sd</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n_beats</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">rr</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> RR intervals: mean </span><span class="si">{</span><span class="n">rr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ms, sd </span><span class="si">{</span><span class="n">rr</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ms"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"95% CI of the mean RR: </span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">half_width</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">half_width</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ms"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"mean heart rate 60/mean(RR): </span><span class="si">{</span><span class="mi">60</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">rr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bpm"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"correlation between successive RR intervals: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">rr</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">rr</span><span class="p">[</span><span class="mi">1</span><span class="p">:])[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">n_beats</span><span class="p">,</span> <span class="mi">1000</span> <span class="o">*</span> <span class="p">(</span><span class="n">run_mean</span> <span class="o">-</span> <span class="n">half_width</span><span class="p">),</span> <span class="mi">1000</span> <span class="o">*</span> <span class="p">(</span><span class="n">run_mean</span> <span class="o">+</span> <span class="n">half_width</span><span class="p">),</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"95</span><span class="si">% c</span><span class="s2">onfidence interval"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_beats</span><span class="p">,</span> <span class="mi">1000</span> <span class="o">*</span> <span class="n">run_mean</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"running mean RR"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="s2">"log"</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Number of beats averaged"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"RR interval (ms)"</span><span class="p">,</span>
+       <span class="n">title</span><span class="o">=</span><span class="s2">"Record 100: the mean RR interval and its uncertainty"</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">700</span><span class="p">,</span> <span class="mi">900</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2272 RR intervals: mean 794.6 ms, sd 48.8 ms
+95% CI of the mean RR: 792.6 to 796.6 ms
+mean heart rate 60/mean(RR): 75.5 bpm
+correlation between successive RR intervals: 0.16
+</pre></div>
+</div>
+<img alt="../_images/cdbb59a690ebd9da973cdf6cb8a3e27f428993da518d1c7809f790f9556b92c7.png" src="../_images/cdbb59a690ebd9da973cdf6cb8a3e27f428993da518d1c7809f790f9556b92c7.png" />
+</div>
+</div>
+<p>The interval narrows as <span class="math notranslate nohighlight">\(1/\sqrt{N}\)</span>, and after the whole 30-minute record the mean RR interval is known to within about 2 ms. There is a catch that I want to flag clearly. Equation (2.39) assumed uncorrelated samples, and successive RR intervals are positively correlated (here about 0.16, and much more for slow trends over minutes). Positive correlation adds positive covariance terms to the variance of the mean, so the true uncertainty is larger than the formula suggests. The same issue arises whenever we treat neighbouring samples of a signal as independent; <a class="reference internal" href="../ch12_spectral_estimation/01_random_processes.html"><span class="std std-doc">Section 7.1</span></a> shows how to account for it with the autocorrelation function.</p>
+</section>
+</section>
+<section id="noise-statistics-of-real-recordings-step-by-step">
+<span id="sec-2-4-7"></span><h2>2.4.7 Noise Statistics of Real Recordings, Step by Step<a class="headerlink" href="#noise-statistics-of-real-recordings-step-by-step" title="Link to this heading">#</a></h2>
+<p>The noise models of <a class="reference internal" href="#sec-2-4-3">Section 2.4.3</a> are idealizations. Real biomedical noise can be checked against them, and the result guides the choice of method: a Gaussian assumption leads to least-squares and Wiener filtering, heavy tails suggest median filters and robust statistics. We examine five recordings.</p>
+<section id="step-1-load-the-recordings">
+<h3>Step 1: Load the recordings<a class="headerlink" href="#step-1-load-the-recordings" title="Link to this heading">#</a></h3>
+<p>The MIT-BIH Noise Stress Test Database <span class="bibtex-citation" id="id2">[<a class="reference internal" href="../bibliography.html#id86" title="George B. Moody, W. E. Muldrow, and Roger G. Mark. A noise stress test for arrhythmia detectors. Computers in Cardiology, 11:381–384, 1984.">Moody <em>et al.</em>, 1984</a>]</span> contains three noise records made with electrodes placed on the limbs of active volunteers where the ECG is barely visible: muscle (EMG) artifact <code class="docutils literal notranslate"><span class="pre">ma</span></code>, electrode motion artifact <code class="docutils literal notranslate"><span class="pre">em</span></code> and baseline wander <code class="docutils literal notranslate"><span class="pre">bw</span></code>. We take the first five minutes of channel 1 of <code class="docutils literal notranslate"><span class="pre">ma</span></code> and <code class="docutils literal notranslate"><span class="pre">em</span></code>, together with needle EMG from a healthy tibialis anterior muscle and from a patient with neuropathy <span class="bibtex-citation" id="id3">[<a class="reference internal" href="../bibliography.html#id84" title="Ary L. Goldberger, Luis A. N. Amaral, Leon Glass, Jeffrey M. Hausdorff, Plamen Ch. Ivanov, Roger G. Mark, Joseph E. Mietus, George B. Moody, Chung-Kang Peng, and H. Eugene Stanley. PhysioBank, PhysioToolkit, and PhysioNet: components of a new research resource for complex physiologic signals. Circulation, 101(23):e215–e220, 2000.">Goldberger <em>et al.</em>, 2000</a>]</span>, and the occipital channel Oz of a resting EEG with the eyes closed from the EEG Motor Movement/Imagery Database <span class="bibtex-citation" id="id4">[<a class="reference internal" href="../bibliography.html#id87" title="Gerwin Schalk, Dennis J. McFarland, Thilo Hinterberger, Niels Birbaumer, and Jonathan R. Wolpaw. BCI2000: a general-purpose brain-computer interface (BCI) system. IEEE Transactions on Biomedical Engineering, 51(6):1034–1043, 2004.">Schalk <em>et al.</em>, 2004</a>]</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">records</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"ma"</span><span class="p">,</span> <span class="s2">"em"</span><span class="p">):</span>
+    <span class="n">rec</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdrecord</span><span class="p">(</span><span class="sa">f</span><span class="s2">"../data/nstdb/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">sampto</span><span class="o">=</span><span class="mi">300</span> <span class="o">*</span> <span class="mi">360</span><span class="p">)</span>
+    <span class="n">records</span><span class="p">[</span><span class="sa">f</span><span class="s2">"ECG noise: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rec</span><span class="o">.</span><span class="n">p_signal</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">rec</span><span class="o">.</span><span class="n">fs</span><span class="p">,</span> <span class="s2">"mV"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"emg_healthy"</span><span class="p">,</span> <span class="s2">"emg_neuropathy"</span><span class="p">):</span>
+    <span class="n">rec</span> <span class="o">=</span> <span class="n">wfdb</span><span class="o">.</span><span class="n">rdrecord</span><span class="p">(</span><span class="sa">f</span><span class="s2">"../data/emgdb/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">records</span><span class="p">[</span><span class="sa">f</span><span class="s2">"needle EMG: </span><span class="si">{</span><span class="n">name</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span><span class="si">}</span><span class="s2">"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rec</span><span class="o">.</span><span class="n">p_signal</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">rec</span><span class="o">.</span><span class="n">fs</span><span class="p">,</span> <span class="s2">"mV"</span><span class="p">)</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_raw_edf</span><span class="p">(</span><span class="s2">"../data/eegmmidb/S001R02.edf"</span><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">eegbci</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+<span class="n">records</span><span class="p">[</span><span class="s2">"EEG Oz, eyes closed"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="p">[</span><span class="s2">"Oz"</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">,</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"sfreq"</span><span class="p">],</span> <span class="s2">"µV"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">unit</span><span class="p">)</span> <span class="ow">in</span> <span class="n">records</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">24s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="si">:</span><span class="s2">7d</span><span class="si">}</span><span class="s2"> samples at </span><span class="si">{</span><span class="n">fs</span><span class="si">:</span><span class="s2">6.0f</span><span class="si">}</span><span class="s2"> Hz (</span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">fs</span><span class="si">:</span><span class="s2">5.1f</span><span class="si">}</span><span class="s2"> s), unit </span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ECG noise: ma             108000 samples at    360 Hz (300.0 s), unit mV
+ECG noise: em             108000 samples at    360 Hz (300.0 s), unit mV
+needle EMG: healthy        50860 samples at   4000 Hz ( 12.7 s), unit mV
+needle EMG: neuropathy    147858 samples at   4000 Hz ( 37.0 s), unit mV
+EEG Oz, eyes closed         9760 samples at    160 Hz ( 61.0 s), unit µV
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-remove-slow-drift">
+<h3>Step 2: Remove slow drift<a class="headerlink" href="#step-2-remove-slow-drift" title="Link to this heading">#</a></h3>
+<p>Slow drifts would dominate the histograms of the ECG noise and EEG records and hide the shape of the faster fluctuations we care about. We remove them with a zero-phase high-pass filter at 0.5 Hz for the ECG noise, 1 Hz for the EEG and 10 Hz for the needle EMG (the filter itself is explained in Section 15.3; here we treat it as a tool).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cutoffs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"ECG noise"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">"needle EMG"</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span> <span class="s2">"EEG Oz"</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+<span class="n">cleaned</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">unit</span><span class="p">)</span> <span class="ow">in</span> <span class="n">records</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">fc</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cutoffs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+    <span class="n">sos</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">butter</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">fc</span><span class="p">,</span> <span class="n">btype</span><span class="o">=</span><span class="s2">"highpass"</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">"sos"</span><span class="p">)</span>
+    <span class="n">cleaned</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">sosfiltfilt</span><span class="p">(</span><span class="n">sos</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">unit</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-compute-the-moments">
+<h3>Step 3: Compute the moments<a class="headerlink" href="#step-3-compute-the-moments" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">unit</span><span class="p">)</span> <span class="ow">in</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">sd</span><span class="p">,</span> <span class="n">sk</span><span class="p">,</span> <span class="n">ku</span> <span class="o">=</span> <span class="n">moments</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"recording"</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">"sd"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">sd</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"skewness"</span><span class="p">:</span> <span class="n">sk</span><span class="p">,</span> <span class="s2">"excess kurtosis"</span><span class="p">:</span> <span class="n">ku</span><span class="p">,</span>
+                 <span class="s2">"P(|x| &gt; 3 sd)"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sd</span><span class="p">)})</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"recording"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">float_format</span><span class="o">=</span><span class="s2">"</span><span class="si">{:.3f}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Gaussian reference: skewness 0, excess kurtosis 0, P(|x| &gt; 3 sd) = </span><span class="si">{</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                               sd  skewness  excess kurtosis  P(|x| &gt; 3 sd)
+recording                                                                  
+ECG noise: ma            0.088 mV    -0.586            9.457          0.019
+ECG noise: em            0.299 mV     0.665            1.026          0.008
+needle EMG: healthy      0.068 mV     1.677           20.535          0.023
+needle EMG: neuropathy   0.374 mV    -1.211           24.087          0.024
+EEG Oz, eyes closed     65.952 µV    -0.027            0.051          0.003
+Gaussian reference: skewness 0, excess kurtosis 0, P(|x| &gt; 3 sd) = 0.0027
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-compare-the-histograms-with-a-gaussian-of-the-same-variance">
+<h3>Step 4: Compare the histograms with a Gaussian of the same variance<a class="headerlink" href="#step-4-compare-the-histograms-with-a-gaussian-of-the-same-variance" title="Link to this heading">#</a></h3>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">2.9</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">zgrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">unit</span><span class="p">))</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+    <span class="n">hist</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">centres</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">centres</span><span class="p">[</span><span class="n">hist</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">],</span> <span class="n">hist</span><span class="p">[</span><span class="n">hist</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">],</span> <span class="s2">"."</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"data"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">zgrid</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">zgrid</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Gaussian"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">zgrid</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">laplace</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">zgrid</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span> <span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Laplacian"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Standardized amplitude"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">": "</span><span class="p">,</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Density (log scale)"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/5641b5fb4ff34bef8710eb1abb8b80328058cbd35726655047cd32dfc84c60ff.png" src="../_images/5641b5fb4ff34bef8710eb1abb8b80328058cbd35726655047cd32dfc84c60ff.png" />
+</div>
+</div>
+</section>
+<section id="step-5-interpret">
+<h3>Step 5: Interpret<a class="headerlink" href="#step-5-interpret" title="Link to this heading">#</a></h3>
+<p>The resting EEG is the most Gaussian of the five: its skewness and excess kurtosis are close to zero and its log-histogram follows the Gaussian parabola. This is the central limit theorem at work, since the scalp potential sums the activity of very large populations of neurons. Electrode motion artifact also behaves almost like Gaussian noise once its slow component is removed.</p>
+<p>The other three recordings have positive excess kurtosis and tails far above the Gaussian curve. The muscle artifact <code class="docutils literal notranslate"><span class="pre">ma</span></code> is bursty, quiet between contractions and large during them, and an ECG preprocessing method that assumes Gaussian noise will underestimate how often large spikes occur. The needle EMG is the extreme case. A needle electrode records a small number of nearby motor units whose action potentials are brief spikes separated by quiet intervals, exactly the situation in which the central limit theorem does not apply. In neuropathy, surviving motor units take over denervated fibres and produce larger, rarer potentials, and the excess kurtosis rises further. The Laplacian is a better description than the Gaussian for these signals, although even it underestimates the extreme tails. I find this comparison one of the quickest sanity checks to run on any new type of recording, because it tells you in a minute whether Gaussian-based tools are likely to be appropriate.</p>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>A random variable is described by its density, which we estimate from data with a normalized histogram or, without any bin choice, with the empirical CDF. The mean, variance, skewness and kurtosis summarize the density; the variance satisfies <span class="math notranslate nohighlight">\(\sigma^2 = \mathbb{E}[X^2] - \mu^2\)</span> and scales as <span class="math notranslate nohighlight">\(a^2\)</span> under amplification. The Gaussian, uniform and Laplacian densities model thermal noise, quantization noise (<span class="math notranslate nohighlight">\(\Delta^2/12\)</span>) and spiky signals, and they differ most in their tails, which the excess kurtosis (0, <span class="math notranslate nohighlight">\(-1.2\)</span> and 3) captures. The central limit theorem explains why sums of many small independent contributions, such as the EEG, are close to Gaussian.</p>
+<p>Covariance measures linear dependence; independence implies zero covariance but not conversely, as <span class="math notranslate nohighlight">\(Y = X^2\)</span> shows. The variance of a sum includes twice the covariance, so for uncorrelated measurements the variance of the sample mean is <span class="math notranslate nohighlight">\(\sigma^2/N\)</span>, the foundation of confidence intervals and of signal averaging in <a class="reference internal" href="../ch16_noise_removal/01_signal_averaging.html"><span class="std std-doc">Section 10.1</span></a>. On real recordings, the EEG was nearly Gaussian while muscle artifact and needle EMG were strongly heavy-tailed. These ideas extend to whole signals in <a class="reference internal" href="../ch12_spectral_estimation/index.html"><span class="std std-doc">Chapter 7</span></a>, where random processes, autocorrelation and the power spectral density take the place of single random variables.</p>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>A random variable has density <span class="math notranslate nohighlight">\(f_X(x) = 2x\)</span> on <span class="math notranslate nohighlight">\([0, 1]\)</span> and zero elsewhere. Compute its CDF, mean, variance and <span class="math notranslate nohighlight">\(P(X &gt; 0.5)\)</span> by hand, and confirm them with <span class="math notranslate nohighlight">\(10^5\)</span> samples generated as <span class="math notranslate nohighlight">\(X = \sqrt{U}\)</span> with <span class="math notranslate nohighlight">\(U\)</span> uniform on <span class="math notranslate nohighlight">\([0, 1]\)</span>. Why does this transformation produce the right density?</p></li>
+<li><p>Show that <span class="math notranslate nohighlight">\(\operatorname{Var}(aX + bY) = a^2\sigma_X^2 + b^2\sigma_Y^2 + 2ab\operatorname{Cov}(X, Y)\)</span>. An ECG lead is the difference of two electrode potentials whose noises have equal variance <span class="math notranslate nohighlight">\(\sigma^2\)</span> and correlation <span class="math notranslate nohighlight">\(\rho\)</span>. What is the noise variance of the lead, and why does a large positive <span class="math notranslate nohighlight">\(\rho\)</span> help?</p></li>
+<li><p>Using <span class="math notranslate nohighlight">\(\int_0^\infty t^n e^{-t/b}\,dt = n!\,b^{n+1}\)</span>, verify the variance and the kurtosis of the Laplacian density in equation (2.36). Then compute <span class="math notranslate nohighlight">\(P(|X| &gt; 3\sigma)\)</span> exactly for the Gaussian and Laplacian densities and compare with the table in <a class="reference internal" href="#sec-2-4-3">Section 2.4.3</a>.</p></li>
+<li><p>An ADC with 12 bits spans <span class="math notranslate nohighlight">\(\pm 5\)</span> mV. Compute the step <span class="math notranslate nohighlight">\(\Delta\)</span> and the RMS quantization noise, and compare it with 10 µV of amplifier noise. Assuming independence, what is the total noise RMS? Check your answer by simulating both noises.</p></li>
+<li><p>Estimate the excess kurtosis of sums of <span class="math notranslate nohighlight">\(N\)</span> independent exponential variables for <span class="math notranslate nohighlight">\(N = 1, 2, 4, 8, 32\)</span> and verify the <span class="math notranslate nohighlight">\(1/N\)</span> law stated in <a class="reference internal" href="#sec-2-4-4">Section 2.4.4</a>. How large must <span class="math notranslate nohighlight">\(N\)</span> be before the skewness drops below 0.1?</p></li>
+<li><p>The confidence interval for the mean RR interval of record 100 assumed independent intervals. Split the RR series into non-overlapping blocks of 50 beats, compute the mean of each block, and use the spread of the block means to estimate the standard error of the overall mean (the method of batch means). Compare with <span class="math notranslate nohighlight">\(s/\sqrt{N}\)</span> and explain the difference using equation (2.38).</p></li>
+</ol>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p><span class="bibtex-citation" id="id5">Papoulis and Pillai [<a class="reference internal" href="../bibliography.html#id14" title="Athanasios Papoulis and S. Unnikrishna Pillai. Probability, Random Variables, and Stochastic Processes. McGraw-Hill, New York, 4th edition, 2002.">2002</a>]</span> is the classic engineering reference for probability, random variables and the central limit theorem, and <span class="bibtex-citation" id="id6">Kay [<a class="reference internal" href="../bibliography.html#id10" title="Steven M. Kay. Modern Spectral Estimation: Theory and Application. Prentice Hall, Englewood Cliffs, NJ, 1988.">1988</a>]</span> and <span class="bibtex-citation" id="id7">Bendat and Piersol [<a class="reference internal" href="../bibliography.html#id13" title="Julius S. Bendat and Allan G. Piersol. Random Data: Analysis and Measurement Procedures. Wiley, Hoboken, NJ, 4th edition, 2010.">2010</a>]</span> connect these ideas to signal analysis. For a gentle statistical treatment aimed at biomedical data, <span class="bibtex-citation" id="id8">Semmlow and Griffel [<a class="reference internal" href="../bibliography.html#id21" title="John L. Semmlow and Benjamin Griffel. Biosignal and Medical Image Processing. CRC Press, Boca Raton, FL, 3rd edition, 2014.">2014</a>]</span> is a good companion, and <span class="bibtex-citation" id="id9">Bishop [<a class="reference internal" href="../bibliography.html#id30" title="Christopher M. Bishop. Pattern Recognition and Machine Learning. Springer, New York, 2006.">2006</a>]</span> (Chapter 2) gives a clear account of the Gaussian and related densities. The noise stress test database is described in <span class="bibtex-citation" id="id10">Moody <em>et al.</em> [<a class="reference internal" href="../bibliography.html#id86" title="George B. Moody, W. E. Muldrow, and Roger G. Mark. A noise stress test for arrhythmia detectors. Computers in Cardiology, 11:381–384, 1984.">1984</a>]</span>, the EEG data in <span class="bibtex-citation" id="id11">Schalk <em>et al.</em> [<a class="reference internal" href="../bibliography.html#id87" title="Gerwin Schalk, Dennis J. McFarland, Thilo Hinterberger, Niels Birbaumer, and Jonathan R. Wolpaw. BCI2000: a general-purpose brain-computer interface (BCI) system. IEEE Transactions on Biomedical Engineering, 51(6):1034–1043, 2004.">2004</a>]</span>, and all recordings are distributed through PhysioNet <span class="bibtex-citation" id="id12">[<a class="reference internal" href="../bibliography.html#id84" title="Ary L. Goldberger, Luis A. N. Amaral, Leon Glass, Jeffrey M. Hausdorff, Plamen Ch. Ivanov, Roger G. Mark, Joseph E. Mietus, George B. Moody, Chung-Kang Peng, and H. Eugene Stanley. PhysioBank, PhysioToolkit, and PhysioNet: components of a new research resource for complex physiologic signals. Circulation, 101(23):e215–e220, 2000.">Goldberger <em>et al.</em>, 2000</a>]</span>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./ch02_math_toolkit"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="04_calculus_for_signals.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">2.3 Calculus for Signals</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../ch04_systems/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">3. Systems and Their Properties</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-variables-densities-and-histograms">2.4.1 Random Variables, Densities and Histograms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moments-mean-variance-skewness-and-kurtosis">2.4.2 Moments: Mean, Variance, Skewness and Kurtosis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#three-noise-models">2.4.3 Three Noise Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-gaussian-density">The Gaussian density</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-uniform-density-and-quantization-noise">The uniform density and quantization noise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-laplacian-density">The Laplacian density</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-noise-is-often-gaussian-the-central-limit-theorem">2.4.4 Why Noise Is Often Gaussian: The Central Limit Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance-correlation-and-independence">2.4.5 Covariance, Correlation and Independence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sample-mean-and-its-uncertainty">2.4.6 The Sample Mean and Its Uncertainty</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-mean-heart-rate-of-record-100">The mean heart rate of record 100</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noise-statistics-of-real-recordings-step-by-step">2.4.7 Noise Statistics of Real Recordings, Step by Step</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-the-recordings">Step 1: Load the recordings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-remove-slow-drift">Step 2: Remove slow drift</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-compute-the-moments">Step 3: Compute the moments</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-compare-the-histograms-with-a-gaussian-of-the-same-variance">Step 4: Compare the histograms with a Gaussian of the same variance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-interpret">Step 5: Interpret</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kim Nguyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on November 08, 2026.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
