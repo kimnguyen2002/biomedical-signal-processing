@@ -1,0 +1,91 @@
+format: jb-book
+root: intro
+parts:
+- caption: Part I. Foundations
+  chapters:
+  - file: ch01_introduction/index
+    sections:
+    - file: ch01_introduction/01_what_is_a_biomedical_signal
+    - file: ch01_introduction/02_bioelectric_origins
+    - file: ch01_introduction/03_acquisition_chain
+  - file: ch02_math_toolkit/index
+    sections:
+    - file: ch02_math_toolkit/01_complex_numbers
+    - file: ch02_math_toolkit/03_signals_as_vectors
+    - file: ch02_math_toolkit/04_calculus_for_signals
+    - file: ch02_math_toolkit/05_probability_and_statistics
+- caption: Part II. Linear Time-Invariant Systems
+  chapters:
+  - file: ch04_systems/index
+    sections:
+    - file: ch04_systems/01_what_is_a_system
+    - file: ch04_systems/02_linearity
+  - file: ch05_convolution/index
+    sections:
+    - file: ch05_convolution/01_impulse_representation
+    - file: ch05_convolution/02_convolution_sum
+- caption: Part III. Frequency-Domain Analysis
+  chapters:
+  - file: ch07_fourier_series/index
+    sections:
+    - file: ch07_fourier_series/01_fourier_series_derivation
+    - file: ch07_fourier_series/02_complex_fourier_series
+    - file: ch07_fourier_series/03_convergence_gibbs
+  - file: ch09_sampling/index
+    sections:
+    - file: ch09_sampling/01_sampling_theorem
+    - file: ch09_sampling/02_aliasing
+  - file: ch12_spectral_estimation/index
+    sections:
+    - file: ch12_spectral_estimation/01_random_processes
+    - file: ch12_spectral_estimation/02_power_spectral_density
+    - file: ch12_spectral_estimation/03_nonparametric_psd
+    - file: ch12_spectral_estimation/04_parametric_psd
+- caption: Part IV. Filtering
+  chapters:
+  - file: ch13_filter_fundamentals/index
+    sections:
+    - file: ch13_filter_fundamentals/01_filter_types_specs
+  - file: ch14_fir/index
+    sections:
+    - file: ch14_fir/01_linear_phase_fir
+  - file: ch16_noise_removal/index
+    sections:
+    - file: ch16_noise_removal/01_signal_averaging
+    - file: ch16_noise_removal/02_wiener_filter
+- caption: Part V. The Electrocardiogram
+  chapters:
+  - file: ch17_ecg/index
+    sections:
+    - file: ch17_ecg/01_cardiac_electrophysiology
+    - file: ch17_ecg/02_recording_the_ecg
+    - file: ch17_ecg/03_ecg_data_in_python
+  - file: ch18_ecg_preprocessing/index
+    sections:
+    - file: ch18_ecg_preprocessing/01_ecg_noise_types
+    - file: ch18_ecg_preprocessing/02_highpass_baseline_wander
+- caption: Part VI. Other Physiological Signals
+  chapters:
+  - file: ch20_eeg/index
+    sections:
+    - file: ch20_eeg/01_eeg_fundamentals
+    - file: ch20_eeg/02_eeg_spectral_analysis
+    - file: ch20_eeg/03_event_related_activity
+- caption: Part VII. Advanced Methods
+  chapters:
+  - file: ch24_wavelets/index
+    sections:
+    - file: ch24_wavelets/01_dwt_filter_banks
+    - file: ch24_wavelets/02_wavelet_denoising
+- caption: Appendices
+  chapters:
+  - file: appendix/a_python_essentials
+  - file: appendix/b_datasets
+  - file: appendix/c_math_reference
+  - file: appendix/d_glossary
+  - file: appendix/e_data_types
+  - file: appendix/f_pandas
+  - file: appendix/g_numpy
+  - file: appendix/h_latex
+  - file: appendix/i_math_symbols
+  - file: bibliography

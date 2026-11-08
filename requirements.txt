@@ -1,0 +1,21 @@
+# Book build
+jupyter-book>=1.0.4,<2
+jupytext>=1.16
+ipykernel>=6.29
+nbconvert>=7.16
+ghp-import>=2.1
+
+# Scientific Python stack
+numpy>=2.0
+scipy>=1.13
+matplotlib>=3.9
+pandas>=2.2
+
+# Biomedical signal tooling
+wfdb>=4.1
+mne>=1.8
+PyWavelets>=1.6
+
+# Machine learning
+scikit-learn>=1.5
+torch>=2.5

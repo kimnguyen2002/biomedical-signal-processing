@@ -1,0 +1,30 @@
+# Build output
+book/_build/
+_build/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Caches created by the data scripts
+.cache/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Local recordings
+book/data/**
+!book/data/README.md
+scripts/prepare_beat_dataset.py
+*.pdf
+
+# Temporary website build (docs/ is the publishable HTML)
+.site-build/
+
+# Sphinx build metadata is not needed by the website
+docs/.buildinfo

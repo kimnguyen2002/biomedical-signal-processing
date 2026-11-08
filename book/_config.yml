@@ -1,0 +1,103 @@
+#######################################################################################
+# Book settings
+# See https://jupyterbook.org/customize/config.html
+#######################################################################################
+title: "Biomedical Signal Processing"
+author: Kim Nguyen
+copyright: "2026"
+logo: _static/logo.png
+only_build_toc_files: true
+exclude_patterns:
+  - _build
+  - "**.ipynb_checkpoints"
+  - data/**
+
+#######################################################################################
+# Execution
+# Notebooks are committed together with their outputs, so the website shows exactly
+# what the code produced on the author's machine. Run `make execute` to refresh them.
+#######################################################################################
+execute:
+  execute_notebooks: "off"
+  timeout: 900
+  allow_errors: false
+
+#######################################################################################
+# Parsing
+#######################################################################################
+parse:
+  myst_enable_extensions:
+    - amsmath
+    - colon_fence
+    - deflist
+    - dollarmath
+    - html_image
+    - replacements
+    - smartquotes
+    - substitution
+  myst_heading_anchors: 3
+
+#######################################################################################
+# Bibliography
+#######################################################################################
+bibtex_bibfiles:
+  - references.bib
+
+#######################################################################################
+# HTML
+#######################################################################################
+html:
+  favicon: _static/favicon.png
+  home_page_in_navbar: true
+  use_repository_button: true
+  use_issues_button: true
+  use_edit_page_button: false
+  use_download_button: true
+  use_fullscreen_button: true
+  baseurl: https://kimnguyen2002.github.io/biomedical-signal-processing/
+  extra_footer: |
+    <p>
+      Text licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>;
+      code licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.
+    </p>
+
+repository:
+  url: https://github.com/kimnguyen2002/biomedical-signal-processing
+  path_to_book: book
+  branch: main
+
+launch_buttons:
+  notebook_interface: classic
+  binderhub_url: https://mybinder.org
+  colab_url: https://colab.research.google.com
+
+#######################################################################################
+# LaTeX / PDF
+#######################################################################################
+latex:
+  latex_engine: xelatex
+  use_jupyterbook_latex: true
+  latex_documents:
+    targetname: biomedical-signal-processing.tex
+
+#######################################################################################
+# Sphinx
+#######################################################################################
+sphinx:
+  config:
+    bibtex_reference_style: author_year
+    bibtex_default_style: plain
+    html_theme_options:
+      home_page_in_toc: true
+      collapse_navbar: false
+      show_navbar_depth: 2
+    html_show_copyright: true
+    html_last_updated_fmt: "%B %d, %Y"
+    html_js_files:
+      - equation-previews-data.js
+      - equation-previews.js
+    html_css_files:
+      - custom.css
+    nb_merge_streams: true
+    suppress_warnings:
+      - mystnb.unknown_mime_type
